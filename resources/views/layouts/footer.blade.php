@@ -15,8 +15,6 @@
 
                             <div class="widget">
 
-                                <img src="images/footer-widget-logo.png" alt="Image" class="footer-logo">
-
                                 <p>We believe in <strong>Simple</strong>, <strong>Creative</strong> &amp; <strong>Flexible</strong> Design Standards.</p>
 
                                 <div style="background: url('images/world-map.png') no-repeat center center; background-size: 100%;">

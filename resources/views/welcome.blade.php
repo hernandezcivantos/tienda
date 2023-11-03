@@ -12,7 +12,7 @@
             <!-- START REVOLUTION SLIDER 5.1.4 fullwidth mode -->
             <div id="rev_slider_ishop" class="rev_slider fullwidthbanner" style="display:none;" data-version="5.1.4">
                 <ul>    <!-- SLIDE  -->
-                    <li data-transition="fade" data-slotamount="1" data-masterspeed="1500" data-delay="5000" data-saveperformance="off" data-title="Latest Collections" style="background-color: #F6F6F6;">
+                    <li data-transition="fade" data-slotamount="1" data-masterspeed="1500" data-delay="15000" data-saveperformance="off" data-title="Latest Collections" style="background-color: #F6F6F6;">
                         <!-- LAYERS -->
 
                         <!-- LAYER NR. 2 -->
@@ -28,7 +28,7 @@
                              data-elementdelay="0.01"
                              data-endelementdelay="0.1"
                              data-endspeed="1000"
-                             data-endeasing="Power4.easeIn"><img src="images/slider/rev/shop/girl1.jpg" alt="Girl"></div>
+                             data-endeasing="Power4.easeIn"><img src="images/slider/rev/shop/maquina.png" alt="Girl"></div>
 
                         <div class="tp-caption ltl tp-resizeme revo-slider-caps-text text-uppercase"
                              data-x="570"
@@ -42,7 +42,7 @@
                              data-elementdelay="0.01"
                              data-endelementdelay="0.1"
                              data-endspeed="1000"
-                             data-endeasing="Power4.easeIn" style=" color: #333;">Get your Shopping Bags Ready</div>
+                             data-endeasing="Power4.easeIn" style=" color: #333;">Mantente en forma con nuestras máquinas</div>
 
                         <div class="tp-caption ltl tp-resizeme revo-slider-emphasis-text p-0 border-0"
                              data-x="570"
@@ -56,7 +56,7 @@
                              data-elementdelay="0.01"
                              data-endelementdelay="0.1"
                              data-endspeed="1000"
-                             data-endeasing="Power4.easeIn" style=" color: #333; max-width: 430px; line-height: 1.15;">Latest Fashion<br>Collections</div>
+                             data-endeasing="Power4.easeIn" style=" color: #333; max-width: 430px; line-height: 1.15;">Últimos modelos<br>Mquinaria moderna</div>
 
                         <div class="tp-caption ltl tp-resizeme revo-slider-desc-text text-start"
                              data-x="570"
@@ -70,7 +70,7 @@
                              data-elementdelay="0.01"
                              data-endelementdelay="0.1"
                              data-endspeed="1000"
-                             data-endeasing="Power4.easeIn" style=" color: #333; max-width: 550px; white-space: normal;">We have created a Design that looks Awesome, performs Brilliantly &amp; senses Orientations.</div>
+                             data-endeasing="Power4.easeIn" style=" color: #333; max-width: 550px; white-space: normal;">En la sección de maquinaria para gym podrás encontrar una extensa gama con los últimos y más modernos modelos.</div>
 
                         <div class="tp-caption ltl tp-resizeme"
                              data-x="570"
@@ -84,11 +84,11 @@
                              data-elementdelay="0.01"
                              data-endelementdelay="0.1"
                              data-endspeed="1000"
-                             data-endeasing="Power4.easeIn"><a href="#" class="button button-border button-large button-rounded text-end m-0"><span>Start Shopping</span> <i class="uil uil-angle-right-b"></i></a></div>
+                             data-endeasing="Power4.easeIn"><a href="#" class="button button-border button-large button-rounded text-end m-0"><span>Máquinas gym</span> <i class="uil uil-angle-right-b"></i></a></div>
 
                     </li>
                     <!-- SLIDE  -->
-                    <li data-transition="slideup" data-slotamount="1" data-masterspeed="1500" data-delay="5000"  data-saveperformance="off"  data-title="Messenger bags" style="background-color: #E9E8E3;">
+                    <li data-transition="slideup" data-slotamount="1" data-masterspeed="1500" data-delay="15000"  data-saveperformance="off"  data-title="Messenger bags" style="background-color: #E9E8E3;">
                         <!-- LAYERS -->
 
                         <div class="tp-caption ltl tp-resizeme revo-slider-caps-text text-uppercase"
@@ -118,7 +118,7 @@
                              data-elementdelay="0.01"
                              data-endelementdelay="0.1"
                              data-endspeed="1000"
-                             data-endeasing="Power4.easeIn" style=" color: #333;">Buy Stylish Bags at Discounted Prices</div>
+                             data-endeasing="Power4.easeIn" style=" color: #333;">Nuestras bolsas con descuento</div>
 
                         <div class="tp-caption ltl tp-resizeme revo-slider-emphasis-text p-0 border-0"
                              data-x="0"
@@ -132,7 +132,7 @@
                              data-elementdelay="0.01"
                              data-endelementdelay="0.1"
                              data-endspeed="1000"
-                             data-endeasing="Power4.easeIn" style=" color: #333; line-height: 1.15;">Messenger Bags</div>
+                             data-endeasing="Power4.easeIn" style=" color: #333; line-height: 1.15;">Bolsas deporte</div>
 
                         <div class="tp-caption ltl tp-resizeme revo-slider-desc-text text-start"
                              data-x="0"
@@ -146,7 +146,7 @@
                              data-elementdelay="0.01"
                              data-endelementdelay="0.1"
                              data-endspeed="1000"
-                             data-endeasing="Power4.easeIn" style=" color: #333; max-width: 550px; white-space: normal;">Grantees insurmountable challenges invest protect, growth improving quality social entrepreneurship.</div>
+                             data-endeasing="Power4.easeIn" style=" color: #333; max-width: 550px; white-space: normal;">¡Aprovecha esta oportunidad, todas nuestras bolsas de deporte ahora rebajadas un 20%!</div>
 
                         <div class="tp-caption ltl tp-resizeme"
                              data-x="0"
@@ -160,7 +160,7 @@
                              data-elementdelay="0.01"
                              data-endelementdelay="0.1"
                              data-endspeed="1000"
-                             data-endeasing="Power4.easeIn"><a href="#" class="button button-border button-large button-rounded text-end m-0"><span>Start Shopping</span> <i class="uil uil-angle-right-b"></i></a></div>
+                             data-endeasing="Power4.easeIn"><a href="#" class="button button-border button-large button-rounded text-end m-0"><span>Bolsas de deporte</span> <i class="uil uil-angle-right-b"></i></a></div>
 
                         <div class="tp-caption utb tp-resizeme revo-slider-caps-text text-uppercase"
                              data-x="510"

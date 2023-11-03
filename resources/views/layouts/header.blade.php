@@ -9,8 +9,8 @@
                 ============================================= -->
                 <div id="logo">
                     <a href="/">
-                        <img class="logo-default" srcset="images/logo.png, images/logo@2x.png 2x" src="images/logo@2x.png" alt="Canvas Logo">
-                        <img class="logo-dark" srcset="images/logo-dark.png, images/logo-dark@2x.png 2x" src="images/logo-dark@2x.png" alt="Canvas Logo">
+                        <img class="logo-default" srcset="images/logo-sports.png, images/logo-sports@2x.png 2x" src="images/logo-sports@2x.png" alt="Sports tienda de ropa logotipo">
+                        <img class="logo-dark" srcset="images/logo-sports-dark.png, images/logo-sports-dark@2x.png 2x" src="images/logo-sports-dark@2x.png" alt="Sports tienda de ropa logotipo">
                     </a>
                 </div><!-- #logo end -->
 

@@ -194,19 +194,19 @@
                         <div class="row align-items-stretch g-4 h-100">
                             <div class="col-md-6 min-vh-25 min-vh-md-0">
                                 <a href="#" class="grid-inner d-block h-100">
-                                    <img src="images/shop/banners/2.jpg" alt="Image" class="w-100 h-100 object-cover rounded">
+                                    <img src="images/shop/banners/relojes-deportivos.png" alt="Banner de la sección de relojes deportivos" class="w-100 h-100 object-cover rounded">
                                 </a>
                             </div>
 
                             <div class="col-md-6 min-vh-25 min-vh-md-0">
                                 <a href="#" class="grid-inner d-block h-100">
-                                    <img src="images/shop/banners/8.jpg" alt="Image" class="w-100 h-100 object-cover rounded">
+                                    <img src="images/shop/banners/zapatillas-deportivas.png" alt="Banner de la sección de zapatillas deportivas" class="w-100 h-100 object-cover rounded">
                                 </a>
                             </div>
 
                             <div class="col-md-12 min-vh-25 min-vh-md-0 pb-md-0">
                                 <a href="#" class="grid-inner d-block h-100">
-                                    <img src="images/shop/banners/4.jpg" alt="Image" class="w-100 h-100 object-cover rounded">
+                                    <img src="images/shop/banners/tenis-de-mesa.png" alt="Banner de la sección de tenis de mesa" class="w-100 h-100 object-cover rounded">
                                 </a>
                             </div>
                         </div>
@@ -215,7 +215,7 @@
 
                     <div class="col-md-4 min-vh-50">
                         <a href="#" class="grid-inner d-block h-100">
-                            <img src="images/shop/banners/9.jpg" alt="Image" class="w-100 h-100 object-cover rounded">
+                            <img src="images/shop/banners/baloncesto.png" alt="Banner de la sección de baloncesto" class="w-100 h-100 object-cover rounded">
                         </a>
                     </div>
                 </div>
@@ -265,14 +265,14 @@
                 <div class="clear"></div>
 
                 <div class="fancy-title title-border title-center mt-4">
-                    <h4>Marcas populares</h4>
+                    <h4>Nuestros Colaboradores</h4>
                 </div>
 
                 <ul class="clients-grid row row-cols-2 row-cols-sm-3 row-cols-md-6 mb-0">
-                    <li class="grid-item"><a href="#"><img src="images/clients/logo/1.png" alt="Clients"></a></li>
-                    <li class="grid-item"><a href="#"><img src="images/clients/logo/3.png" alt="Clients"></a></li>
-                    <li class="grid-item"><a href="#"><img src="images/clients/logo/13.png" alt="Clients"></a></li>
-                    <li class="grid-item"><a href="#"><img src="images/clients/logo/14.png" alt="Clients"></a></li>
+                    <li class="grid-item"><img src="images/clients/logo/1.png" alt="Clients"></li>
+                    <li class="grid-item"><img src="images/clients/logo/3.png" alt="Clients"></li>
+                    <li class="grid-item"><img src="images/clients/logo/13.png" alt="Clients"></li>
+                    <li class="grid-item"><img src="images/clients/logo/14.png" alt="Clients"></li>
                 </ul>
 
             </div>

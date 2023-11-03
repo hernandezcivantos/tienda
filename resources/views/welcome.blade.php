@@ -312,7 +312,7 @@
                                 </div>
                                 <div class="fbox-content">
                                     <h3>Envio Gratuito</h3>
-                                    <p class="mt-0">Envío gratuito para comprar superiores a 100€.</p>
+                                    <p class="mt-0">Envío gratuito por compras superiores a 100€.</p>
                                 </div>
                             </div>
                         </div>

@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\HomeController;
+use App\Http\Controllers\PanelController;
 use App\Http\Controllers\LandingController;
 use Illuminate\Support\Facades\Route;
 
@@ -11,4 +11,4 @@ Route::get('/', [LandingController::class, 'index']);
 Auth::routes();
 
 # Panel admin
-Route::get('/home', [HomeController::class, 'index'])->name('home');
+Route::get('/home', [PanelController::class, 'index'])->name('home');

@@ -429,7 +429,7 @@
                         },
                         arrows: {
                             style: "ares",
-                            enable: true,
+                            enable: false,
                             hide_onmobile: false,
                             hide_onleave: false,
                             tmp: '<div class="tp-title-wrap">	<span class="tp-arr-titleholder"></span> </div>',

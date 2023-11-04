@@ -9,35 +9,14 @@
                 ============================================= -->
                 <div id="logo">
                     <a href="/">
-                        <img class="logo-default" srcset="images/logo-sports.png, images/logo-sports@2x.png"
-                             src="images/logo-sports.png" alt="Sports tienda de ropa logotipo">
-                        <img class="logo-dark" srcset="images/logo-sports-dark.png, images/logo-sports-dark.png"
-                             src="images/logo-sports-dark.png" alt="Sports tienda de ropa logotipo">
+                        <img class="logo-default" srcset="{{asset('images/logo-sports.png')}}, {{asset('images/logo-sports.png')}}"
+                             src="{{asset('images/logo-sports.png')}}" alt="Sports tienda de ropa logotipo">
+                        <img class="logo-dark" srcset="{{asset('images/logo-sports-dark.png')}}, {{asset('images/logo-sports-dark.png')}}"
+                             src="{{asset('images/logo-sports-dark.png')}}" alt="Sports tienda de ropa logotipo">
                     </a>
                 </div><!-- #logo end -->
 
-                <div class="header-misc">
-
-                    <!-- Top Cart
-                    ============================================= -->
-                    <div id="top-cart" class="header-misc-icon d-sm-block">
-                        <a href="#" id="top-cart-trigger"><i class="uil uil-shopping-bag"></i><span
-                                class="top-cart-number">0</span></a>
-                        <div class="top-cart-content">
-                            <div class="top-cart-title">
-                                <h4>Cesta de compra</h4>
-                            </div>
-                            <div class="top-cart-items">
-
-                            </div>
-                            <div class="top-cart-action">
-                                <span class="top-checkout-price">0.00€</span>
-                                <a href="#" class="button button-3d button-small m-0">Ver cesta</a>
-                            </div>
-                        </div>
-                    </div><!-- #top-cart end -->
-
-                </div>
+                @include('layouts.cart')
 
                 <div class="primary-menu-trigger">
                     <button class="cnvs-hamburger" type="button" title="Open Mobile Menu">
@@ -50,14 +29,14 @@
                 <nav class="primary-menu">
 
                     <ul class="menu-container">
-                        <li class="menu-item current">
+                        <li class="menu-item {{ request()->is('/') ? 'current' : '' }}">
                             <a class="menu-link" href="/">
                                 <div>Inicio</div>
                             </a>
                         </li>
                         @guest
                             @if (Route::has('login'))
-                                <li class="menu-item ms-auto">
+                                <li class="menu-item ms-auto {{ request()->is('login') ? 'current' : '' }}">
                                     <a class="menu-link" href="{{ route('login') }}"><div><i class="uil uil-user"></i> {{ __('Conectar') }} </div></a>
                                 </li>
                             @endif
@@ -72,6 +51,15 @@
                                             </div>
                                         </a>
                                     </li>
+                                    @if(Auth()->user()->isAdmin())
+                                    <li class="menu-item" style="">
+                                        <a class="menu-link" href="{{ route('admin') }}">
+                                            <div>
+                                                <i class="uil-user-plus"></i> {{ __('Menu Admin') }}
+                                            </div>
+                                        </a>
+                                    </li>
+                                    @endif
                                     <li class="menu-item" style="">
                                         <a class="menu-link" href="{{ route('logout') }}" onclick="event.preventDefault();
                                              document.getElementById('logout-form').submit();">
@@ -88,26 +76,6 @@
                                     @csrf
                                 </form>
                             </li>
-                            {{--<li class="menu-item dropdown">
-                                <a id="navbarDropdown" class="menu-link dropdown-toggle" href="#" role="button"
-                                   data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                                    <i class="uil uil-user"></i> {{ Auth::user()->name }}
-                                </a>
-
-                                <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                                    <a class="menu-link" href="#">
-                                        <i class="uil uil-account"></i> {{ __('Mi cuenta') }}
-                                    </a>
-                                    <a class="dropdown-item" href="{{ route('logout') }}"
-                                       onclick="event.preventDefault();
-                                             document.getElementById('logout-form').submit();">
-                                        {{ __('Desconectar') }}
-                                    </a>
-
-
-                                </div>
-                            </li>--}}
-
                         @endguest
                     </ul>
 

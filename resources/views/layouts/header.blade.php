@@ -45,7 +45,7 @@
                                 <a class="menu-link" href="#"><div><i class="uil uil-user"></i> {{ Auth::user()->name }} <i class="bi-caret-down-fill text-smaller d-none d-xl-inline-block me-0"></i><i class="sub-menu-indicator fa-solid fa-caret-down"></i></div></a>
                                 <ul class="sub-menu-container" style="">
                                     <li class="menu-item" style="">
-                                        <a class="menu-link" href="#">
+                                        <a class="menu-link" href="{{ route('user.self') }}">
                                             <div>
                                                 <i class="uil-cog"></i> {{ __('Mi cuenta') }}
                                             </div>

@@ -12,8 +12,9 @@
                     <div class="col-md-9">
 
                         <div class="heading-block border-0">
-                            <h3><span id="username">{{Auth()->user()->name}}</span> <a href="#" class="pointer-event" data-bs-toggle="modal"
-                                                            data-bs-target=".bs-example-modal-centered"><i
+                            <h3><span id="username">{{Auth()->user()->name}}</span> <a href="#" class="pointer-event"
+                                                                                       data-bs-toggle="modal"
+                                                                                       data-bs-target=".bs-example-modal-centered"><i
                                             class="bi-pencil" style="font-size: 20px"></i></a></h3>
                             <span id="useremail">{{Auth()->user()->email}}</span>
                         </div>
@@ -25,24 +26,30 @@
                                 <h5>Histórico de compras</h5>
 
                                 <div>
-                                    <table class="table table-bordered table-striped">
-                                        <thead>
-                                        <tr>
-                                            <th>Fecha</th>
-                                            <th>Estado</th>
-                                            <th>#</th>
-                                        </tr>
-                                        </thead>
-                                        <tbody>
-                                        <tr>
-                                            <td>
-                                                <code>5/23/2021</code>
-                                            </td>
-                                            <td>Payment for VPS2 completed</td>
-                                            <td><a href="#">Test</a></td>
-                                        </tr>
-                                        </tbody>
-                                    </table>
+                                    @if(count($shoppings) > 0)
+                                        <table class="table table-bordered table-striped">
+                                            <thead>
+                                            <tr>
+                                                <th>Fecha</th>
+                                                <th>Estado</th>
+                                                <th>#</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            @foreach($shoppings as $shopping)
+                                                <tr>
+                                                    <td>
+                                                        <code>{{$shopping->date->format('d/m/Y h:i:s')}}</code>
+                                                    </td>
+                                                    <td>{{$shopping->status->name}}</td>
+                                                    <td><a href="#">Test</a></td>
+                                                </tr>
+                                            @endforeach
+                                            </tbody>
+                                        </table>
+                                    @else
+                                        <p>No tienes compras actualmente.</p>
+                                    @endif
                                 </div>
                             </div>
                         </div>
@@ -121,7 +128,7 @@
 
                 $.ajax({
                     type: 'POST',
-                    url: '{!! route('user.store') !!}',
+                    url: '{!! route('user.update') !!}',
                     data: $('#userEdit').serialize(),
                     dataType: 'json',
                     success: function (response) {

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\shopping;
 use App\Models\User;
 use http\Env\Response;
 use Illuminate\Http\JsonResponse;
@@ -23,7 +24,8 @@ class UserController extends Controller
             'routes' => [
                 ['name' => 'Inicio', 'redirect' => '/'],
                 ['name' => 'Mi usuario', 'redirect' => route('user.self')]
-            ]
+            ],
+            'shoppings' => Shopping::getAllByUserID()
         ];
 
         return view('user.self', $data);

@@ -21,7 +21,17 @@ class shopping extends Model
      */
     protected $fillable = [
         'user_id',
-        'status_id'
+        'status_id',
+        'date'
+    ];
+
+    /**
+     * The attributes that should be cast.
+     *
+     * @var array<string, string>
+     */
+    protected $casts = [
+        'date' => 'datetime',
     ];
 
     public function user(): HasOne
@@ -29,14 +39,21 @@ class shopping extends Model
         return $this->hasOne(User::class);
     }
 
-    public function status(): HasOne
+    public function status()
     {
-        return $this->hasOne(ShoppingStatus::class);
+        return $this->belongsTo(ShoppingStatus::class);
     }
 
     public function shopping_products(): BelongsTo
     {
         return $this->belongsTo(ShoppingProducts::class);
 
+    }
+
+    public static function getAllByUserID()
+    {
+        return self::where('user_id', Auth()->User()->id)
+            ->with('status')
+            ->get();
     }
 }

@@ -3,10 +3,8 @@
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
-use App\Http\Controllers\PanelController;
 use App\Http\Controllers\LandingController;
 use App\Http\Controllers\UserController;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 # Landing
@@ -23,11 +21,13 @@ Route::post('logout', [LoginController::class, 'logout'])->name('logout');
 Route::get('register', [RegisterController::class, 'showRegistrationForm'])->name('register');
 Route::post('register', [RegisterController::class, 'register']);
 
+// Newsletter
+Route::post('/newsletter/store', [UserController::class, 'store'])->name('newsletter.store');
+
 # User
 Route::group(['middleware' => 'auth'], function () {
-    Route::get('/home', [PanelController::class, 'index'])->name('home');
     Route::get('/user/self', [UserController::class, 'myUser'])->name('user.self');
-    Route::post('/user/store', [UserController::class, 'update'])->name('user.store');
+    Route::post('/user/store', [UserController::class, 'update'])->name('user.update');
 });
 
 # Admin

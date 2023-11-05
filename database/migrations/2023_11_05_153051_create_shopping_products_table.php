@@ -13,7 +13,12 @@ return new class extends Migration
     {
         Schema::create('shopping_products', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('shopping_id')->index();
+            $table->unsignedBigInteger('product_id')->index();
             $table->timestamps();
+
+            $table->foreign('shopping_id')->references('id')->on('shoppings')->onDelete('cascade');
+            $table->foreign('product_id')->references('id')->on('products')->onDelete('cascade');
         });
     }
 

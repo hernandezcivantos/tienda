@@ -13,8 +13,12 @@ return new class extends Migration
     {
         Schema::create('shoppings', function (Blueprint $table) {
             $table->id();
-            $table->bigInteger('user_id');
+            $table->unsignedBigInteger('user_id')->index();
+            $table->unsignedBigInteger('status_id')->index();
             $table->timestamps();
+
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('status_id')->references('id')->on('shopping_statuses')->onDelete('cascade');
         });
     }
 

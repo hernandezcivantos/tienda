@@ -4,12 +4,13 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-class newsletter extends Model
+class ShoppingStatus extends Model
 {
     use HasFactory;
 
-    protected $table = 'newsletters';
+    protected $table = 'shopping_statuses';
 
     /**
      * The attributes that are mass assignable.
@@ -17,6 +18,11 @@ class newsletter extends Model
      * @var array<int, string>
      */
     protected $fillable = [
-        'email'
+        'name'
     ];
+
+    public function shopping(): BelongsTo
+    {
+        return $this->belongsTo(Shopping::class);
+    }
 }

@@ -4,12 +4,13 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
-class newsletter extends Model
+class Product extends Model
 {
     use HasFactory;
 
-    protected $table = 'newsletters';
+    protected $table = 'products';
 
     /**
      * The attributes that are mass assignable.
@@ -17,6 +18,14 @@ class newsletter extends Model
      * @var array<int, string>
      */
     protected $fillable = [
-        'email'
+        'name',
+        'price',
+        'weight',
+        'measures'
     ];
+
+    public function images(): HasMany
+    {
+        return $this->hasMany(ProductImages::class);
+    }
 }

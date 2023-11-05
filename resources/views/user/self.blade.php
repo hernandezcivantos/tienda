@@ -30,19 +30,19 @@
                                         <table class="table table-bordered table-striped">
                                             <thead>
                                             <tr>
+                                                <th>#</th>
                                                 <th>Fecha</th>
                                                 <th>Estado</th>
-                                                <th>#</th>
                                             </tr>
                                             </thead>
                                             <tbody>
                                             @foreach($shoppings as $shopping)
-                                                <tr>
+                                                <tr class="pointer" data-href="{{url('/') . '/purchase/view/' . $shopping->id}}">
+                                                    <td>{{$shopping->id}}</td>
                                                     <td>
                                                         <code>{{$shopping->date->format('d/m/Y h:i:s')}}</code>
                                                     </td>
                                                     <td>{{$shopping->status->name}}</td>
-                                                    <td><a href="#">Test</a></td>
                                                 </tr>
                                             @endforeach
                                             </tbody>
@@ -153,6 +153,11 @@
                     }
                 });
             });
+        });
+
+        $('table tr').click(function(){
+            window.location = $(this).data('href');
+            return false;
         });
 
     </script>

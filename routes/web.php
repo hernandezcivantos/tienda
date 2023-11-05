@@ -4,6 +4,7 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\LandingController;
+use App\Http\Controllers\ShoppingController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -27,6 +28,7 @@ Route::post('/newsletter/store', [UserController::class, 'store'])->name('newsle
 # User
 Route::group(['middleware' => 'auth'], function () {
     Route::get('/user/self', [UserController::class, 'myUser'])->name('user.self');
+    Route::get('/purchase/view/{id}', [ShoppingController::class, 'view']);
     Route::post('/user/store', [UserController::class, 'update'])->name('user.update');
 });
 

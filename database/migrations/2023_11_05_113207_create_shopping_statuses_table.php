@@ -14,7 +14,6 @@ return new class extends Migration
         Schema::create('shopping_statuses', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->timestamps();
         });
     }
 

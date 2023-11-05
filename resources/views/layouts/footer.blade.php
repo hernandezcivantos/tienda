@@ -3,7 +3,7 @@
 <footer id="footer" class="dark">
     <div class="container">
 
-        <!-- Footer Widgets
+        {{--<!-- Footer Widgets
         ============================================= -->
         <div class="footer-widgets-wrap">
 
@@ -49,7 +49,7 @@
                 </div>
             </div>
 
-        </div><!-- .footer-widgets-wrap end -->
+        </div><!-- .footer-widgets-wrap end -->--}}
 
     </div>
 

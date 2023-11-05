@@ -1,4 +1,4 @@
-@if($bc)
+@if(isset($bc) && $bc)
     <!-- Page Title
 		============================================= -->
     <section class="page-title bg-transparent">

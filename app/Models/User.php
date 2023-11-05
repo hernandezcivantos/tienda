@@ -21,7 +21,8 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
-        'access_level'
+        'access_level',
+        'address'
     ];
 
     /**
@@ -44,8 +45,12 @@ class User extends Authenticatable
         'password' => 'hashed',
     ];
 
+    /**
+     * Checks if user has admin privileges
+     * @return bool
+     */
     public function isAdmin(): bool
     {
-        return $this->access_level < 2;
+        return $this['access_level'] < 2;
     }
 }

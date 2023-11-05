@@ -695,7 +695,7 @@ if( typeof jQuery !== 'undefined' ) {
 						}, 333);
 					}
 				}).catch( function(error) {
-					console.log('Function does not exist: ' + fn);
+					//console.log('Function does not exist: ' + fn);
 				});
 			},
 

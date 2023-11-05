@@ -42,7 +42,7 @@
                             @endif
                         @else
                             <li class="menu-item ms-auto sub-menu">
-                                <a class="menu-link" href="#"><div><i class="uil uil-user"></i> {{ Auth::user()->name }} <i class="bi-caret-down-fill text-smaller d-none d-xl-inline-block me-0"></i><i class="sub-menu-indicator fa-solid fa-caret-down"></i></div></a>
+                                <a data-bs-toggle="tooltip" data-bs-placement="top" data-bs-original-title="{{ Auth::user()->name }}" class="menu-link" href="#"><div><i class="uil uil-user"></i> {{strlen(Auth::user()->name) > 10 ? substr(Auth::user()->name, 0, 10) . '...': Auth::user()->name}} <i class="bi-caret-down-fill text-smaller d-none d-xl-inline-block me-0"></i><i class="sub-menu-indicator fa-solid fa-caret-down"></i></div></a>
                                 <ul class="sub-menu-container" style="">
                                     <li class="menu-item" style="">
                                         <a class="menu-link" href="{{ route('user.self') }}">

@@ -115,3 +115,5 @@
         </div>
     </div><!-- #copyrights end -->
 </footer><!-- #footer end -->
+
+<div id="msg-notification" data-notify-position="top-right"></div>

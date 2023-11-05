@@ -24,9 +24,10 @@ Route::get('register', [RegisterController::class, 'showRegistrationForm'])->nam
 Route::post('register', [RegisterController::class, 'register']);
 
 # User
-Route::group(['middleware' => 'admin'], function () {
+Route::group(['middleware' => 'auth'], function () {
     Route::get('/home', [PanelController::class, 'index'])->name('home');
     Route::get('/user/self', [UserController::class, 'myUser'])->name('user.self');
+    Route::post('/user/store', [UserController::class, 'update'])->name('user.store');
 });
 
 # Admin

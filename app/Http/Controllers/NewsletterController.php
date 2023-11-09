@@ -12,12 +12,13 @@ class NewsletterController extends Controller
     public function store(Request $request): JsonResponse
     {
         $rules = [
-            'email' => 'email|required'
+            'email' => 'required|email|unique:newsletters,email'
         ];
 
         $customMessages = [
             'required' => __('Es necesario escribir un correo electrónico'),
             'email' => __('El formato del correo electrónico no es correcto'),
+            'unique' => __('Ese correo ya está registrado, gracias')
         ];
 
         $validator = Validator::make($request->all(), $rules, $customMessages);

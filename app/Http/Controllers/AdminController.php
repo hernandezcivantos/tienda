@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Category;
+use App\Models\Product;
 use Illuminate\Http\Request;
 
 class AdminController extends Controller
@@ -20,7 +21,8 @@ class AdminController extends Controller
                 ['name' => 'Inicio', 'redirect' => '/'],
                 ['name' => 'Admin', 'redirect' => route('admin')]
             ],
-            'categories' => Category::all()
+            'categories' => Category::all(),
+            'products' => Product::with('category')->get()
         ];
 
         return view('panel', $data);

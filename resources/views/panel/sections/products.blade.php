@@ -12,12 +12,25 @@
         <tr>
             <th>#</th>
             <th>Nombre</th>
-            <th>Estado</th>
-            <th></th>
+            <th>Categoría</th>
+            <th>Precio</th>
+            <th>Acciones</th>
         </tr>
         </thead>
-        <tbody id="categoriesBody">
-
+        <tbody id="productsBody">
+        @foreach($products as $product)
+            <tr id="categoryRow{{$product->id}}">
+                <td>{{$product->id}}</td>
+                <td>{{$product->name}} </td>
+                <td>{{$product->category->name}}</td>
+                <td>{{$product->price}}</td>
+                <td>
+                    <a class="productEditLink" data-id="{{$product->id}}" href="#">
+                        <i class="uil-edit" style="font-size: 18px"></i>
+                    </a>
+                </td>
+            </tr>
+        @endforeach
         </tbody>
     </table>
 </div>

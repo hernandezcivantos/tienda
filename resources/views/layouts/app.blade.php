@@ -27,6 +27,12 @@
     <!-- Toast -->
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
 
+    <!-- Plugins/Components CSS -->
+    <link rel="stylesheet" href="{{asset('css/components/ion.rangeslider.css')}}">
+
+    <!-- Plugins/Components CSS -->
+    <link rel="stylesheet" href="{{asset('css/components/bs-filestyle.css')}}">
+
     <!-- Specific CSS -->
     @yield('css')
 
@@ -66,6 +72,8 @@
     crossorigin="anonymous"></script>
 <!-- Toast -->
 <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+<script src="{{asset('js/components/rangeslider.min.js')}}"></script>
+<script src="{{asset('js/components/bs-filestyle.js')}}"></script>
 <script>
 
     const loader = $('#loaderDiv');

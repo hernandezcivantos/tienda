@@ -84,3 +84,7 @@
     display: block;
     text-align: center;
 }
+
+select .disabled {
+    color: #d21c1c !important;
+}

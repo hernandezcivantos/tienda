@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('name');
             $table->double('price');
             $table->double('weight');
-            $table->double('measures');
+            $table->string('measures', 155);
             $table->timestamps();
 
             $table->foreign('category_id')->references('id')->on('categories')->onDelete('cascade');

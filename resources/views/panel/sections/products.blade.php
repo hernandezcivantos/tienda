@@ -2,7 +2,7 @@
 
     <div class="row">
         <div class="col-12 table-top-button">
-            <a id="newCategoryButton" href="#" class="button"><i
+            <a id="newProductButton" href="#" class="button"><i
                     class="uil-plus"></i>{{__('Nuevo producto')}}</a>
         </div>
     </div>
@@ -21,12 +21,3 @@
         </tbody>
     </table>
 </div>
-
-@section('modals')
-    <!-- Products modals -->
-
-@endsection
-
-@section('js')
-
-@endsection

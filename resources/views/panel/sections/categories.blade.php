@@ -14,7 +14,7 @@
                 <thead>
                 <tr>
                     <th>#</th>
-                    <th>Fecha</th>
+                    <th>Nombre</th>
                     <th>Estado</th>
                     <th></th>
                 </tr>

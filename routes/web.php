@@ -31,8 +31,10 @@ Route::get('/category/{name}', [CategoryController::class, 'url']);
 Route::group(['middleware' => 'auth'], function () {
     Route::get('/user/self', [UserController::class, 'myUser'])->name('user.self');
     Route::get('/purchase/view/{id}', [ShoppingController::class, 'view']);
-    Route::post('/user/store', [UserController::class, 'update'])->name('user.update');
+    Route::post('/user/update', [UserController::class, 'update'])->name('user.update');
     Route::post('/category/store', [CategoryController::class, 'store'])->name('category.store');
+    Route::post('/category/get', [CategoryController::class, 'get'])->name('category.get');
+    Route::post('/category/update', [CategoryController::class, 'update'])->name('category.update');
 });
 
 # Admin

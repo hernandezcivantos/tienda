@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Category;
 use Illuminate\Http\Request;
 
 class AdminController extends Controller
@@ -18,7 +19,8 @@ class AdminController extends Controller
             'routes' => [
                 ['name' => 'Inicio', 'redirect' => '/'],
                 ['name' => 'Admin', 'redirect' => route('admin')]
-            ]
+            ],
+            'categories' => Category::all()
         ];
 
         return view('panel', $data);

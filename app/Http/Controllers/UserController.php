@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Models\shopping;
 use App\Models\User;
-use http\Env\Response;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -44,8 +43,8 @@ class UserController extends Controller
         ];
 
         $customMessages = [
-            'name.required' => __('El nombre es necesario.'),
-            'max' => __('Demasiados caracteres.'),
+            'name.required' => __('El nombre es necesario'),
+            'max' => __('Demasiados caracteres'),
         ];
 
         $validator = Validator::make($request->all(), $rules, $customMessages);
@@ -58,12 +57,12 @@ class UserController extends Controller
         } else {
             $user = User::find(Auth::user()->id);
             $user->name = $request->name;
-            $user->address = $request->address;
+            $user->address = $request->address ?? '';
             $user->save();
 
             $response = [
                 'success' => 1,
-                'message' => __('Usuario actualizado correctamente.')
+                'message' => __('Usuario actualizado correctamente')
             ];
         }
 

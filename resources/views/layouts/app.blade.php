@@ -15,14 +15,17 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
-            href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital@0;1&display=swap"
-            rel="stylesheet">
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital@0;1&display=swap"
+        rel="stylesheet">
 
     <!-- Core Style -->
     <link rel="stylesheet" href="{{asset('style.css')}}">
 
     <!-- Font Icons -->
     <link rel="stylesheet" href="{{asset('css/font-icons.css')}}">
+
+    <!-- Toast -->
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
 
     <!-- Specific CSS -->
     @yield('css')
@@ -44,7 +47,7 @@
     </div>
 </div>
 <div id="wrapper">
-    @include('layouts.header')
+    @include('layouts.header', ['categories' => \App\Models\Category::all()->where('active', 1)->toArray()])
     @include('layouts.breadcrumb')
     @yield('content')
     @include('layouts.footer')
@@ -58,10 +61,11 @@
 <script src="{{asset('js/plugins.min.js') }}"></script>
 <script src="{{asset('js/functions.bundle.js') }}"></script>
 <script
-        src="https://code.jquery.com/jquery-3.7.1.min.js"
-        integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo="
-        crossorigin="anonymous"></script>
-
+    src="https://code.jquery.com/jquery-3.7.1.min.js"
+    integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo="
+    crossorigin="anonymous"></script>
+<!-- Toast -->
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
 <script>
 
     const loader = $('#loaderDiv');
@@ -80,11 +84,68 @@
 
     function hideLoader() {
         if (!loader.hasClass("hiding")) {
-            loader.removeClass('hiding');
+            loader.addClass('hiding');
         }
+    }
+
+    /**
+     * Generate a toast to display message
+     * @param msg Messago to display
+     * @param duration time in milsecs
+     * @param success 0/1 if error/success
+     */
+    function toastMessage(msg, duration, success) {
+
+        let bg = "linear-gradient(to right, #00b09b, #96c93d)";
+
+        if (!success) {
+            bg = "linear-gradient(to right, #FC7E63, #b20a2c)";
+        }
+
+        Toastify({
+            text: msg,
+            duration: duration,
+            close: true,
+            gravity: "top",
+            position: "right",
+            stopOnFocus: true,
+            style: {
+                background: bg
+            }
+        }).showToast();
+    }
+
+    /**
+     * Transform a string into a friendly url, being careful with special characters
+     * @param value
+     * @returns {string}
+     */
+    function friendlyUrl(value) {
+        if (value === undefined) {
+            return '';
+        }
+
+        const replacements = {
+            'á': 'a',
+            'é': 'e',
+            'í': 'i',
+            'ó': 'o',
+            'ú': 'u',
+            'ü': 'u',
+            'ñ': 'n'
+        };
+
+        value = value.replace(/[áéíóúüñ]/g, function(match) {
+            return replacements[match];
+        });
+
+        value = value.replace(/[^a-z0-9_]+/gi, '-').replace(/^-|-$/g, '').toLowerCase();
+
+        return value;
     }
 </script>
 
 @yield('js')
+@yield('modals')
 </body>
 </html>

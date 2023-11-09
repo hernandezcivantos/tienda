@@ -19,11 +19,18 @@ class Category extends Model
      */
     protected $fillable = [
         'name',
+        'route',
         'active'
     ];
 
     public function product(): BelongsTo
     {
         return $this->belongsTo(Product::class);
+    }
+
+    public static function getByUrl(string $url): Category
+    {
+        return self::where('route', $url)
+            ->first();
     }
 }

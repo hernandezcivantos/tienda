@@ -12,10 +12,13 @@
                     <div class="col-md-9">
 
                         <div class="heading-block border-0">
-                            <h3><span id="username">{{Auth()->user()->name}}</span> <a href="#" class="pointer-event"
-                                                                                       data-bs-toggle="modal"
-                                                                                       data-bs-target=".bs-example-modal-centered"><i
-                                            class="bi-pencil" style="font-size: 20px"></i></a></h3>
+                            <h3>
+                                <span id="username">
+                                    {{Auth()->user()->name}}
+                                </span>
+                                <a href="#" id="userDataButton" class="pointer-event"><i class="bi-pencil"
+                                                                                         style="font-size: 20px"></i></a>
+                            </h3>
                             <span id="useremail">{{Auth()->user()->email}}</span>
                         </div>
 
@@ -37,7 +40,8 @@
                                             </thead>
                                             <tbody>
                                             @foreach($shoppings as $shopping)
-                                                <tr class="pointer" data-href="{{url('/') . '/purchase/view/' . $shopping->id}}">
+                                                <tr class="pointer"
+                                                    data-href="{{url('/') . '/purchase/view/' . $shopping->id}}">
                                                     <td>{{$shopping->id}}</td>
                                                     <td>
                                                         <code>{{$shopping->date->format('d/m/Y h:i:s')}}</code>
@@ -62,11 +66,13 @@
             </div>
         </div>
     </section><!-- #content end -->
+@endsection
 
-    <!-- Modals -->
-    <!-- Data edit -->
-    <div id="userDataModal" class="modal fade text-start bs-example-modal-centered" tabindex="-1" role="dialog"
-         aria-labelledby="centerModalLabel" aria-hidden="true">
+@section('modals')
+    <!-- User modals -->
+    <!-- User Data edit -->
+    <div id="userDataModal" class="modal fade text-start" tabindex="-1" role="dialog"
+         aria-labelledby="userDataModalLabel" aria-hidden="true">
         <form id="userEdit" autocomplete="false">
             <div class="modal-dialog modal-dialog-centered">
                 <div class="modal-content">
@@ -81,7 +87,7 @@
                             <input type="email" id="email" class="form-control" value="{{Auth()->user()->email}}"
                                    disabled>
                             <small
-                                    class="form-text text-muted">{{__('No se puede modificar el correo electrónico.')}}</small>
+                                class="form-text text-muted">{{__('No se puede modificar el correo electrónico.')}}</small>
                         </div>
                         <div class="form-group">
                             <label for="name">Nombre</label>
@@ -113,14 +119,16 @@
                 </div>
             </div>
         </form>
-    </div>
-
+    </div> <!-- ./User Data edit -->
 @endsection
 
 @section('js')
     <script>
         $(document).ready(function () {
-            const notificationTarget = $("#msg-notification");
+            $('#userDataButton').on('click', function () {
+                $('#userDataModal').modal('show');
+            });
+
             $('#userEdit').submit(function (e) {
                 e.preventDefault();
 
@@ -132,21 +140,14 @@
                     data: $('#userEdit').serialize(),
                     dataType: 'json',
                     success: function (response) {
-                        notificationTarget.attr("data-notify-msg", response.message);
                         if (response.success === 1) {
-                            notificationTarget.attr("data-notify-type", "success");
                             $('#username').text($('#name').val());
-                        } else {
-                            notificationTarget.attr("data-notify-type", "danger");
+                            $('#userDataModal').modal('hide');
                         }
-                        SEMICOLON.Modules.notifications(document.querySelector('#msg-notification'));
-                        $('#userDataModal').modal('hide');
-
+                        toastMessage(response.message, 5000, response.success);
                     },
-                    error: function (xhr, status, error) {
-                        notificationTarget.attr("data-notify-msg", xhr.message);
-                        notificationTarget.attr("data-notify-type", "danger");
-                        SEMICOLON.Modules.notifications(document.querySelector('#msg-notification'));
+                    error: function (error) {
+                        toastMessage(error.message, 5000, 0);
                     },
                     complete: function (e) {
                         hideLoader();
@@ -155,7 +156,7 @@
             });
         });
 
-        $('table tr').click(function(){
+        $('table tr').on('click', function () {
             window.location = $(this).data('href');
             return false;
         });

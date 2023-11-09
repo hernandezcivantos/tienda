@@ -15,13 +15,14 @@ class CategoriesSeeder extends Seeder
     {
         DB::table('categories')->insert(
             [
-                ['name' => 'Ropa deportiva'],
-                ['name' => 'Bolsas y mochilas'],
-                ['name' => 'Calzado deportivo'],
-                ['name' => 'Máquinas'],
-                ['name' => 'Relojes deportivos'],
-                ['name' => 'Baloncesto'],
-                ['name' => 'Tenis de mesa']
+                ['name' => 'Ropa deportiva', 'route' => 'ropa-deportiva'],
+                ['name' => 'Bolsas y mochilas', 'route' => 'bolsas-y-mochilas'],
+                ['name' => 'Calzado deportivo', 'route' => 'calzado-deportivo'],
+                ['name' => 'Máquinas', 'route' => 'mquinas'],
+                ['name' => 'Relojes deportivos', 'route' => 'relojes-deportivos'],
+                ['name' => 'Baloncesto', 'route' => 'baloncesto'],
+                ['name' => 'Tenis de mesa', 'route' => 'tenis-de-mesa'],
+                ['name' => 'Categoría desactivada', 'route' => 'categoria-desactivada']
             ]
         );
     }

@@ -9,9 +9,11 @@
                 ============================================= -->
                 <div id="logo">
                     <a href="/">
-                        <img class="logo-default" srcset="{{asset('images/logo-sports.png')}}, {{asset('images/logo-sports.png')}}"
+                        <img class="logo-default"
+                             srcset="{{asset('images/logo-sports.png')}}, {{asset('images/logo-sports.png')}}"
                              src="{{asset('images/logo-sports.png')}}" alt="Sports tienda de ropa logotipo">
-                        <img class="logo-dark" srcset="{{asset('images/logo-sports-dark.png')}}, {{asset('images/logo-sports-dark.png')}}"
+                        <img class="logo-dark"
+                             srcset="{{asset('images/logo-sports-dark.png')}}, {{asset('images/logo-sports-dark.png')}}"
                              src="{{asset('images/logo-sports-dark.png')}}" alt="Sports tienda de ropa logotipo">
                     </a>
                 </div><!-- #logo end -->
@@ -31,18 +33,47 @@
                     <ul class="menu-container">
                         <li class="menu-item {{ request()->is('/') ? 'current' : '' }}">
                             <a class="menu-link" href="/">
-                                <div>Inicio</div>
+                                <div>{{__('Inicio')}}</div>
                             </a>
                         </li>
+                        @if($categories > 0)
+                            <li class="menu-item ms-auto sub-menu">
+                                <a class="menu-link" href="#">
+                                    <div>
+                                        {{__('Categorías')}}
+                                        <i class="bi-caret-down-fill text-smaller d-none d-xl-inline-block me-0"></i><i
+                                                class="sub-menu-indicator fa-solid fa-caret-down"></i></div>
+                                </a>
+                                <ul class="sub-menu-container" style="">
+                                    @foreach($categories as $category)
+                                    <li class="menu-item" style="">
+                                        <a class="menu-link" href="{{url('/category') . '/' .  $category['route']}}">
+                                            <div>
+                                                {{ __($category['name']) }}
+                                            </div>
+                                        </a>
+                                    </li>
+                                    @endforeach
+                                </ul>
+                            </li>
+                        @endif
                         @guest
                             @if (Route::has('login'))
                                 <li class="menu-item ms-auto {{ request()->is('login') ? 'current' : '' }}">
-                                    <a class="menu-link" href="{{ route('login') }}"><div><i class="uil uil-user"></i> {{ __('Conectar') }} </div></a>
+                                    <a class="menu-link" href="{{ route('login') }}">
+                                        <div><i class="uil uil-user"></i> {{ __('Conectar') }} </div>
+                                    </a>
                                 </li>
                             @endif
                         @else
                             <li class="menu-item ms-auto sub-menu">
-                                <a data-bs-toggle="tooltip" data-bs-placement="top" data-bs-original-title="{{ Auth::user()->name }}" class="menu-link" href="#"><div><i class="uil uil-user"></i> {{strlen(Auth::user()->name) > 10 ? substr(Auth::user()->name, 0, 10) . '...': Auth::user()->name}} <i class="bi-caret-down-fill text-smaller d-none d-xl-inline-block me-0"></i><i class="sub-menu-indicator fa-solid fa-caret-down"></i></div></a>
+                                <a data-bs-toggle="tooltip" data-bs-placement="top"
+                                   data-bs-original-title="{{ Auth::user()->name }}" class="menu-link" href="#">
+                                    <div>
+                                        <i class="uil uil-user"></i> {{strlen(Auth::user()->name) > 10 ? substr(Auth::user()->name, 0, 10) . '...': Auth::user()->name}}
+                                        <i class="bi-caret-down-fill text-smaller d-none d-xl-inline-block me-0"></i><i
+                                                class="sub-menu-indicator fa-solid fa-caret-down"></i></div>
+                                </a>
                                 <ul class="sub-menu-container" style="">
                                     <li class="menu-item" style="">
                                         <a class="menu-link" href="{{ route('user.self') }}">
@@ -52,13 +83,13 @@
                                         </a>
                                     </li>
                                     @if(Auth()->user()->isAdmin())
-                                    <li class="menu-item" style="">
-                                        <a class="menu-link" href="{{ route('admin') }}">
-                                            <div>
-                                                <i class="uil-user-plus"></i> {{ __('Menu Admin') }}
-                                            </div>
-                                        </a>
-                                    </li>
+                                        <li class="menu-item" style="">
+                                            <a class="menu-link" href="{{ route('admin') }}">
+                                                <div>
+                                                    <i class="uil-user-plus"></i> {{ __('Menu Admin') }}
+                                                </div>
+                                            </a>
+                                        </li>
                                     @endif
                                     <li class="menu-item" style="">
                                         <a class="menu-link" href="{{ route('logout') }}" onclick="event.preventDefault();
@@ -69,7 +100,8 @@
                                         </a>
                                     </li>
                                 </ul>
-                                <button class="sub-menu-trigger fa-solid fa-chevron-right"><span class="visually-hidden">Open Sub-Menu</span></button>
+                                <button class="sub-menu-trigger fa-solid fa-chevron-right"><span
+                                            class="visually-hidden">Open Sub-Menu</span></button>
 
                                 <form id="logout-form" action="{{ route('logout') }}" method="POST"
                                       class="d-none">

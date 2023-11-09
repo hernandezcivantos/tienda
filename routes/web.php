@@ -5,6 +5,7 @@ use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\LandingController;
+use App\Http\Controllers\NewsletterController;
 use App\Http\Controllers\ShoppingController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
@@ -24,7 +25,7 @@ Route::get('register', [RegisterController::class, 'showRegistrationForm'])->nam
 Route::post('register', [RegisterController::class, 'register']);
 
 // Newsletter
-Route::post('/newsletter/store', [UserController::class, 'store'])->name('newsletter.store');
+Route::post('/newsletter/store', [NewsletterController::class, 'store'])->name('newsletter.store');
 Route::get('/category/{name}', [CategoryController::class, 'url']);
 
 # User

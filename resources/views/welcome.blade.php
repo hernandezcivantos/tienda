@@ -8,11 +8,13 @@
             - THEMEPUNCH BANNER -
         #################################
         -->
-        <div id="rev_slider_ishop_wrapper" class="rev_slider_wrapper fullwidth-container" data-alias="default-slider" style="padding:0px;">
+        <div id="rev_slider_ishop_wrapper" class="rev_slider_wrapper fullwidth-container" data-alias="default-slider"
+             style="padding:0px;">
             <!-- START REVOLUTION SLIDER 5.1.4 fullwidth mode -->
             <div id="rev_slider_ishop" class="rev_slider fullwidthbanner" style="display:none;" data-version="5.1.4">
                 <ul>    <!-- SLIDE  -->
-                    <li data-transition="fade" data-slotamount="1" data-masterspeed="1500" data-delay="15000" data-saveperformance="off" data-title="Latest Collections" style="background-color: #F6F6F6;">
+                    <li data-transition="fade" data-slotamount="1" data-masterspeed="1500" data-delay="15000"
+                        data-saveperformance="off" data-title="Latest Collections" style="background-color: #F6F6F6;">
                         <!-- LAYERS -->
 
                         <!-- LAYER NR. 2 -->
@@ -28,7 +30,8 @@
                              data-elementdelay="0.01"
                              data-endelementdelay="0.1"
                              data-endspeed="1000"
-                             data-endeasing="Power4.easeIn"><img src="images/slider/rev/shop/maquina.png" alt="Girl"></div>
+                             data-endeasing="Power4.easeIn"><img src="images/slider/rev/shop/maquina.png" alt="Girl">
+                        </div>
 
                         <div class="tp-caption ltl tp-resizeme revo-slider-caps-text text-uppercase"
                              data-x="570"
@@ -42,7 +45,9 @@
                              data-elementdelay="0.01"
                              data-endelementdelay="0.1"
                              data-endspeed="1000"
-                             data-endeasing="Power4.easeIn" style=" color: #333;">Mantente en forma con nuestras máquinas</div>
+                             data-endeasing="Power4.easeIn" style=" color: #333;">Mantente en forma con nuestras
+                            máquinas
+                        </div>
 
                         <div class="tp-caption ltl tp-resizeme revo-slider-emphasis-text p-0 border-0"
                              data-x="570"
@@ -56,7 +61,9 @@
                              data-elementdelay="0.01"
                              data-endelementdelay="0.1"
                              data-endspeed="1000"
-                             data-endeasing="Power4.easeIn" style=" color: #333; max-width: 430px; line-height: 1.15;">Últimos modelos<br>Mquinaria moderna</div>
+                             data-endeasing="Power4.easeIn" style=" color: #333; max-width: 430px; line-height: 1.15;">
+                            Últimos modelos<br>Mquinaria moderna
+                        </div>
 
                         <div class="tp-caption ltl tp-resizeme revo-slider-desc-text text-start"
                              data-x="570"
@@ -70,7 +77,10 @@
                              data-elementdelay="0.01"
                              data-endelementdelay="0.1"
                              data-endspeed="1000"
-                             data-endeasing="Power4.easeIn" style=" color: #333; max-width: 550px; white-space: normal;">En la sección de maquinaria para gym podrás encontrar una extensa gama con los últimos y más modernos modelos.</div>
+                             data-endeasing="Power4.easeIn"
+                             style=" color: #333; max-width: 550px; white-space: normal;">En la sección de maquinaria
+                            para gym podrás encontrar una extensa gama con los últimos y más modernos modelos.
+                        </div>
 
                         <div class="tp-caption ltl tp-resizeme"
                              data-x="570"
@@ -84,11 +94,14 @@
                              data-elementdelay="0.01"
                              data-endelementdelay="0.1"
                              data-endspeed="1000"
-                             data-endeasing="Power4.easeIn"><a href="#" class="button button-border button-large button-rounded text-end m-0"><span>Máquinas gym</span> <i class="uil uil-angle-right-b"></i></a></div>
+                             data-endeasing="Power4.easeIn"><a href="#"
+                                                               class="button button-border button-large button-rounded text-end m-0"><span>Máquinas gym</span>
+                                <i class="uil uil-angle-right-b"></i></a></div>
 
                     </li>
                     <!-- SLIDE  -->
-                    <li data-transition="slideup" data-slotamount="1" data-masterspeed="1500" data-delay="15000"  data-saveperformance="off"  data-title="Messenger bags" style="background-color: #E9E8E3;">
+                    <li data-transition="slideup" data-slotamount="1" data-masterspeed="1500" data-delay="15000"
+                        data-saveperformance="off" data-title="Messenger bags" style="background-color: #E9E8E3;">
                         <!-- LAYERS -->
 
                         <div class="tp-caption ltl tp-resizeme revo-slider-caps-text text-uppercase"
@@ -118,7 +131,8 @@
                              data-elementdelay="0.01"
                              data-endelementdelay="0.1"
                              data-endspeed="1000"
-                             data-endeasing="Power4.easeIn" style=" color: #333;">Nuestras bolsas con descuento</div>
+                             data-endeasing="Power4.easeIn" style=" color: #333;">Nuestras bolsas con descuento
+                        </div>
 
                         <div class="tp-caption ltl tp-resizeme revo-slider-emphasis-text p-0 border-0"
                              data-x="0"
@@ -132,7 +146,8 @@
                              data-elementdelay="0.01"
                              data-endelementdelay="0.1"
                              data-endspeed="1000"
-                             data-endeasing="Power4.easeIn" style=" color: #333; line-height: 1.15;">Bolsas deporte</div>
+                             data-endeasing="Power4.easeIn" style=" color: #333; line-height: 1.15;">Bolsas deporte
+                        </div>
 
                         <div class="tp-caption ltl tp-resizeme revo-slider-desc-text text-start"
                              data-x="0"
@@ -146,7 +161,10 @@
                              data-elementdelay="0.01"
                              data-endelementdelay="0.1"
                              data-endspeed="1000"
-                             data-endeasing="Power4.easeIn" style=" color: #333; max-width: 550px; white-space: normal;">¡Aprovecha esta oportunidad, todas nuestras bolsas de deporte ahora rebajadas un 20%!</div>
+                             data-endeasing="Power4.easeIn"
+                             style=" color: #333; max-width: 550px; white-space: normal;">¡Aprovecha esta oportunidad,
+                            todas nuestras bolsas de deporte ahora rebajadas un 20%!
+                        </div>
 
                         <div class="tp-caption ltl tp-resizeme"
                              data-x="0"
@@ -160,7 +178,9 @@
                              data-elementdelay="0.01"
                              data-endelementdelay="0.1"
                              data-endspeed="1000"
-                             data-endeasing="Power4.easeIn"><a href="#" class="button button-border button-large button-rounded text-end m-0"><span>Bolsas de deporte</span> <i class="uil uil-angle-right-b"></i></a></div>
+                             data-endeasing="Power4.easeIn"><a href="#"
+                                                               class="button button-border button-large button-rounded text-end m-0"><span>Bolsas de deporte</span>
+                                <i class="uil uil-angle-right-b"></i></a></div>
 
                         <div class="tp-caption utb tp-resizeme revo-slider-caps-text text-uppercase"
                              data-x="510"
@@ -194,19 +214,25 @@
                         <div class="row align-items-stretch g-4 h-100">
                             <div class="col-md-6 min-vh-25 min-vh-md-0">
                                 <a href="#" class="grid-inner d-block h-100">
-                                    <img src="images/shop/banners/relojes-deportivos.png" alt="Banner de la sección de relojes deportivos" class="w-100 h-100 object-cover rounded">
+                                    <img src="images/shop/banners/relojes-deportivos.png"
+                                         alt="Banner de la sección de relojes deportivos"
+                                         class="w-100 h-100 object-cover rounded">
                                 </a>
                             </div>
 
                             <div class="col-md-6 min-vh-25 min-vh-md-0">
                                 <a href="#" class="grid-inner d-block h-100">
-                                    <img src="images/shop/banners/zapatillas-deportivas.png" alt="Banner de la sección de zapatillas deportivas" class="w-100 h-100 object-cover rounded">
+                                    <img src="images/shop/banners/zapatillas-deportivas.png"
+                                         alt="Banner de la sección de zapatillas deportivas"
+                                         class="w-100 h-100 object-cover rounded">
                                 </a>
                             </div>
 
                             <div class="col-md-12 min-vh-25 min-vh-md-0 pb-md-0">
                                 <a href="#" class="grid-inner d-block h-100">
-                                    <img src="images/shop/banners/tenis-de-mesa.png" alt="Banner de la sección de tenis de mesa" class="w-100 h-100 object-cover rounded">
+                                    <img src="images/shop/banners/tenis-de-mesa.png"
+                                         alt="Banner de la sección de tenis de mesa"
+                                         class="w-100 h-100 object-cover rounded">
                                 </a>
                             </div>
                         </div>
@@ -215,7 +241,8 @@
 
                     <div class="col-md-4 min-vh-50">
                         <a href="#" class="grid-inner d-block h-100">
-                            <img src="images/shop/banners/baloncesto.png" alt="Banner de la sección de baloncesto" class="w-100 h-100 object-cover rounded">
+                            <img src="images/shop/banners/baloncesto.png" alt="Banner de la sección de baloncesto"
+                                 class="w-100 h-100 object-cover rounded">
                         </a>
                     </div>
                 </div>
@@ -226,7 +253,8 @@
                     <h4>Destacados</h4>
                 </div>
 
-                <div class="tab-pane fade show active" id="home2" role="tabpanel" aria-labelledby="canvas-home-tab" tabindex="0">
+                <div class="tab-pane fade show active" id="home2" role="tabpanel" aria-labelledby="canvas-home-tab"
+                     tabindex="0">
 
                     <div class="shop row gutter-30">
 
@@ -237,16 +265,22 @@
                                     <a href="#"><img src="images/shop/dress/1-1.jpg" alt="Checked Short Dress"></a>
                                     <div class="sale-flash badge bg-success p-2">50% Off*</div>
                                     <div class="bg-overlay">
-                                        <div class="bg-overlay-content align-items-end justify-content-between" data-hover-animate="fadeIn" data-hover-speed="400">
-                                            <a href="#" class="btn btn-dark me-2" title="Add to Cart"><i class="bi-bag-plus"></i></a>
-                                            <a href="include/ajax/shop-item.html" class="btn btn-dark" data-lightbox="ajax" title="Quick View"><i class="bi-eye"></i></a>
+                                        <div class="bg-overlay-content align-items-end justify-content-between"
+                                             data-hover-animate="fadeIn" data-hover-speed="400">
+                                            <a href="#" class="btn btn-dark me-2" title="Add to Cart"><i
+                                                    class="bi-bag-plus"></i></a>
+                                            <a href="include/ajax/shop-item.html" class="btn btn-dark"
+                                               data-lightbox="ajax" title="Quick View"><i class="bi-eye"></i></a>
                                         </div>
                                         <div class="bg-overlay-bg bg-transparent"></div>
                                     </div>
                                 </div>
                                 <div class="product-desc">
                                     <div class="product-title"><h3><a href="#">Checked Short Dress</a></h3></div>
-                                    <div class="product-price"><del>$24.99</del> <ins>$12.49</ins></div>
+                                    <div class="product-price">
+                                        <del>$24.99</del>
+                                        <ins>$12.49</ins>
+                                    </div>
                                     <div class="product-rating">
                                         <i class="bi-star-fill"></i>
                                         <i class="bi-star-fill"></i>
@@ -300,7 +334,8 @@
                                 </div>
                                 <div class="fbox-content">
                                     <h3>Opciones de pago</h3>
-                                    <p class="mt-0">Aseguramos los pagos mediante nuestras pasarelas. Aceptamos Visa, MasterCard y American Express.</p>
+                                    <p class="mt-0">Aseguramos los pagos mediante nuestras pasarelas. Aceptamos Visa,
+                                        MasterCard y American Express.</p>
                                 </div>
                             </div>
                         </div>
@@ -324,7 +359,8 @@
                                 </div>
                                 <div class="fbox-content">
                                     <h3>Devolución hasta 30 días</h3>
-                                    <p class="mt-0">Devolución o cambio garantizados hasta 30 días después de la compra.</p>
+                                    <p class="mt-0">Devolución o cambio garantizados hasta 30 días después de la
+                                        compra.</p>
                                 </div>
                             </div>
                         </div>
@@ -350,10 +386,11 @@
                             <p>¡Estarás informado de las últimas novedades y noticias antes que nadie!</p>
 
                             <div class="widget-subscribe-form-result"></div>
-                            <form id="widget-subscribe-form3" action="" method="post" class="mb-0">
+                            <form id="subscribe" class="mb-0">
                                 <div class="input-group" style="max-width:400px;">
                                     <div class="input-group-text"><i class="bi-envelope-plus"></i></div>
-                                    <input type="email" name="widget-subscribe-form-email" class="form-control required email" placeholder="Introduce tu email">
+                                    <input id="subscribeEmail" type="email" class="form-control required email"
+                                           placeholder="Introduce tu email">
                                     <button class="btn btn-danger" type="submit">¡Apuntarme ya!</button>
                                 </div>
                             </form>
@@ -452,6 +489,32 @@
             apiRevoSlider.on("revolution.slide.onloaded", function (e) {
                 SEMICOLON.Base.sliderDimensions();
             });
+
+            $('#subscribe').on('submit', function (e) {
+                e.preventDefault();
+
+                displayLoader();
+
+                $.ajax({
+                    type: 'POST',
+                    url: '{!! route('newsletter.store') !!}',
+                    data: {email: $('#subscribeEmail').val()},
+                    dataType: 'json',
+                    success: function (response) {
+                        if (response.success === 1) {
+                            $('#subscribeEmail').val("");
+                        }
+                        toastMessage(response.message, 5000, response.success);
+                    },
+                    error: function (error) {
+                        toastMessage(error.message, 5000, 0);
+                    },
+                    complete: function (e) {
+                        hideLoader();
+                    }
+                });
+            });
+
         }); //ready
     </script>
 @endsection

@@ -42,17 +42,18 @@
                                     <div>
                                         {{__('Categorías')}}
                                         <i class="bi-caret-down-fill text-smaller d-none d-xl-inline-block me-0"></i><i
-                                                class="sub-menu-indicator fa-solid fa-caret-down"></i></div>
+                                            class="sub-menu-indicator fa-solid fa-caret-down"></i></div>
                                 </a>
                                 <ul class="sub-menu-container" style="">
                                     @foreach($categories as $category)
-                                    <li class="menu-item" style="">
-                                        <a class="menu-link" href="{{url('/category') . '/' .  $category['route']}}">
-                                            <div>
-                                                {{ __($category['name']) }}
-                                            </div>
-                                        </a>
-                                    </li>
+                                        <li class="menu-item" style="">
+                                            <a class="menu-link"
+                                               href="{{url('/category') . '/' .  $category['route']}}">
+                                                <div>
+                                                    {{ __($category['name']) }}
+                                                </div>
+                                            </a>
+                                        </li>
                                     @endforeach
                                 </ul>
                             </li>
@@ -72,7 +73,7 @@
                                     <div>
                                         <i class="uil uil-user"></i> {{strlen(Auth::user()->name) > 10 ? substr(Auth::user()->name, 0, 10) . '...': Auth::user()->name}}
                                         <i class="bi-caret-down-fill text-smaller d-none d-xl-inline-block me-0"></i><i
-                                                class="sub-menu-indicator fa-solid fa-caret-down"></i></div>
+                                            class="sub-menu-indicator fa-solid fa-caret-down"></i></div>
                                 </a>
                                 <ul class="sub-menu-container" style="">
                                     <li class="menu-item" style="">
@@ -82,15 +83,6 @@
                                             </div>
                                         </a>
                                     </li>
-                                    @if(Auth()->user()->isAdmin())
-                                        <li class="menu-item" style="">
-                                            <a class="menu-link" href="{{ route('admin') }}">
-                                                <div>
-                                                    <i class="uil-user-plus"></i> {{ __('Menu Admin') }}
-                                                </div>
-                                            </a>
-                                        </li>
-                                    @endif
                                     <li class="menu-item" style="">
                                         <a class="menu-link" href="{{ route('logout') }}" onclick="event.preventDefault();
                                              document.getElementById('logout-form').submit();">
@@ -101,13 +93,20 @@
                                     </li>
                                 </ul>
                                 <button class="sub-menu-trigger fa-solid fa-chevron-right"><span
-                                            class="visually-hidden">Open Sub-Menu</span></button>
+                                        class="visually-hidden">Open Sub-Menu</span></button>
 
                                 <form id="logout-form" action="{{ route('logout') }}" method="POST"
                                       class="d-none">
                                     @csrf
                                 </form>
                             </li>
+                            @if(Auth()->user()->isAdmin())
+                                <li class="menu-item side-panel-trigger">
+                                    <a class="menu-link" href="#">
+                                        <div>{{__('ADMIN')}}</div>
+                                    </a>
+                                </li>
+                            @endif
                         @endguest
                     </ul>
 

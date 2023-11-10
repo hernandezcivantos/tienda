@@ -34,13 +34,14 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/purchase/view/{id}', [ShoppingController::class, 'view']);
     Route::get('/user/self', [UserController::class, 'myUser'])->name('user.self');
     Route::post('/user/update', [UserController::class, 'update'])->name('user.update');
-    Route::post('/category/store', [CategoryController::class, 'store'])->name('category.store');
-    Route::post('/category/get', [CategoryController::class, 'get'])->name('category.get');
-    Route::post('/category/update', [CategoryController::class, 'update'])->name('category.update');
-    Route::post('/product/store', [ProductController::class, 'store'])->name('product.store');
 });
 
 # Admin
 Route::group(['middleware' => 'admin'], function () {
-    Route::get('/admin', [AdminController::class, 'index'])->name('admin');
+    Route::post('/category/store', [CategoryController::class, 'store'])->name('category.store');
+    Route::post('/category/get', [CategoryController::class, 'get'])->name('category.get');
+    Route::post('/category/update', [CategoryController::class, 'update'])->name('category.update');
+    Route::post('/product/store', [ProductController::class, 'store'])->name('product.store');
+    Route::get('/admin/categories', [AdminController::class, 'categories'])->name('admin.categories');
+    Route::get('/admin/products', [AdminController::class, 'products'])->name('admin.products');
 });

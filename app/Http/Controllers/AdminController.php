@@ -13,18 +13,34 @@ class AdminController extends Controller
         $this->middleware('auth');
     }
 
-    public function index ()
+    public function categories()
     {
         $data = [
             'bc' => true,
             'routes' => [
                 ['name' => 'Inicio', 'redirect' => '/'],
-                ['name' => 'Admin', 'redirect' => route('admin')]
+                ['name' => 'Admin'],
+                ['name' => 'Categorías', 'redirect' => route('admin.categories')],
             ],
-            'categories' => Category::all(),
-            'products' => Product::with('category')->get()
+            'categories' => Category::all()
         ];
 
-        return view('panel', $data);
+        return view('panel.categories', $data);
+    }
+
+    public function products()
+    {
+        $data = [
+            'bc' => true,
+            'routes' => [
+                ['name' => 'Inicio', 'redirect' => '/'],
+                ['name' => 'Admin'],
+                ['name' => 'Productos', 'redirect' => route('admin.products')],
+            ],
+            'products' => Product::with('category')->get(),
+            'categories' => Category::all()
+        ];
+
+        return view('panel.products', $data);
     }
 }

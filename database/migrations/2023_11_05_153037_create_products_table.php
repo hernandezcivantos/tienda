@@ -16,8 +16,8 @@ return new class extends Migration
             $table->unsignedBigInteger('category_id')->index();
             $table->string('name');
             $table->double('price');
-            $table->double('weight');
-            $table->string('measures', 155);
+            $table->double('weight')->nullable();
+            $table->string('measures', 155)->nullable();
             $table->timestamps();
 
             $table->foreign('category_id')->references('id')->on('categories')->onDelete('cascade');

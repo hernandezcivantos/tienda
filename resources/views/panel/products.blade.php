@@ -45,13 +45,13 @@
 @section('modals')
     <!-- Products modals -->
     <!-- ADD -->
-    <form id="newProductForm">
-        <div id="newProductModal" class="modal fade text-start bs-example-modal-fs" tabindex="-1"
+    <form id="productForm">
+        <div id="productModal" class="modal fade text-start bs-example-modal-fs" tabindex="-1"
              aria-labelledby="fsModalLabel" aria-hidden="true" style="display: none;">
             <div class="modal-dialog modal-fullscreen">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h4 class="modal-title" id="myModalLabel">{{__('Añadir producto')}}</h4>
+                        <h4 class="modal-title" id="modalLabel"></h4>
                         <button type="button" class="btn-close btn-sm" data-bs-dismiss="modal"
                                 aria-hidden="true"></button>
                     </div>
@@ -149,7 +149,7 @@
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary"
                                 data-bs-dismiss="modal">{{__('Cerrar')}}</button>
-                        <button id="newProductButtonForm" class="btn btn-green">{{__('Añadir producto')}}</button>
+                        <button id="productButtonForm" type="submit" class="btn btn-green">{{__('Añadir producto')}}</button>
                     </div>
                 </div>
             </div>
@@ -160,16 +160,38 @@
 @section('js')
     <script>
         $(document).ready(function () {
-            // Products
 
-            function wipeNewProduct() {
+            let modalMode;
+            const MODALLABEL = $('#modalLabel');
+            const DEFAULT_VAT = '21';
+            const DEFAULT_DISCOUNT = '0';
+
+            function wipeProductForm(mode) {
                 $('#productName').val('');
+                $('#productCategory').prop('selectedIndex',0);
+                $('#productVat').val('0.0');
+                $('#productDiscount').val('0.0');
+                $('#productPrice').val('0.0');
+                $('#productWeight').val('');
+                $('#productMeasures').val('');
+
+                $(".vat-range").data("ionRangeSlider").update({
+                    from: DEFAULT_VAT
+                });
+                $(".discount-range").data("ionRangeSlider").update({
+                    from: DEFAULT_DISCOUNT
+                });
+
+                $('.fileinput-remove-button').click();
+
+                modalMode = mode;
             }
 
-            $('#newProductButton').on('click', function (e) {
-                e.preventDefault();
-
-                $('#newProductModal').modal('show');
+            $('#newProductButton').on('click', function () {
+                MODALLABEL.append('');
+                MODALLABEL.append('{{__('Añadir producto')}}');
+                wipeProductForm(1);
+                $('#productModal').modal('show');
             });
 
             $(".vat-range").ionRangeSlider({
@@ -191,7 +213,6 @@
             });
 
             function calculateVatPrice() {
-
                 let vat = parseFloat($('.vat-range').val());
                 let price = parseFloat($('#productPrice').val());
 
@@ -224,8 +245,7 @@
                 return price * vat / 100;
             }
 
-            $('#newProductButtonForm').on('click', function (e) {
-
+            $('#productForm').submit(function(e) {
                 e.preventDefault();
 
                 displayLoader();
@@ -233,12 +253,13 @@
                 $.ajax({
                     type: 'POST',
                     url: '{!! route('product.store') !!}',
-                    data: $('#newProductForm').serialize(),
-                    dataType: 'json',
+                    data: new FormData(this),
+                    cache: false,
+                    contentType: false,
+                    processData: false,
                     success: function (response) {
                         if (response.success === 1) {
-                            console.log(response)
-                            $('#newProductModal').modal('hide');
+                            $('#productModal').modal('hide');
                         }
                         toastMessage(response.message, 5000, response.success);
                     },

@@ -110,7 +110,6 @@
 @section('js')
     <script>
         $(document).ready(function () {
-
             let categoryEditId;
 
             $('#newCategoryButton').on('click', function (e) {

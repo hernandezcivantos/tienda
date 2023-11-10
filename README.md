@@ -53,6 +53,11 @@ Tendremos que generar las keys de laravel, mediante la interfaz gráfica o:
 ```bash
 php artisan key:generate
 ```
+Tenemos que hacer el link del storage público para poder visualizar las imágenes:
+
+```bash
+php artisan storage:link
+```
 
 ## Base de datos
 

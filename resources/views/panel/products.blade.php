@@ -143,6 +143,8 @@
                             </div>
                         </div>
 
+                        <input id="productID" type="hidden" name="id" value="">
+
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary"
@@ -175,6 +177,7 @@
                 $('#productPrice').val('0.0');
                 $('#productWeight').val('');
                 $('#productMeasures').val('');
+                $('#productID').val('');
 
                 $(".vat-range").data("ionRangeSlider").update({
                     from: DEFAULT_VAT
@@ -212,20 +215,21 @@
             });
 
             $(document.body).on('click', '.productEditLink' ,function(){
+                let id = $(this).data('id');
+
                 MODALLABEL.append('');
                 MODALLABEL.append('{{__('Editar producto')}}');
                 wipeProductForm(2);
+                $('#productID').val(id);
 
                 displayLoader();
 
                 $.ajax({
                     type: 'POST',
                     url: '{!! route('product.get') !!}',
-                    data: {id: $(this).data('id')},
+                    data: {id: id},
                     success: function (response) {
                         if (response.success === 1) {
-
-                            console.log(response.extra);
 
                             $(".vat-range").data("ionRangeSlider").update({
                                 from: response.extra.vat
@@ -347,34 +351,57 @@
 
                 displayLoader();
 
-                $.ajax({
-                    type: 'POST',
-                    url: '{!! route('product.store') !!}',
-                    data: new FormData(this),
-                    cache: false,
-                    contentType: false,
-                    processData: false,
-                    success: function (response) {
-                        if (response.success === 1) {
-                            prodcutsTable.ajax.reload();
-                            $('#productModal').modal('hide');
+                if(modalMode === 1) {
+                    $.ajax({
+                        type: 'POST',
+                        url: '{!! route('product.store') !!}',
+                        data: new FormData(this),
+                        cache: false,
+                        contentType: false,
+                        processData: false,
+                        success: function (response) {
+                            if (response.success === 1) {
+                                productsTable.row.add(response.extra).draw();
+                                $('#productModal').modal('hide');
+                            }
+                            toastMessage(response.message, 5000, response.success);
+                        },
+                        error: function (error) {
+                            toastMessage(error.message, 5000, 0);
+                        },
+                        complete: function (e) {
+                            hideLoader();
                         }
-                        toastMessage(response.message, 5000, response.success);
-                    },
-                    error: function (error) {
-                        toastMessage(error.message, 5000, 0);
-                    },
-                    complete: function (e) {
-                        hideLoader();
-                    }
-                });
+                    });
+                } else if(modalMode === 2) {
+                    $.ajax({
+                        type: 'POST',
+                        url: '{!! route('product.update') !!}',
+                        data: new FormData(this),
+                        cache: false,
+                        contentType: false,
+                        processData: false,
+                        success: function (response) {
+                            if (response.success === 1) {
+                                productsTable.ajax.reload();
+                                $('#productModal').modal('hide');
+                            }
+                            toastMessage(response.message, 5000, response.success);
+                        },
+                        error: function (error) {
+                            toastMessage(error.message, 5000, 0);
+                        },
+                        complete: function (e) {
+                            hideLoader();
+                        }
+                    });
+                }
             });
 
-            let prodcutsTable = new DataTable('#productsTable', {
+            let productsTable = new DataTable('#productsTable', {
                 ajax: {
                     url: '{{route('product.all')}}',
                 },
-                order: [[0, 'desc']],
                 columns: [
                     {data: 'id'},
                     {data: 'name'},
@@ -401,7 +428,6 @@
                     url: '{{asset('js/sp.json')}}'
                 }
             });
-
         });
     </script>
 @endsection

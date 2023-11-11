@@ -4,6 +4,7 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\DatatablesController;
 use App\Http\Controllers\LandingController;
 use App\Http\Controllers\NewsletterController;
 use App\Http\Controllers\ProductController;
@@ -29,21 +30,39 @@ Route::post('register', [RegisterController::class, 'register']);
 Route::post('/newsletter/store', [NewsletterController::class, 'store'])->name('newsletter.store');
 Route::get('/category/{name}', [CategoryController::class, 'url']);
 
-# User
+# Users
 Route::group(['middleware' => 'auth'], function () {
-    Route::get('/purchase/view/{id}', [ShoppingController::class, 'view']);
-    Route::get('/user/self', [UserController::class, 'myUser'])->name('user.self');
-    Route::post('/user/update', [UserController::class, 'update'])->name('user.update');
+
+    Route::group(['prefix' => 'purchase', 'as' => 'purchase.', 'name' => 'purchase'], function () {
+        Route::get('view/{id}', [ShoppingController::class, 'view']);
+    });
+
+    Route::group(['prefix' => 'user', 'as' => 'user.', 'name' => 'user'], function () {
+        Route::get('self', [UserController::class, 'myUser'])->name('self');
+        Route::post('update', [UserController::class, 'update'])->name('update');
+    });
+
 });
 
 # Admin
 Route::group(['middleware' => 'admin'], function () {
-    Route::post('/category/store', [CategoryController::class, 'store'])->name('category.store');
-    Route::post('/category/get', [CategoryController::class, 'get'])->name('category.get');
-    Route::post('/category/update', [CategoryController::class, 'update'])->name('category.update');
-    Route::post('/product/store', [ProductController::class, 'store'])->name('product.store');
-    Route::post('/product/get', [ProductController::class, 'get'])->name('product.get');
-    Route::get('/product/all', [ProductController::class, 'all'])->name('product.all');
-    Route::get('/admin/categories', [AdminController::class, 'categories'])->name('admin.categories');
-    Route::get('/admin/products', [AdminController::class, 'products'])->name('admin.products');
+
+    Route::group(['prefix' => 'category', 'as' => 'category.', 'name' => 'category'], function () {
+        Route::post('store', [CategoryController::class, 'store'])->name('store');
+        Route::post('get', [CategoryController::class, 'get'])->name('get');
+        Route::post('update', [CategoryController::class, 'update'])->name('update');
+    });
+
+    Route::group(['prefix' => 'product', 'as' => 'product.', 'name' => 'product'], function () {
+        Route::post('store', [ProductController::class, 'store'])->name('store');
+        Route::post('update', [ProductController::class, 'update'])->name('update');
+        Route::post('get', [ProductController::class, 'get'])->name('get');
+        Route::get('all', [DatatablesController::class, 'products'])->name('all');
+    });
+
+    Route::group(['prefix' => 'admin', 'as' => 'admin.', 'name' => 'admin', 'middleware' => 'admin'], function () {
+        Route::get('categories', [AdminController::class, 'categories'])->name('categories');
+        Route::get('products', [AdminController::class, 'products'])->name('products');
+    });
+
 });

@@ -488,12 +488,20 @@
             });
 
             $(".vat-range").ionRangeSlider({
+                onChange: function (data) {
+                    // Called then action is done and mouse is released
+                    calculatePrices();
+                },
                 min: 0,
                 max: 100,
                 from: 21
             });
 
             $(".discount-range").ionRangeSlider({
+                onChange: function (data) {
+                    // Called then action is done and mouse is released
+                    calculatePrices();
+                },
                 min: 0,
                 max: 100,
                 from: 0

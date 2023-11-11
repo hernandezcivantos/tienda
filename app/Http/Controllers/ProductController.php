@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Product;
 use App\Models\ProductImage;
+use Exception;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -197,6 +198,57 @@ class ProductController extends Controller
         }
 
         return response()->json($response);
+    }
+
+    public function delete(Request $request)
+    {
+        $rules = [
+            'id' => 'required|exists:products,id',
+        ];
+
+        $customMessages = [
+            'required' => __('Es necesario proporcionar un ID de producto'),
+            'exists' => __('El producto no existe')
+        ];
+
+        $validator = Validator::make($request->all(), $rules, $customMessages);
+
+        if ($validator->fails()) {
+            $response = [
+                'success' => 0,
+                'message' => $validator->errors()->first()
+            ];
+        } else {
+            try {
+                DB::beginTransaction();
+
+                Product::find($request->id)
+                    ->delete();
+
+                $this->_deleteFiles($request->id);
+
+                $response = [
+                    'success' => 1,
+                    'message' => __('Imágenes eliminadas correctamente'),
+                ];
+
+                DB::commit();
+            } catch (Exception $exception ) {
+                DB::rollBack();
+                $response = [
+                    'success' => 0,
+                    'message' => $exception->getMessage()
+                ];
+            }
+        }
+
+        return response()->json($response);
+    }
+
+    private function _deleteFiles($productID)
+    {
+        ProductImage::where('product_id', $productID)
+            ->delete();
     }
 
     private function _updaloadFiles($files, $id): void

@@ -156,13 +156,38 @@
             </div>
         </div> <!-- ./ADD -->
 
+        <!-- PRODUCT DELETE -->
+        <div id="productDeleteModal" class="modal fade text-start bs-example-modal-centered" tabindex="-1"
+             role="dialog" aria-labelledby="centerModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title" id="myModalLabel">{{__('ELIMINAR PRODUCTO')}}</h4>
+                        <button type="button" class="btn-close btn-sm" data-bs-dismiss="modal"
+                                aria-hidden="true"></button>
+                    </div>
+                    <div class="modal-body">
+                        <p>{{__('Estás a punto de ELIMINAR este producto. ¿Es correcto?')}}</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary"
+                                data-bs-dismiss="modal">{{__('Cerrar')}}</button>
+                        <button id="productDeleteModalButton" type="button"
+                                class="btn btn-danger">{{__('Eliminar')}}</button>
+                    </div>
+                </div>
+            </div>
+        </div><!-- ./PRODUCT DELETE -->
+
         <!-- IMAGE DELETE -->
-        <div id="productImageDeleteModal" class="modal fade text-start bs-example-modal-centered" tabindex="-1" role="dialog" aria-labelledby="centerModalLabel" aria-hidden="true">
+        <div id="productImageDeleteModal" class="modal fade text-start bs-example-modal-centered" tabindex="-1"
+             role="dialog" aria-labelledby="centerModalLabel" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered">
                 <div class="modal-content">
                     <div class="modal-header">
                         <h4 class="modal-title" id="myModalLabel">{{__('ELIMINAR IMAGEN')}}</h4>
-                        <button type="button" class="btn-close btn-sm" data-bs-dismiss="modal" aria-hidden="true"></button>
+                        <button type="button" class="btn-close btn-sm" data-bs-dismiss="modal"
+                                aria-hidden="true"></button>
                     </div>
                     <div class="modal-body">
                         <p>{{__('Estás a punto de ELIMINAR una imagen asociada a este producto. ¿Es correcto?')}}</p>
@@ -200,7 +225,7 @@
                     {
                         data: null,
                         mRender: function (data) {
-                            return new Intl.NumberFormat('de-DE', { style: 'currency', currency: 'EUR' }).format(
+                            return new Intl.NumberFormat('de-DE', {style: 'currency', currency: 'EUR'}).format(
                                 data.price,
                             );
                         }
@@ -208,10 +233,14 @@
                     {
                         data: null,
                         bSortable: false,
-                        mRender: function(data) {
+                        mRender: function (data) {
                             return `<a class="productEditLink" data-id="${data.id}" href="#">
                                         <i class="uil-edit" style="font-size: 18px"></i>
-                                    </a>`;
+                                    </a>
+                                    <a class="productDeleteLink" data-id="${data.id}" href="#">
+                                        <i class="uil-trash" style="font-size: 18px"></i>
+                                    </a>
+                                    `;
                         }
                     },
                 ],
@@ -342,7 +371,7 @@
                 $('#productModal').modal('show');
             });
 
-            $(document.body).on('click', '.productEditLink' ,function(){
+            $(document.body).on('click', '.productEditLink', function () {
                 let id = $(this).data('id');
 
                 MODAL_LABEL.append('');
@@ -387,23 +416,40 @@
                 });
             });
 
-            $(".vat-range").ionRangeSlider({
-                min: 0,
-                max: 100,
-                from: 21
+            $(document.body).on('click', '.productDeleteLink', function () {
+                let id = $(this).data('id');
+
+                $('#productDeleteModalButton').attr('data-id', id);
+                $('#productDeleteModal').modal('show');
             });
 
-            $(".discount-range").ionRangeSlider({
-                min: 0,
-                max: 100,
-                from: 0
+            $(document.body).on('click', '#productDeleteModalButton', function () {
+                let id = $(this).data('id');
+
+                displayLoader();
+
+                $.ajax({
+                    type: 'POST',
+                    url: '{!! route('product.delete') !!}',
+                    data: {id: id},
+                    success: function (response) {
+                        if (response.success === 1) {
+                            $('#productDeleteModal').modal('hide');
+                            productsTable.ajax.reload();
+                        }
+                        toastMessage(response.message, 5000, response.success);
+                    },
+                    error: function (error) {
+                        toastMessage(error.message, 5000, 0);
+                    },
+                    complete: function (e) {
+                        hideLoader();
+                    }
+                });
+
             });
 
-            document.getElementById('productPrice').addEventListener("input", function () {
-                calculatePrices();
-            });
-
-            $(document.body).on('click', '#productImageDelete' ,function() {
+            $(document.body).on('click', '#productImageDelete', function () {
                 let id = $(this).data('id');
 
                 $('#productImageDeleteModalButton').attr('data-id', id);
@@ -411,7 +457,7 @@
 
             });
 
-            $(document.body).on('click', '#productImageDeleteModalButton' ,function() {
+            $(document.body).on('click', '#productImageDeleteModalButton', function () {
                 let id = $(this).data('id');
 
                 displayLoader();
@@ -434,7 +480,22 @@
                         hideLoader();
                     }
                 });
+            });
 
+            $(".vat-range").ionRangeSlider({
+                min: 0,
+                max: 100,
+                from: 21
+            });
+
+            $(".discount-range").ionRangeSlider({
+                min: 0,
+                max: 100,
+                from: 0
+            });
+
+            document.getElementById('productPrice').addEventListener("input", function () {
+                calculatePrices();
             });
 
             $('#productForm').submit(function (e) {
@@ -442,7 +503,7 @@
 
                 displayLoader();
 
-                if(modalMode === 1) {
+                if (modalMode === 1) {
                     $.ajax({
                         type: 'POST',
                         url: '{!! route('product.store') !!}',
@@ -464,7 +525,7 @@
                             hideLoader();
                         }
                     });
-                } else if(modalMode === 2) {
+                } else if (modalMode === 2) {
                     $.ajax({
                         type: 'POST',
                         url: '{!! route('product.update') !!}',

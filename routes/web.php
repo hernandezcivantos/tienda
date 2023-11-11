@@ -59,6 +59,7 @@ Route::group(['middleware' => 'admin'], function () {
         Route::post('store', [ProductController::class, 'store'])->name('store');
         Route::post('update', [ProductController::class, 'update'])->name('update');
         Route::post('get', [ProductController::class, 'get'])->name('get');
+        Route::post('delete', [ProductController::class, 'delete'])->name('delete');
         Route::get('all', [DatatablesController::class, 'products'])->name('all');
     });
 

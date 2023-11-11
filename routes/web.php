@@ -42,6 +42,8 @@ Route::group(['middleware' => 'admin'], function () {
     Route::post('/category/get', [CategoryController::class, 'get'])->name('category.get');
     Route::post('/category/update', [CategoryController::class, 'update'])->name('category.update');
     Route::post('/product/store', [ProductController::class, 'store'])->name('product.store');
+    Route::post('/product/get', [ProductController::class, 'get'])->name('product.get');
+    Route::get('/product/all', [ProductController::class, 'all'])->name('product.all');
     Route::get('/admin/categories', [AdminController::class, 'categories'])->name('admin.categories');
     Route::get('/admin/products', [AdminController::class, 'products'])->name('admin.products');
 });

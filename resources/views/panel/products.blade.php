@@ -4,6 +4,7 @@
     <section id="content">
         <div class="content-wrap">
             <div class="container">
+
                 <div class="row">
                     <div class="col-12 table-top-button">
                         <a id="newProductButton" href="#" class="button"><i
@@ -11,7 +12,7 @@
                     </div>
                 </div>
 
-                <table id="productsTable" class="table table-bordered table-striped datatableTable">
+                <table id="productsTable" class="table table-bordered table-striped">
                     <thead>
                     <tr>
                         <th>#</th>
@@ -21,21 +22,6 @@
                         <th>Acciones</th>
                     </tr>
                     </thead>
-                    <tbody id="productsBody">
-                    @foreach($products as $product)
-                        <tr id="categoryRow{{$product->id}}">
-                            <td>{{$product->id}}</td>
-                            <td>{{$product->name}} </td>
-                            <td>{{$product->category->name}}</td>
-                            <td>{{$product->price}}</td>
-                            <td>
-                                <a class="productEditLink" data-id="{{$product->id}}" href="#">
-                                    <i class="uil-edit" style="font-size: 18px"></i>
-                                </a>
-                            </td>
-                        </tr>
-                    @endforeach
-                    </tbody>
                 </table>
             </div>
         </div>
@@ -135,6 +121,7 @@
                                 </div>
                             </div>
                         </div>
+
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="form-group">
@@ -145,11 +132,23 @@
                                 </div>
                             </div>
                         </div>
+
+                        <div id="productImagesDisplay" class="file-preview hiding">
+                            <div class="file-drop-zone clearfix">
+                                <div id="productImagesDisplayZone" class="file-preview-thumbnails clearfix">
+
+                                </div>
+                                <div class="file-preview-status text-center text-success"></div>
+                                <div class="kv-fileinput-error file-error-message" style="display: none;"></div>
+                            </div>
+                        </div>
+
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary"
                                 data-bs-dismiss="modal">{{__('Cerrar')}}</button>
-                        <button id="productButtonForm" type="submit" class="btn btn-green">{{__('Añadir producto')}}</button>
+                        <button id="productButtonForm" type="submit"
+                                class="btn btn-green"></button>
                     </div>
                 </div>
             </div>
@@ -161,14 +160,16 @@
     <script>
         $(document).ready(function () {
 
-            let modalMode;
             const MODALLABEL = $('#modalLabel');
             const DEFAULT_VAT = '21';
             const DEFAULT_DISCOUNT = '0';
+            const BASE_PATH = '{{asset('public/storage/products')}}';
+
+            let modalMode;
 
             function wipeProductForm(mode) {
                 $('#productName').val('');
-                $('#productCategory').prop('selectedIndex',0);
+                $('#productCategory').prop('selectedIndex', 0);
                 $('#productVat').val('0.0');
                 $('#productDiscount').val('0.0');
                 $('#productPrice').val('0.0');
@@ -185,6 +186,22 @@
                 $('.fileinput-remove-button').click();
 
                 modalMode = mode;
+
+                if (modalMode === 1) {
+                    $('#productButtonForm').html('{{__('Añadir producto')}}');
+
+                    if (!$('#productImagesDisplay').hasClass('hiding')) {
+                        $('#productImagesDisplay').addClass('hiding');
+                    }
+                } else if (modalMode === 2) {
+                    $('#productButtonForm').html('{{__('Editar producto')}}');
+
+                    if ($('#productImagesDisplay').hasClass('hiding')) {
+                        $('#productImagesDisplay').removeClass('hiding');
+                    }
+                }
+
+                calculatePrices();
             }
 
             $('#newProductButton').on('click', function () {
@@ -192,6 +209,50 @@
                 MODALLABEL.append('{{__('Añadir producto')}}');
                 wipeProductForm(1);
                 $('#productModal').modal('show');
+            });
+
+            $(document.body).on('click', '.productEditLink' ,function(){
+                MODALLABEL.append('');
+                MODALLABEL.append('{{__('Editar producto')}}');
+                wipeProductForm(2);
+
+                displayLoader();
+
+                $.ajax({
+                    type: 'POST',
+                    url: '{!! route('product.get') !!}',
+                    data: {id: $(this).data('id')},
+                    success: function (response) {
+                        if (response.success === 1) {
+
+                            console.log(response.extra);
+
+                            $(".vat-range").data("ionRangeSlider").update({
+                                from: response.extra.vat
+                            });
+                            $(".discount-range").data("ionRangeSlider").update({
+                                from: response.extra.discount
+                            });
+
+                            $('#productCategory').val(response.extra.category_id)
+                            $('#productName').val(response.extra.name)
+                            $('#productPrice').val(response.extra.price)
+                            $('#productWeight').val(response.extra.weight)
+                            $('#productMeasures').val(response.extra.measures)
+
+                            calculatePrices();
+                            fillImages(response.extra.images);
+
+                            $('#productModal').modal('show');
+                        }
+                    },
+                    error: function (error) {
+                        toastMessage(error.message, 5000, 0);
+                    },
+                    complete: function (e) {
+                        hideLoader();
+                    }
+                });
             });
 
             $(".vat-range").ionRangeSlider({
@@ -207,10 +268,14 @@
             });
 
             document.getElementById('productPrice').addEventListener("input", function () {
+                calculatePrices();
+            });
+
+            function calculatePrices() {
                 document.getElementById("productVatPrice").value = calculateVatPrice()
                 document.getElementById("productDiscontPrice").value = calculateDiscountPrice()
                 document.getElementById("productVatImput").value = calculateVat();
-            });
+            }
 
             function calculateVatPrice() {
                 let vat = parseFloat($('.vat-range').val());
@@ -245,7 +310,39 @@
                 return price * vat / 100;
             }
 
-            $('#productForm').submit(function(e) {
+            function fillImages(images) {
+
+                $('#productImagesDisplayZone').html('');
+
+                images.forEach((element) => {
+
+                    let url = BASE_PATH + '/' + element.image;
+
+                    $('#productImagesDisplayZone').append(
+                        `<div class="file-preview-frame krajee-default kv-preview-thumb rotatable">
+                            <div class="kv-file-content">
+                                <img
+                                    src="${url}"
+                                    class="file-preview-image kv-preview-data" title="Imagen del producto ${element.product_id}"
+                                    alt="Imagen del producto ${element.product_id}"
+                                    style="width: auto; height: auto; max-width: 100%; max-height: 100%; image-orientation: from-image;">
+                            </div>
+                            <div class="file-thumbnail-footer">
+                                <div class="file-actions">
+                                    <div class="file-footer-buttons">
+                                        <button type="button"
+                                                class="btn btn-sm btn-danger"
+                                                title="View Details"><i class="bi-trash"></i></button>
+                                    </div>
+                                </div>
+
+                                <div class="clearfix"></div>
+                            </div>
+                        </div>`);
+                });
+            }
+
+            $('#productForm').submit(function (e) {
                 e.preventDefault();
 
                 displayLoader();
@@ -259,6 +356,7 @@
                     processData: false,
                     success: function (response) {
                         if (response.success === 1) {
+                            prodcutsTable.ajax.reload();
                             $('#productModal').modal('hide');
                         }
                         toastMessage(response.message, 5000, response.success);
@@ -270,7 +368,39 @@
                         hideLoader();
                     }
                 });
-            })
+            });
+
+            let prodcutsTable = new DataTable('#productsTable', {
+                ajax: {
+                    url: '{{route('product.all')}}',
+                },
+                order: [[0, 'desc']],
+                columns: [
+                    {data: 'id'},
+                    {data: 'name'},
+                    {data: 'category.name'},
+                    {
+                        data: null,
+                        mRender: function (data) {
+                            return new Intl.NumberFormat('de-DE', { style: 'currency', currency: 'EUR' }).format(
+                                data.price,
+                            );
+                        }
+                    },
+                    {
+                        data: null,
+                        bSortable: false,
+                        mRender: function(data) {
+                            return `<a class="productEditLink" data-id="${data.id}" href="#">
+                                        <i class="uil-edit" style="font-size: 18px"></i>
+                                    </a>`;
+                        }
+                    },
+                ],
+                language: {
+                    url: '{{asset('js/sp.json')}}'
+                }
+            });
 
         });
     </script>

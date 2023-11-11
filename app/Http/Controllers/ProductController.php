@@ -88,11 +88,54 @@ class ProductController extends Controller
             $response = [
                 'success' => 1,
                 'message' => __('El producto se ha creado correctamente'),
-                'extra' => $product
+                'extra' => $product,
+                'category' => $product->category->name
             ];
 
         }
 
         return response()->json($response);
+    }
+
+    public function get(Request $request): JsonResponse
+    {
+        $rules = [
+            'id' => 'required|exists:products,id',
+        ];
+
+        $customMessages = [
+            'required' => __('Es necesario proporcionar un ID de producto'),
+            'exists' => __('El producto no existe')
+        ];
+
+        $validator = Validator::make($request->all(), $rules, $customMessages);
+
+        if ($validator->fails()) {
+            $response = [
+                'success' => 0,
+                'message' => $validator->errors()->first()
+            ];
+        } else {
+            $product = Product::where('id', $request->id)
+                ->with('images')
+                ->first()
+                ->toArray();
+
+            $response = [
+                'success' => 1,
+                'message' => __('Producto obtenido correctamente'),
+                'extra' => $product
+            ];
+        }
+
+        return response()->json($response);
+    }
+
+    public function all()
+    {
+        $products = Product::with('category')
+            ->get();
+
+        return datatables()->of($products)->toJson();
     }
 }

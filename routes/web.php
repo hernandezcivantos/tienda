@@ -8,8 +8,10 @@ use App\Http\Controllers\DatatablesController;
 use App\Http\Controllers\LandingController;
 use App\Http\Controllers\NewsletterController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\ProductImageController;
 use App\Http\Controllers\ShoppingController;
 use App\Http\Controllers\UserController;
+use App\Models\ProductImage;
 use Illuminate\Support\Facades\Route;
 
 # Landing
@@ -63,6 +65,10 @@ Route::group(['middleware' => 'admin'], function () {
     Route::group(['prefix' => 'admin', 'as' => 'admin.', 'name' => 'admin', 'middleware' => 'admin'], function () {
         Route::get('categories', [AdminController::class, 'categories'])->name('categories');
         Route::get('products', [AdminController::class, 'products'])->name('products');
+    });
+
+    Route::group(['prefix' => 'image', 'as' => 'image.', 'name' => 'image', 'middleware' => 'admin'], function () {
+        Route::post('delete', [ProductImageController::class, 'delete'])->name('delete');
     });
 
 });

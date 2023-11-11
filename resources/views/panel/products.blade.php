@@ -155,6 +155,28 @@
                 </div>
             </div>
         </div> <!-- ./ADD -->
+
+        <!-- IMAGE DELETE -->
+        <div id="productImageDeleteModal" class="modal fade text-start bs-example-modal-centered" tabindex="-1" role="dialog" aria-labelledby="centerModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title" id="myModalLabel">{{__('ELIMINAR IMAGEN')}}</h4>
+                        <button type="button" class="btn-close btn-sm" data-bs-dismiss="modal" aria-hidden="true"></button>
+                    </div>
+                    <div class="modal-body">
+                        <p>{{__('Estás a punto de ELIMINAR una imagen asociada a este producto. ¿Es correcto?')}}</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary"
+                                data-bs-dismiss="modal">{{__('Cerrar')}}</button>
+                        <button id="productImageDeleteModalButton" type="button"
+                                class="btn btn-danger">{{__('Eliminar')}}</button>
+                    </div>
+                </div>
+            </div>
+        </div><!-- ./IMAGE DELETE -->
+
     </form>
 @endsection
 
@@ -162,10 +184,41 @@
     <script>
         $(document).ready(function () {
 
-            const MODALLABEL = $('#modalLabel');
+            const MODAL_LABEL = $('#modalLabel');
             const DEFAULT_VAT = '21';
             const DEFAULT_DISCOUNT = '0';
             const BASE_PATH = '{{asset('public/storage/products')}}';
+
+            let productsTable = new DataTable('#productsTable', {
+                ajax: {
+                    url: '{{route('product.all')}}',
+                },
+                columns: [
+                    {data: 'id'},
+                    {data: 'name'},
+                    {data: 'category.name'},
+                    {
+                        data: null,
+                        mRender: function (data) {
+                            return new Intl.NumberFormat('de-DE', { style: 'currency', currency: 'EUR' }).format(
+                                data.price,
+                            );
+                        }
+                    },
+                    {
+                        data: null,
+                        bSortable: false,
+                        mRender: function(data) {
+                            return `<a class="productEditLink" data-id="${data.id}" href="#">
+                                        <i class="uil-edit" style="font-size: 18px"></i>
+                                    </a>`;
+                        }
+                    },
+                ],
+                language: {
+                    url: '{{asset('js/sp.json')}}'
+                }
+            });
 
             let modalMode;
 
@@ -207,9 +260,84 @@
                 calculatePrices();
             }
 
+            function calculatePrices() {
+                document.getElementById("productVatPrice").value = calculateVatPrice()
+                document.getElementById("productDiscontPrice").value = calculateDiscountPrice()
+                document.getElementById("productVatImput").value = calculateVat();
+            }
+
+            function calculateVatPrice() {
+                let vat = parseFloat($('.vat-range').val());
+                let price = parseFloat($('#productPrice').val());
+
+                if (vat === parseFloat('0') || price === parseFloat('0')) {
+                    return price;
+                }
+
+                return price - price * vat / 100;
+            }
+
+            function calculateDiscountPrice() {
+                let discount = parseFloat($('.discount-range').val());
+                let price = parseFloat($('#productPrice').val());
+
+                if (discount === parseFloat('0') || price === parseFloat('0')) {
+                    return price;
+                }
+
+                return price - price * discount / 100;
+            }
+
+            function calculateVat() {
+                let vat = parseFloat($('.vat-range').val());
+                let price = calculateDiscountPrice();
+
+                if (vat === parseFloat('0') || price === parseFloat('0')) {
+                    return price;
+                }
+
+                return price * vat / 100;
+            }
+
+            function fillImages(images) {
+
+                $('#productImagesDisplayZone').html('');
+
+                images.forEach((element) => {
+
+                    console.log(element);
+
+                    let url = BASE_PATH + '/' + element.image;
+
+                    $('#productImagesDisplayZone').append(
+                        `<div id="productImagePreviewFrame${element.id}" class="file-preview-frame krajee-default kv-preview-thumb rotatable">
+                            <div class="kv-file-content">
+                                <img
+                                    src="${url}"
+                                    class="file-preview-image kv-preview-data" title="Imagen del producto ${element.product_id}"
+                                    alt="Imagen del producto ${element.product_id}"
+                                    style="width: auto; height: auto; max-width: 100%; max-height: 100%; image-orientation: from-image;">
+                            </div>
+                            <div class="file-thumbnail-footer">
+                                <div class="file-actions">
+                                    <div class="file-footer-buttons">
+                                        <button id="productImageDelete"
+                                                data-id="${element.id}"
+                                                type="button"
+                                                class="btn btn-sm btn-danger">
+                                                <i class="bi-trash"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class="clearfix"></div>
+                            </div>
+                        </div>`);
+                });
+            }
+
             $('#newProductButton').on('click', function () {
-                MODALLABEL.append('');
-                MODALLABEL.append('{{__('Añadir producto')}}');
+                MODAL_LABEL.append('');
+                MODAL_LABEL.append('{{__('Añadir producto')}}');
                 wipeProductForm(1);
                 $('#productModal').modal('show');
             });
@@ -217,8 +345,8 @@
             $(document.body).on('click', '.productEditLink' ,function(){
                 let id = $(this).data('id');
 
-                MODALLABEL.append('');
-                MODALLABEL.append('{{__('Editar producto')}}');
+                MODAL_LABEL.append('');
+                MODAL_LABEL.append('{{__('Editar producto')}}');
                 wipeProductForm(2);
                 $('#productID').val(id);
 
@@ -275,76 +403,39 @@
                 calculatePrices();
             });
 
-            function calculatePrices() {
-                document.getElementById("productVatPrice").value = calculateVatPrice()
-                document.getElementById("productDiscontPrice").value = calculateDiscountPrice()
-                document.getElementById("productVatImput").value = calculateVat();
-            }
+            $(document.body).on('click', '#productImageDelete' ,function() {
+                let id = $(this).data('id');
 
-            function calculateVatPrice() {
-                let vat = parseFloat($('.vat-range').val());
-                let price = parseFloat($('#productPrice').val());
+                $('#productImageDeleteModalButton').attr('data-id', id);
+                $('#productImageDeleteModal').modal('show');
 
-                if (vat === parseFloat('0') || price === parseFloat('0')) {
-                    return price;
-                }
+            });
 
-                return price - price * vat / 100;
-            }
+            $(document.body).on('click', '#productImageDeleteModalButton' ,function() {
+                let id = $(this).data('id');
 
-            function calculateDiscountPrice() {
-                let discount = parseFloat($('.discount-range').val());
-                let price = parseFloat($('#productPrice').val());
+                displayLoader();
 
-                if (discount === parseFloat('0') || price === parseFloat('0')) {
-                    return price;
-                }
-
-                return price - price * discount / 100;
-            }
-
-            function calculateVat() {
-                let vat = parseFloat($('.vat-range').val());
-                let price = calculateDiscountPrice();
-
-                if (vat === parseFloat('0') || price === parseFloat('0')) {
-                    return price;
-                }
-
-                return price * vat / 100;
-            }
-
-            function fillImages(images) {
-
-                $('#productImagesDisplayZone').html('');
-
-                images.forEach((element) => {
-
-                    let url = BASE_PATH + '/' + element.image;
-
-                    $('#productImagesDisplayZone').append(
-                        `<div class="file-preview-frame krajee-default kv-preview-thumb rotatable">
-                            <div class="kv-file-content">
-                                <img
-                                    src="${url}"
-                                    class="file-preview-image kv-preview-data" title="Imagen del producto ${element.product_id}"
-                                    alt="Imagen del producto ${element.product_id}"
-                                    style="width: auto; height: auto; max-width: 100%; max-height: 100%; image-orientation: from-image;">
-                            </div>
-                            <div class="file-thumbnail-footer">
-                                <div class="file-actions">
-                                    <div class="file-footer-buttons">
-                                        <button type="button"
-                                                class="btn btn-sm btn-danger"
-                                                title="View Details"><i class="bi-trash"></i></button>
-                                    </div>
-                                </div>
-
-                                <div class="clearfix"></div>
-                            </div>
-                        </div>`);
+                $.ajax({
+                    type: 'POST',
+                    url: '{!! route('image.delete') !!}',
+                    data: {id: id},
+                    success: function (response) {
+                        if (response.success === 1) {
+                            $('#productImageDeleteModal').modal('hide');
+                            $(`#productImagePreviewFrame${id}`).remove();
+                        }
+                        toastMessage(response.message, 5000, response.success);
+                    },
+                    error: function (error) {
+                        toastMessage(error.message, 5000, 0);
+                    },
+                    complete: function (e) {
+                        hideLoader();
+                    }
                 });
-            }
+
+            });
 
             $('#productForm').submit(function (e) {
                 e.preventDefault();
@@ -395,37 +486,6 @@
                             hideLoader();
                         }
                     });
-                }
-            });
-
-            let productsTable = new DataTable('#productsTable', {
-                ajax: {
-                    url: '{{route('product.all')}}',
-                },
-                columns: [
-                    {data: 'id'},
-                    {data: 'name'},
-                    {data: 'category.name'},
-                    {
-                        data: null,
-                        mRender: function (data) {
-                            return new Intl.NumberFormat('de-DE', { style: 'currency', currency: 'EUR' }).format(
-                                data.price,
-                            );
-                        }
-                    },
-                    {
-                        data: null,
-                        bSortable: false,
-                        mRender: function(data) {
-                            return `<a class="productEditLink" data-id="${data.id}" href="#">
-                                        <i class="uil-edit" style="font-size: 18px"></i>
-                                    </a>`;
-                        }
-                    },
-                ],
-                language: {
-                    url: '{{asset('js/sp.json')}}'
                 }
             });
         });

@@ -214,6 +214,8 @@
             const DEFAULT_DISCOUNT = '0';
             const BASE_PATH = '{{asset('public/storage/products')}}';
 
+            let productDeleteId;
+
             let productsTable = new DataTable('#productsTable', {
                 ajax: {
                     url: '{{route('product.all')}}',
@@ -385,6 +387,7 @@
                     type: 'POST',
                     url: '{!! route('product.get') !!}',
                     data: {id: id},
+                    cache: false,
                     success: function (response) {
                         if (response.success === 1) {
 
@@ -416,22 +419,23 @@
                 });
             });
 
-            $(document.body).on('click', '.productDeleteLink', function () {
-                let id = $(this).data('id');
+            $(document.body).on('click', '.productDeleteLink', function (e) {
+                let id = e.currentTarget.dataset.id;
+
+                productDeleteId = id;
 
                 $('#productDeleteModalButton').attr('data-id', id);
                 $('#productDeleteModal').modal('show');
             });
 
             $(document.body).on('click', '#productDeleteModalButton', function () {
-                let id = $(this).data('id');
-
                 displayLoader();
 
                 $.ajax({
                     type: 'POST',
                     url: '{!! route('product.delete') !!}',
-                    data: {id: id},
+                    data: {id: productDeleteId},
+                    cache: false,
                     success: function (response) {
                         if (response.success === 1) {
                             $('#productDeleteModal').modal('hide');
@@ -466,6 +470,7 @@
                     type: 'POST',
                     url: '{!! route('image.delete') !!}',
                     data: {id: id},
+                    cache: false,
                     success: function (response) {
                         if (response.success === 1) {
                             $('#productImageDeleteModal').modal('hide');

@@ -28,7 +28,7 @@ class Category extends Model
         return $this->belongsTo(Product::class);
     }
 
-    public static function getByUrl(string $url): Category
+    public static function getByUrl(string $url)
     {
         return self::where('route', $url)
             ->first();

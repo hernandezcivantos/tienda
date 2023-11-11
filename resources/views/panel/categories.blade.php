@@ -15,29 +15,15 @@
                         </div>
                     </div>
 
-                    <table id="categoriesTable" class="table table-bordered table-striped datatableTable">
+                    <table id="categoriesTable" class="table table-bordered table-striped">
                         <thead>
                         <tr>
                             <th>#</th>
-                            <th>Nombre</th>
-                            <th>Estado</th>
-                            <th></th>
+                            <th>{{__('Nombre')}}</th>
+                            <th>{{__('Estado')}}</th>
+                            <th>{{__('Acciones')}}</th>
                         </tr>
                         </thead>
-                        <tbody id="categoriesBody">
-                        @foreach($categories as $category)
-                            <tr id="categoryRow{{$category->id}}">
-                                <td>{{$category->id}}</td>
-                                <td>
-                                    {{$category->name}}
-                                </td>
-                                <td>{{$category->active ? 'Activa' : 'Inactiva'}}</td>
-                                <td><a class="categoryEditLink" data-id="{{$category->id}}" href="#"><i class="uil-edit"
-                                                                                                        style="font-size: 18px"></i></a>
-                                </td>
-                            </tr>
-                        @endforeach
-                        </tbody>
                     </table>
                 </div>
 
@@ -105,12 +91,69 @@
             </div>
         </div>
     </div> <!-- ./EDIT -->
+
+    <!-- CATEGORY DELETE -->
+    <div id="categoryDeleteModal" class="modal fade text-start bs-example-modal-centered" tabindex="-1"
+         role="dialog" aria-labelledby="centerModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title" id="myModalLabel">{{__('ELIMINAR CATEGORIA')}}</h4>
+                    <button type="button" class="btn-close btn-sm" data-bs-dismiss="modal"
+                            aria-hidden="true"></button>
+                </div>
+                <div class="modal-body">
+                    <p>{{__('Estás a punto de ELIMINAR esta categoría. ¿Es correcto?')}}</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary"
+                            data-bs-dismiss="modal">{{__('Cerrar')}}</button>
+                    <button id="categoryDeleteModalButton" type="button"
+                            class="btn btn-danger">{{__('Eliminar')}}</button>
+                </div>
+            </div>
+        </div>
+    </div><!-- ./CATEGORY DELETE -->
 @endsection
 
 @section('js')
     <script>
         $(document).ready(function () {
             let categoryEditId;
+            let categoryDeleteId;
+
+            let categoriesTable = new DataTable('#categoriesTable', {
+                ajax: {
+                    url: '{{route('category.all')}}',
+                },
+                columns: [
+                    {data: 'id'},
+                    {data: 'name'},
+                    {
+                        data: null,
+                        bSortable: false,
+                        mRender: function (data) {
+                            return data.active ? 'Activa' : 'Inactiva';
+                        }
+                    },
+                    {
+                        data: null,
+                        bSortable: false,
+                        mRender: function (data) {
+                            return `<a class="categoryEditLink" data-id="${data.id}" href="#">
+                                        <i class="uil-edit" style="font-size: 18px"></i>
+                                    </a>
+                                    <a class="categoryDeleteLink" data-id="${data.id}" href="#">
+                                        <i class="uil-trash" style="font-size: 18px"></i>
+                                    </a>
+                                    `;
+                        }
+                    },
+                ],
+                language: {
+                    url: '{{asset('js/sp.json')}}'
+                }
+            });
 
             $('#newCategoryButton').on('click', function (e) {
                 e.preventDefault();
@@ -142,11 +185,12 @@
                     type: 'POST',
                     url: '{!! route('category.store') !!}',
                     data: data,
+                    cache: false,
                     dataType: 'json',
                     success: function (response) {
                         if (response.success === 1) {
                             $('#newCategoryModal').modal('hide');
-                            $('#categoriesBody').append(`<tr id="categoryRow${response.extra.id}"><td>${response.extra.id}</td><td>${response.extra.name}</td><td>Activa</td><td><a class="categoryEditLink" data-id="${response.extra.id}" href="#"><i class="uil-edit" style="font-size: 18px"></i></a></td></tr>`)
+                            categoriesTable.row.add(response.extra).draw();
                         }
                         toastMessage(response.message, 5000, response.success);
                     },
@@ -173,6 +217,7 @@
                     type: 'POST',
                     url: '{!! route('category.get') !!}',
                     data: {id: id},
+                    cache: false,
                     dataType: 'json',
                     success: function (response) {
                         if (response.success === 1) {
@@ -209,11 +254,12 @@
                     type: 'POST',
                     url: '{!! route('category.update') !!}',
                     data: data,
+                    cache: false,
                     dataType: 'json',
                     success: function (response) {
                         if (response.success === 1) {
                             $('#editCategoryModal').modal('hide');
-                            $('#categoryRow' + categoryEditId).html(`<td>${response.extra.id}</td><td>${response.extra.name}</td><td>${response.extra.active ? 'Activa' : 'Inactiva'}</td><td><a class="categoryEditLink" data-id="${response.extra.id}" href="#"><i class="uil-edit" style="font-size: 18px"></i></a></td>`)
+                            categoriesTable.ajax.reload();
                             categoryEditId = null;
                         }
                         toastMessage(response.message, 5000, response.success);
@@ -225,6 +271,41 @@
                         hideLoader();
                     }
                 });
+            });
+
+            $(document.body).on('click', '.categoryDeleteLink', function (e) {
+
+                let id = e.currentTarget.dataset.id;
+
+                categoryDeleteId = id;
+
+                $('#categoryDeleteModalButton').attr('data-id', id);
+                $('#categoryDeleteModal').modal('show');
+            });
+
+            $(document.body).on('click', '#categoryDeleteModalButton', function () {
+                displayLoader();
+
+                $.ajax({
+                    type: 'POST',
+                    url: '{!! route('category.delete') !!}',
+                    data: {id: categoryDeleteId},
+                    cache: false,
+                    success: function (response) {
+                        if (response.success === 1) {
+                            $('#categoryDeleteModal').modal('hide');
+                            categoriesTable.ajax.reload();
+                        }
+                        toastMessage(response.message, 5000, response.success);
+                    },
+                    error: function (error) {
+                        toastMessage(error.message, 5000, 0);
+                    },
+                    complete: function (e) {
+                        hideLoader();
+                    }
+                });
+
             });
         });
     </script>

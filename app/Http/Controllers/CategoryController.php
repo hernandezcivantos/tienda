@@ -7,6 +7,7 @@ use App\Models\Product;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use Mockery\Exception;
 
 class CategoryController extends Controller
 {
@@ -129,6 +130,52 @@ class CategoryController extends Controller
                 'message' => __('La categoría se ha modificado correctamente'),
                 'extra' => $category
             ];
+        }
+
+        return response()->json($response);
+    }
+
+    public function delete(Request $request)
+    {
+        $rules = [
+            'id' => 'required|exists:categories,id',
+        ];
+
+        $customMessages = [
+            'required' => __('Es necesario proporcionar un ID de categoría'),
+            'exists' => __('La categoría no existe')
+        ];
+
+        $validator = Validator::make($request->all(), $rules, $customMessages);
+
+        if ($validator->fails()) {
+            $response = [
+                'success' => 0,
+                'message' => $validator->errors()->first()
+            ];
+        } else {
+            try {
+
+                $categoryHasProducts = Product::where('category_id', $request->id)
+                    ->exists();
+
+                if($categoryHasProducts)
+                    throw new Exception('No se puede eliminar una categoría con productos asignados');
+
+                Category::find($request->id)
+                    ->delete();
+
+                $response = [
+                    'success' => 1,
+                    'message' => __('Categoría eliminada correctamente'),
+                ];
+
+            } catch (Exception $exception ) {
+                $response = [
+                    'success' => 0,
+                    'message' => $exception->getMessage()
+                ];
+            }
         }
 
         return response()->json($response);

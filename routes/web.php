@@ -30,7 +30,6 @@ Route::post('register', [RegisterController::class, 'register']);
 
 // Newsletter
 Route::post('/newsletter/store', [NewsletterController::class, 'store'])->name('newsletter.store');
-Route::get('/category/{name}', [CategoryController::class, 'url']);
 
 # Users
 Route::group(['middleware' => 'auth'], function () {
@@ -51,8 +50,10 @@ Route::group(['middleware' => 'admin'], function () {
 
     Route::group(['prefix' => 'category', 'as' => 'category.', 'name' => 'category'], function () {
         Route::post('store', [CategoryController::class, 'store'])->name('store');
-        Route::post('get', [CategoryController::class, 'get'])->name('get');
         Route::post('update', [CategoryController::class, 'update'])->name('update');
+        Route::post('get', [CategoryController::class, 'get'])->name('get');
+        Route::post('delete', [CategoryController::class, 'delete'])->name('delete');
+        Route::get('all', [DatatablesController::class, 'categories'])->name('all');
     });
 
     Route::group(['prefix' => 'product', 'as' => 'product.', 'name' => 'product'], function () {
@@ -71,5 +72,7 @@ Route::group(['middleware' => 'admin'], function () {
     Route::group(['prefix' => 'image', 'as' => 'image.', 'name' => 'image', 'middleware' => 'admin'], function () {
         Route::post('delete', [ProductImageController::class, 'delete'])->name('delete');
     });
-
 });
+
+// Shop Category to product list
+Route::get('/category/{name}', [CategoryController::class, 'url']);

@@ -22,7 +22,8 @@ class ProductController extends Controller
             'price' => 'required|numeric',
             'weight' => 'nullable|numeric',
             'measures' => 'nullable',
-            'productFiles.*' => 'required|image|mimes:png,jpg,jpeg|max:2048'
+            'productFiles.*' => 'required|image|mimes:png,jpg,jpeg|max:2048',
+            'active' => 'required|bool'
         ];
 
         $customMessages = [
@@ -39,7 +40,9 @@ class ProductController extends Controller
             'price.numeric' => __('El precio tiene que ser numérico'),
             'productFiles.*.mimes' => __('Formato de imagen no admitido. Admitidos: [jpg o png]'),
             'productFiles.*.image' => __('El archivo tiene que ser una imagen'),
-            'productFiles.*.max' => __('Tamaño de imágen excedido, las imágenes no deben superar los 2Mb')
+            'productFiles.*.max' => __('Tamaño de imágen excedido, las imágenes no deben superar los 2Mb'),
+            'active.required' => __('El estado es necesario'),
+            'active.bool' => __('El estado tiene que ser activo o inactivo'),
         ];
 
         $validator = Validator::make($request->all(), $rules, $customMessages);
@@ -60,9 +63,10 @@ class ProductController extends Controller
                 $product->price = $request->price;
                 $product->weight = $request->weight;
                 $product->measures = $request->measures;
+                $product->active = $request->active;
                 $product->save();
 
-                if($request->hasFile('productFiles')) {
+                if ($request->hasFile('productFiles')) {
                     $this->_updaloadFiles($request->productFiles, $product->id);
                 }
 
@@ -132,7 +136,8 @@ class ProductController extends Controller
             'price' => 'required|numeric',
             'weight' => 'nullable|numeric',
             'measures' => 'nullable',
-            'productFiles.*' => 'required|image|mimes:png,jpg,jpeg|max:2048'
+            'productFiles.*' => 'required|image|mimes:png,jpg,jpeg|max:2048',
+            'active' => 'required|bool'
         ];
 
         $customMessages = [
@@ -152,7 +157,9 @@ class ProductController extends Controller
             'price.numeric' => __('El precio tiene que ser numérico'),
             'productFiles.*.mimes' => __('Formato de imagen no admitido. Admitidos: [jpg o png]'),
             'productFiles.*.image' => __('El archivo tiene que ser una imagen'),
-            'productFiles.*.max' => __('Tamaño de imágen excedido, las imágenes no deben superar los 2Mb')
+            'productFiles.*.max' => __('Tamaño de imágen excedido, las imágenes no deben superar los 2Mb'),
+            'active.required' => __('El estado es necesario'),
+            'active.bool' => __('El estado tiene que ser activo o inactivo'),
         ];
 
         $validator = Validator::make($request->all(), $rules, $customMessages);
@@ -173,9 +180,10 @@ class ProductController extends Controller
                 $product->price = $request->price;
                 $product->weight = $request->weight;
                 $product->measures = $request->measures;
+                $product->active = $request->active;
                 $product->update();
 
-                if($request->hasFile('productFiles')) {
+                if ($request->hasFile('productFiles')) {
                     $this->_updaloadFiles($request->productFiles, $product->id);
                 }
 
@@ -233,7 +241,7 @@ class ProductController extends Controller
                 ];
 
                 DB::commit();
-            } catch (Exception $exception ) {
+            } catch (Exception $exception) {
                 DB::rollBack();
                 $response = [
                     'success' => 0,
@@ -253,7 +261,7 @@ class ProductController extends Controller
 
     private function _updaloadFiles($files, $id): void
     {
-        foreach($files as $file) {
+        foreach ($files as $file) {
 
             $file->store('public/products');
 

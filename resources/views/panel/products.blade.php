@@ -147,6 +147,7 @@
 
                     </div>
                     <div class="modal-footer">
+                        <input id="productActive" class="bt-switch" type="checkbox" checked data-on-text="Activo" data-off-text="Inactivo" data-on-color="themecolor" data-off-color="danger">
                         <button type="button" class="btn btn-secondary"
                                 data-bs-dismiss="modal">{{__('Cerrar')}}</button>
                         <button id="productButtonForm" type="submit"
@@ -280,6 +281,8 @@
                     if (!$('#productImagesDisplay').hasClass('hiding')) {
                         $('#productImagesDisplay').addClass('hiding');
                     }
+
+                    $('#productActive').prop('checked', false).change();
                 } else if (modalMode === 2) {
                     $('#productButtonForm').html('{{__('Editar producto')}}');
 
@@ -335,8 +338,6 @@
                 $('#productImagesDisplayZone').html('');
 
                 images.forEach((element) => {
-
-                    console.log(element);
 
                     let url = BASE_PATH + '/' + element.image;
 
@@ -406,6 +407,8 @@
 
                             calculatePrices();
                             fillImages(response.extra.images);
+
+                            $('#productActive').prop('checked', response.extra.active === 1).change();
 
                             $('#productModal').modal('show');
                         }
@@ -516,11 +519,15 @@
 
                 displayLoader();
 
+                let data = new FormData(this);
+
+                data.append('active', $('#productActive').prop('checked') ? 1 : 0)
+
                 if (modalMode === 1) {
                     $.ajax({
                         type: 'POST',
                         url: '{!! route('product.store') !!}',
-                        data: new FormData(this),
+                        data: data,
                         cache: false,
                         contentType: false,
                         processData: false,
@@ -542,7 +549,7 @@
                     $.ajax({
                         type: 'POST',
                         url: '{!! route('product.update') !!}',
-                        data: new FormData(this),
+                        data: data,
                         cache: false,
                         contentType: false,
                         processData: false,
@@ -562,6 +569,8 @@
                     });
                 }
             });
+
+            $(".bt-switch").bootstrapSwitch();
         });
     </script>
 @endsection

@@ -51,7 +51,7 @@
 
 <body class="stretched side-panel-right side-push-panel">
 @if(Auth()->user() && Auth()->user()->isAdmin())
-@include('layouts.side')
+    @include('layouts.side')
 @endif
 <div id="loaderDiv" class="loading-container hiding">
     <div class="col-lg-3 col-md-4 col-6 loading" style="height:12.5rem;">
@@ -63,7 +63,7 @@
     </div>
 </div>
 <div id="wrapper">
-    @include('layouts.header', ['categories' => \App\Models\Category::all()->where('active', 1)->toArray()])
+    @include('layouts.header')
     @include('layouts.breadcrumb')
     @yield('content')
     @include('layouts.footer')
@@ -174,6 +174,35 @@
 
         return value;
     }
+
+    function regenerateCategoryMenu() {
+        $.ajax({
+            type: 'POST',
+            url: '{!! route('category.menu') !!}',
+            cache: false,
+            success: function (response) {
+                $('#categoryMenu').html('');
+                response.forEach((element)=> {
+                    $('#categoryMenu').append(
+                    `<li class="menu-item" style="">
+                        <a class="menu-link"
+                           href="{{url('/category')}}${element.route}">
+                            <div>${element.name}</div>
+                        </a>
+                    </li>`);
+                })
+            },
+            error: function (error) {
+                toastMessage(error.message, 5000, 0);
+            },
+            complete: function (e) {
+                hideLoader();
+            }
+        });
+    }
+
+    regenerateCategoryMenu();
+
 </script>
 
 @yield('js')

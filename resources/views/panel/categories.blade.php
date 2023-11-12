@@ -195,6 +195,7 @@
                         if (response.success === 1) {
                             categoriesTable.row.add(response.extra).draw();
                             $('#newCategoryModal').modal('hide');
+                            regenerateCategoryMenu();
                         }
                         toastMessage(response.message, 5000, response.success);
                     },
@@ -272,6 +273,7 @@
                             $('#editCategoryModal').modal('hide');
                             categoriesTable.ajax.reload();
                             categoryEditId = null;
+                            regenerateCategoryMenu();
                         }
                         toastMessage(response.message, 5000, response.success);
                     },
@@ -306,6 +308,7 @@
                         if (response.success === 1) {
                             $('#categoryDeleteModal').modal('hide');
                             categoriesTable.ajax.reload();
+                            regenerateCategoryMenu();
                         }
                         toastMessage(response.message, 5000, response.success);
                     },

@@ -31,6 +31,9 @@ Route::post('register', [RegisterController::class, 'register']);
 // Newsletter
 Route::post('/newsletter/store', [NewsletterController::class, 'store'])->name('newsletter.store');
 
+// Menu
+Route::post('/category/menu', [CategoryController::class, 'menu'])->name('category.menu');
+
 # Users
 Route::group(['middleware' => 'auth'], function () {
 

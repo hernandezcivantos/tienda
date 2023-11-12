@@ -188,4 +188,9 @@ class CategoryController extends Controller
 
         return response()->json($response);
     }
+
+    public function menu()
+    {
+        return response()->json(Category::where('active', 1)->get());
+    }
 }

@@ -36,28 +36,17 @@
                                 <div>{{__('Inicio')}}</div>
                             </a>
                         </li>
-                        @if($categories > 0)
-                            <li class="menu-item ms-auto sub-menu">
-                                <a class="menu-link" href="#">
-                                    <div>
-                                        {{__('Categorías')}}
-                                        <i class="bi-caret-down-fill text-smaller d-none d-xl-inline-block me-0"></i><i
-                                            class="sub-menu-indicator fa-solid fa-caret-down"></i></div>
-                                </a>
-                                <ul class="sub-menu-container" style="">
-                                    @foreach($categories as $category)
-                                        <li class="menu-item" style="">
-                                            <a class="menu-link"
-                                               href="{{url('/category') . '/' .  $category['route']}}">
-                                                <div>
-                                                    {{ __($category['name']) }}
-                                                </div>
-                                            </a>
-                                        </li>
-                                    @endforeach
-                                </ul>
-                            </li>
-                        @endif
+
+                        <li class="menu-item ms-auto sub-menu">
+                            <a class="menu-link" href="#">
+                                <div>
+                                    {{__('Categorías')}}
+                                    <i class="bi-caret-down-fill text-smaller d-none d-xl-inline-block me-0"></i><i
+                                        class="sub-menu-indicator fa-solid fa-caret-down"></i></div>
+                            </a>
+                            <ul id="categoryMenu" class="sub-menu-container" style=""></ul>
+                        </li>
+
                         @guest
                             @if (Route::has('login'))
                                 <li class="menu-item ms-auto {{ request()->is('login') ? 'current' : '' }}">

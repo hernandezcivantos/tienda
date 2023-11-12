@@ -14,6 +14,7 @@
                 <ul>
                     <li><a href="{{route('admin.categories')}}"><i class="bi-display"></i>{{__('Categorías')}}</a></li>
                     <li><a href="{{route('admin.products')}}"><i class="bi-box2"></i>{{__('Productos')}}</a></li>
+                    <li><a href="{{route('admin.users')}}"><i class="uil-users-alt"></i>{{__('Usuarios')}}</a></li>
                 </ul>
             </nav>
 

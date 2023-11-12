@@ -36,10 +36,23 @@ class AdminController extends Controller
                 ['name' => 'Admin'],
                 ['name' => 'Productos', 'redirect' => route('admin.products')],
             ],
-            'products' => Product::with('category')->get(),
             'categories' => Category::all()
         ];
 
         return view('panel.products', $data);
+    }
+
+    public function users()
+    {
+        $data = [
+            'bc' => true,
+            'routes' => [
+                ['name' => 'Inicio', 'redirect' => '/'],
+                ['name' => 'Admin'],
+                ['name' => 'Usuarios', 'redirect' => route('admin.users')],
+            ]
+        ];
+
+        return view('panel.users', $data);
     }
 }

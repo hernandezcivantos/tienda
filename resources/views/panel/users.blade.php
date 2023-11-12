@@ -10,17 +10,18 @@
 
                     <div class="row">
                         <div class="col-12 table-top-button">
-                            <a id="newCategoryButton" href="#" class="button"><i
-                                    class="uil-plus"></i>{{__('Nueva categoría')}}</a>
+                            <a id="newUserButton" href="#" class="button"><i
+                                    class="uil-plus"></i>{{__('Nuevo usuario')}}</a>
                         </div>
                     </div>
 
-                    <table id="categoriesTable" class="table table-bordered table-striped">
+                    <table id="usersTable" class="table table-bordered table-striped">
                         <thead>
                         <tr>
                             <th>#</th>
                             <th>{{__('Nombre')}}</th>
-                            <th>{{__('Estado')}}</th>
+                            <th>{{__('Correo')}}</th>
+                            <th>{{__('Rol')}}</th>
                             <th>{{__('Acciones')}}</th>
                         </tr>
                         </thead>
@@ -35,9 +36,9 @@
 @endsection
 
 @section('modals')
-    <!-- Categories modals -->
+    <!-- Users modals -->
     <!-- ADD -->
-    <div id="newCategoryModal" class="modal fade text-start" tabindex="-1" role="dialog"
+    <div id="newUserModal" class="modal fade text-start" tabindex="-1" role="dialog"
          aria-labelledby="newCategoryModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
@@ -56,7 +57,6 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <input id="newCategoryActive" class="bt-switch" type="checkbox" checked data-on-text="Activa" data-off-text="Inactiva" data-on-color="themecolor" data-off-color="danger">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{{__('Cerrar')}}</button>
                     <button id="newCategoryModalButton" type="button"
                             class="btn btn-green">{{__('Crear categoría')}}</button>
@@ -85,7 +85,6 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <input id="editCategoryActive" class="bt-switch" type="checkbox" checked data-on-text="Activa" data-off-text="Inactiva" data-on-color="themecolor" data-off-color="danger">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{{__('Cerrar')}}</button>
                     <button id="editCategoryModalButton" type="button"
                             class="btn btn-green">{{__('Editar categoría')}}</button>
@@ -124,18 +123,19 @@
             let categoryEditId;
             let categoryDeleteId;
 
-            let categoriesTable = new DataTable('#categoriesTable', {
+            let usersTable = new DataTable('#usersTable', {
                 ajax: {
-                    url: '{{route('category.all')}}',
+                    url: '{{route('admin.users.all')}}',
                 },
                 columns: [
                     {data: 'id'},
                     {data: 'name'},
+                    {data: 'email'},
                     {
                         data: null,
                         bSortable: false,
                         mRender: function (data) {
-                            return data.active === 1 ? 'Activa' : 'Inactiva';
+                            return data.access_level === 1 ? 'Admin' : 'Cliente';
                         }
                     },
                     {
@@ -162,7 +162,6 @@
 
                 $('#categoryName').val('');
                 $('#categoryRoute').val('');
-                $('#editCategoryActive').prop('checked', true).change();
                 $('#newCategoryModal').modal('show');
             });
 
@@ -179,8 +178,7 @@
 
                 let data = {
                     name: $('#categoryName').val(),
-                    route: friendlyUrl($('#categoryName').val()),
-                    active: $('#newCategoryActive').prop('checked') ? 1 : 0
+                    route: friendlyUrl($('#categoryName').val())
                 };
 
                 displayLoader();
@@ -193,8 +191,8 @@
                     dataType: 'json',
                     success: function (response) {
                         if (response.success === 1) {
-                            categoriesTable.row.add(response.extra).draw();
                             $('#newCategoryModal').modal('hide');
+                            usersTable.row.add(response.extra).draw();
                         }
                         toastMessage(response.message, 5000, response.success);
                     },
@@ -212,7 +210,6 @@
 
                 $('#categoryNameEdit').val('');
                 $('#categoryRouteEdit').val('');
-                $('#editCategoryActive').prop('checked', false).change();
 
                 displayLoader();
 
@@ -228,11 +225,6 @@
                         if (response.success === 1) {
                             $('#categoryNameEdit').val(response.extra.name);
                             $('#categoryRouteEdit').val(response.extra.route);
-                            if(response.extra.active === 1) {
-                                $('#editCategoryActive').prop('checked', true).change();
-                            } else {
-                                $('#editCategoryActive').prop('checked', false).change();
-                            }
                             $('#editCategoryModal').modal('show');
                             categoryEditId = id;
                             hideLoader();
@@ -255,8 +247,7 @@
                 let data = {
                     id: categoryEditId,
                     name: $('#categoryNameEdit').val(),
-                    route: friendlyUrl($('#categoryRouteEdit').val()),
-                    active: $('#editCategoryActive').prop('checked') ? 1 : 0,
+                    route: friendlyUrl($('#categoryRouteEdit').val())
                 };
 
                 displayLoader();
@@ -270,7 +261,7 @@
                     success: function (response) {
                         if (response.success === 1) {
                             $('#editCategoryModal').modal('hide');
-                            categoriesTable.ajax.reload();
+                            usersTable.ajax.reload();
                             categoryEditId = null;
                         }
                         toastMessage(response.message, 5000, response.success);
@@ -305,7 +296,7 @@
                     success: function (response) {
                         if (response.success === 1) {
                             $('#categoryDeleteModal').modal('hide');
-                            categoriesTable.ajax.reload();
+                            usersTable.ajax.reload();
                         }
                         toastMessage(response.message, 5000, response.success);
                     },
@@ -318,8 +309,6 @@
                 });
 
             });
-
-            $(".bt-switch").bootstrapSwitch();
         });
     </script>
 @endsection

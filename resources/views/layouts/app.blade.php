@@ -36,6 +36,10 @@
     <!-- Plugins/Components CSS -->
     <link rel="stylesheet" href="{{asset('css/components/bs-datatable.css')}}">
 
+    <!-- Plugins/Components CSS -->
+    <link rel="stylesheet" href="{{asset('css/components/bs-switches.css')}}"><!-- Bootstrap Switch CSS -->
+    <link rel="stylesheet" href="{{asset('css/components/radio-checkbox.css')}}"><!-- Radio Checkbox Plugin -->
+
     <!-- Specific CSS -->
     @yield('css')
 
@@ -46,7 +50,9 @@
 </head>
 
 <body class="stretched side-panel-right side-push-panel">
+@if(Auth()->user() && Auth()->user()->isAdmin())
 @include('layouts.side')
+@endif
 <div id="loaderDiv" class="loading-container hiding">
     <div class="col-lg-3 col-md-4 col-6 loading" style="height:12.5rem;">
         <div class="css3-spinner" style="--cnvs-loader-color:var(--cnvs-themecolor);">
@@ -79,6 +85,8 @@
 <script src="{{asset('js/components/rangeslider.min.js')}}"></script>
 <script src="{{asset('js/components/bs-filestyle.js')}}"></script>
 <script src="{{asset('js/components/bs-datatable.js')}}"></script>
+<script src="{{asset('js/components/bs-switches.js')}}"></script>
+
 <script>
 
     let table = new DataTable('.datatableTable', {

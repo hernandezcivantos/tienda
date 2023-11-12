@@ -32,12 +32,15 @@ class CategoryController extends Controller
     {
         $rules = [
             'name' => 'required|max:255',
-            'route' => 'required'
+            'route' => 'required',
+            'active' => 'required|bool'
         ];
 
         $customMessages = [
             'name.required' => __('El nombre es necesario'),
             'route.required' => __('La ruta es necesaria'),
+            'active.required' => __('El estado es necesario'),
+            'active.bool' => __('El estado debe ser activo o inactivo'),
             'max' => __('Demasiados caracteres'),
         ];
 
@@ -52,6 +55,7 @@ class CategoryController extends Controller
             $category = new Category();
             $category->name = $request->name;
             $category->route = $request->route;
+            $category->active = $request->active;
             $category->save();
 
             $response = [
@@ -100,12 +104,15 @@ class CategoryController extends Controller
         $rules = [
             'id' => 'required|exists:categories,id',
             'name' => 'required|max:255',
-            'route' => 'required'
+            'route' => 'required',
+            'active' => 'required|bool'
         ];
 
         $customMessages = [
             'name.required' => __('El nombre es necesario'),
             'route.required' => __('La ruta es necesaria'),
+            'active.required' => __('El estado es necesario'),
+            'active.bool' => __('El estado debe ser activo o inactivo'),
             'id.required' => __('Es necesario proporcionar un ID de categoría'),
             'id.exists' => __('La categoría no existe'),
             'max' => __('Demasiados caracteres'),
@@ -123,6 +130,7 @@ class CategoryController extends Controller
 
             $category->name = $request->name;
             $category->route = $request->route;
+            $category->active = $request->active;
             $category->save();
 
             $response = [

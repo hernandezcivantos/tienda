@@ -78,6 +78,14 @@ Route::group(['middleware' => 'admin'], function () {
     Route::group(['prefix' => 'image', 'as' => 'image.', 'name' => 'image', 'middleware' => 'admin'], function () {
         Route::post('delete', [ProductImageController::class, 'delete'])->name('delete');
     });
+
+    Route::group(['prefix' => 'user', 'as' => 'user.', 'name' => 'user'], function () {
+        Route::post('store', [UserController::class, 'store'])->name('store');
+        Route::post('get', [UserController::class, 'get'])->name('get');
+        Route::post('delete', [UserController::class, 'delete'])->name('delete');
+        Route::post('updateForm', [UserController::class, 'updateForm'])->name('updateForm');
+
+    });
 });
 
 // Shop Category to product list

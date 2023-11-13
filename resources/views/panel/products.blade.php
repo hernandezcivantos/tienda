@@ -368,7 +368,7 @@
             }
 
             $('#newProductButton').on('click', function () {
-                MODAL_LABEL.append('');
+                MODAL_LABEL.html('');
                 MODAL_LABEL.append('{{__('Añadir producto')}}');
                 wipeProductForm(1);
                 $('#productModal').modal('show');
@@ -377,7 +377,7 @@
             $(document.body).on('click', '.productEditLink', function () {
                 let id = $(this).data('id');
 
-                MODAL_LABEL.append('');
+                MODAL_LABEL.html('');
                 MODAL_LABEL.append('{{__('Editar producto')}}');
                 wipeProductForm(2);
                 $('#productID').val(id);
@@ -408,7 +408,7 @@
                             calculatePrices();
                             fillImages(response.extra.images);
 
-                            $('#productActive').prop('checked', response.extra.active === 1).change();
+                            $('#productActive').prop('checked', response.extra.active === 1 || response.extra.active === '1').change();
 
                             $('#productModal').modal('show');
                         }

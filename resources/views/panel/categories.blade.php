@@ -135,7 +135,7 @@
                         data: null,
                         bSortable: false,
                         mRender: function (data) {
-                            return data.active === 1 ? 'Activa' : 'Inactiva';
+                            return data.active === 1 || data.active === '1' ? 'Activa' : 'Inactiva';
                         }
                     },
                     {
@@ -229,7 +229,7 @@
                         if (response.success === 1) {
                             $('#categoryNameEdit').val(response.extra.name);
                             $('#categoryRouteEdit').val(response.extra.route);
-                            if(response.extra.active === 1) {
+                            if(response.extra.active === 1 || response.extra.active === '1') {
                                 $('#editCategoryActive').prop('checked', true).change();
                             } else {
                                 $('#editCategoryActive').prop('checked', false).change();

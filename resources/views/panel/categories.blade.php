@@ -292,8 +292,8 @@
 
                 categoryDeleteId = id;
 
-                $('#categoryDeleteModalButton').attr('data-id', id);
-                $('#categoryDeleteModal').modal('show');
+                $('#userDeleteModalButton').attr('data-id', id);
+                $('#userDeleteModal').modal('show');
             });
 
             $(document.body).on('click', '#categoryDeleteModalButton', function () {

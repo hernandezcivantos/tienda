@@ -93,12 +93,12 @@
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h4 class="modal-title" id="myModalLabel">{{__('ELIMINAR CATEGORIA')}}</h4>
+                    <h4 class="modal-title" id="myModalLabel">{{__('ELIMINAR USUARIO')}}</h4>
                     <button type="button" class="btn-close btn-sm" data-bs-dismiss="modal"
                             aria-hidden="true"></button>
                 </div>
                 <div class="modal-body">
-                    <p>{{__('Estás a punto de ELIMINAR esta categoría. ¿Es correcto?')}}</p>
+                    <p>{{__('Estás a punto de ELIMINAR este usuario. ¿Es correcto?')}}</p>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary"
@@ -149,7 +149,7 @@
                             return `<a class="userEditLink" data-id="${data.id}" href="#">
                                         <i class="uil-edit" style="font-size: 18px"></i>
                                     </a>
-                                    <a class="userEditLink" data-id="${data.id}" href="#">
+                                    <a class="userDeleteLink" data-id="${data.id}" href="#">
                                         <i class="uil-trash" style="font-size: 18px"></i>
                                     </a>
                                     `;

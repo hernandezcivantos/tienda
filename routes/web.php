@@ -17,6 +17,9 @@ use Illuminate\Support\Facades\Route;
 # Landing
 Route::get('/', [LandingController::class, 'index']);
 
+
+// Shop Category to product list
+
 # Autorización
 //Auth::routes();
 // Login and Logout Routes...
@@ -65,6 +68,7 @@ Route::group(['middleware' => 'admin'], function () {
         Route::post('get', [ProductController::class, 'get'])->name('get');
         Route::post('delete', [ProductController::class, 'delete'])->name('delete');
         Route::get('all', [DatatablesController::class, 'products'])->name('all');
+        Route::get('/view/{id}', [ProductController::class, 'view']);
     });
 
     Route::group(['prefix' => 'admin', 'as' => 'admin.', 'name' => 'admin', 'middleware' => 'admin'], function () {
@@ -88,5 +92,4 @@ Route::group(['middleware' => 'admin'], function () {
     });
 });
 
-// Shop Category to product list
 Route::get('/category/{name}', [CategoryController::class, 'url']);

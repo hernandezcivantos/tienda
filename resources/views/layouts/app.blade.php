@@ -186,7 +186,7 @@
                     $('#categoryMenu').append(
                     `<li class="menu-item" style="">
                         <a class="menu-link"
-                           href="{{url('/category')}}${element.route}">
+                           href="{{url('/category')}}/${element.route}">
                             <div>${element.name}</div>
                         </a>
                     </li>`);

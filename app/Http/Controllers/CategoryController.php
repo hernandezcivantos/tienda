@@ -22,7 +22,11 @@ class CategoryController extends Controller
                 ['name' => 'Productos'],
                 ['name' => $category->name]
             ],
-            'products' => Product::all()->where('category_id', $category->id)
+            'products' => Product::where('category_id', $category->id)
+                ->with('images', function ($query) {
+                    $query->take(2);
+                })
+                ->get()
         ];
 
         return view('category.view', $data);

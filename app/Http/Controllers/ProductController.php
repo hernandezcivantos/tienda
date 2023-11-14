@@ -253,6 +253,13 @@ class ProductController extends Controller
         return response()->json($response);
     }
 
+    public function view(Request $request)
+    {
+        echo '<pre>';
+        print_r($request->id);
+        echo '</pre>';
+    }
+
     private function _deleteFiles($productID)
     {
         ProductImage::where('product_id', $productID)

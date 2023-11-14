@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
+use NumberFormatter;
 
 class Product extends Model
 {
@@ -23,7 +24,9 @@ class Product extends Model
         'name',
         'price',
         'weight',
-        'measures'
+        'measures',
+        'discount',
+        'vat'
     ];
 
     public function images(): HasMany
@@ -34,5 +37,22 @@ class Product extends Model
     public function category(): BelongsTo
     {
         return $this->belongsTo(Category::class);
+    }
+
+    public function getFormattedPrice()
+    {
+        $formatter = new NumberFormatter('de_DE', NumberFormatter::CURRENCY);
+        return $formatter->formatCurrency($this->price, 'EUR');
+    }
+
+    public function getFormattedWithDiscountPrice()
+    {
+        if($this->discount > 0)
+        {
+            $formatter = new NumberFormatter('de_DE', NumberFormatter::CURRENCY);
+            return $formatter->formatCurrency($this->price - $this->price * $this->discount / 100, 'EUR');
+        }
+
+        return $this->getFormattedPrice();
     }
 }

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\ProductImage;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Storage;
 
 class ProductImageController extends Controller
 {
@@ -16,7 +17,7 @@ class ProductImageController extends Controller
 
         $customMessages = [
             'required' => __('Es necesario proporcionar un ID de imagen'),
-            'exists' => __('El producto no existe')
+            'exists' => __('La imagen no existe')
         ];
 
         $validator = Validator::make($request->all(), $rules, $customMessages);
@@ -27,8 +28,13 @@ class ProductImageController extends Controller
                 'message' => $validator->errors()->first()
             ];
         } else {
-            ProductImage::find($request->id)
-                ->delete();
+
+            $image = ProductImage::find($request->id);
+
+            if(ProductImage::find($request->id)->delete())
+            {
+                Storage::delete('public/products/' . $image->image);
+            }
 
             $response = [
                 'success' => 1,

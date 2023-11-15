@@ -213,7 +213,7 @@
             const MODAL_LABEL = $('#modalLabel');
             const DEFAULT_VAT = '21';
             const DEFAULT_DISCOUNT = '0';
-            const BASE_PATH = '{{asset('public/storage/products')}}';
+            const BASE_PATH = '{{asset('')}}';
 
             let productDeleteId;
 
@@ -339,7 +339,7 @@
 
                 images.forEach((element) => {
 
-                    let url = BASE_PATH + '/' + element.image;
+                    let url = BASE_PATH + element.image;
 
                     $('#productImagesDisplayZone').append(
                         `<div id="productImagePreviewFrame${element.id}" class="file-preview-frame krajee-default kv-preview-thumb rotatable">

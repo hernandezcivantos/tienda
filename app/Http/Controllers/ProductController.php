@@ -8,6 +8,7 @@ use Exception;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 
 class ProductController extends Controller
@@ -16,7 +17,7 @@ class ProductController extends Controller
     {
         $rules = [
             'name' => 'required|max:255',
-            'category' => 'required|numeric|exists:categories,id',
+            'category' => 'required|exists:categories,id',
             'vat' => 'required|numeric|between:0,100.0',
             'discount' => 'nullable|numeric|between:0,100.0',
             'price' => 'required|numeric',
@@ -130,7 +131,7 @@ class ProductController extends Controller
         $rules = [
             'id' => 'required|numeric|exists:products,id',
             'name' => 'required|max:255',
-            'category' => 'required|numeric|exists:categories,id',
+            'category' => 'required|exists:categories,id',
             'vat' => 'required|numeric|between:0,100.0',
             'discount' => 'nullable|numeric|between:0,100.0',
             'price' => 'required|numeric',
@@ -230,10 +231,18 @@ class ProductController extends Controller
             try {
                 DB::beginTransaction();
 
-                Product::find($request->id)
-                    ->delete();
+                $product = Product::where('id', $request->id)
+                    ->with('images')
+                    ->first();
 
-                $this->_deleteFiles($request->id);
+                $images = $product->images;
+
+                $product->delete();
+
+                foreach($images as $image)
+                {
+                    Storage::delete('public/products/' . $image->image);
+                }
 
                 $response = [
                     'success' => 1,
@@ -260,21 +269,17 @@ class ProductController extends Controller
         echo '</pre>';
     }
 
-    private function _deleteFiles($productID)
-    {
-        ProductImage::where('product_id', $productID)
-            ->delete();
-    }
-
     private function _updaloadFiles($files, $id): void
     {
         foreach ($files as $file) {
+
+            $name = $file->hashName();
 
             $file->store('public/products');
 
             $image = new ProductImage();
             $image->product_id = $id;
-            $image->image = $file->getClientOriginalName();
+            $image->image = $name;
             $image->save();
         }
     }

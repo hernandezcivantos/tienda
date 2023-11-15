@@ -15,6 +15,11 @@ class CategoryController extends Controller
     {
         $category = Category::getByUrl($request['name']);
 
+        if(!$category)
+        {
+            return redirect('/');
+        }
+
         $data = [
             'bc' => true,
             'routes' => [
@@ -195,6 +200,7 @@ class CategoryController extends Controller
 
     public function menu()
     {
-        return response()->json(Category::where('active', 1)->get());
+        return response()->json(Category::where('active', 1)
+            ->get());
     }
 }

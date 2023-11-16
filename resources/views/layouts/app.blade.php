@@ -190,7 +190,7 @@
                     TPJ('#categoryMenu').append(
                     `<li class="menu-item" style="">
                         <a class="menu-link"
-                           href="{{url('/category')}}/TPJ{element.route}">
+                           href="{{url('/category')}}/${element.route}">
                             <div>${element.name}</div>
                         </a>
                     </li>`);

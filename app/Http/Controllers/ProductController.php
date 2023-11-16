@@ -65,7 +65,7 @@ class ProductController extends Controller
                 $product->price = $request->price;
                 $product->weight = $request->weight;
                 $product->measures = $request->measures;
-                $product->desription = $request->desription;
+                $product->description = $request->description;
                 $product->active = $request->active;
                 $product->save();
 
@@ -184,7 +184,7 @@ class ProductController extends Controller
                 $product->price = $request->price;
                 $product->weight = $request->weight;
                 $product->measures = $request->measures;
-                $product->desription = $request->desription;
+                $product->description = $request->description;
                 $product->active = $request->active;
                 $product->update();
 

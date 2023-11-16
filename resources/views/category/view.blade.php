@@ -11,18 +11,26 @@
                 <div id="shop" class="shop row gutter-30">
 
                     @foreach($products as $product)
-                        <div class="product col-lg-3 col-md-4 col-sm-6 col-12">
+                        <div onClick="window.location='{{url('/product/view') . '/' . $product->id}}';"
+                             class="product col-lg-3 col-md-4 col-sm-6 col-12 pointer">
                             <div class="grid-inner">
                                 <div class="product-image">
-                                    @foreach($product->images as $image)
-                                        <a href="#"><img src="{{asset('storage/public/products/'.$image->image)}}"
+                                    @foreach($product->images->take(2) as $image)
+                                        <a href="#"><img class="img-fluid" src="{{asset('storage/products/' . $image->image)}}"
                                                          alt="{{$product->name}}"></a>
                                     @endforeach
+                                    @if(count($product->images) < 1)
+                                            <a href="#"><img src="{{asset('images/no-image.jpg')}}"
+                                                             alt="{{$product->name}}"></a>
+                                    @endif
+                                    @if($product->discount > 0)
+                                        <div class="sale-flash badge bg-success p-2 text-uppercase">
+                                            -{{$product->discount}}%
+                                        </div>
+                                    @endif
                                     <div class="bg-overlay">
                                         <div class="bg-overlay-content align-items-end justify-content-between"
                                              data-hover-animate="fadeIn" data-hover-speed="400">
-                                            <a href="#" class="btn btn-dark me-2" title="Add to Cart"><i
-                                                    class="bi-bag-plus"></i></a>
                                         </div>
                                         <div class="bg-overlay-bg bg-transparent"></div>
                                     </div>

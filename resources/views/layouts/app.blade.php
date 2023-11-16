@@ -11,6 +11,11 @@
     <meta name="author" content="Civantos">
     <meta name="description" content="">
 
+   {{-- <script
+        src="https://code.jquery.com/jquery-3.7.1.min.js"
+        integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo="
+        crossorigin="anonymous"></script>--}}
+
     <!-- Font Imports -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -76,10 +81,7 @@
 ============================================= -->
 <script src="{{asset('js/plugins.min.js') }}"></script>
 <script src="{{asset('js/functions.bundle.js') }}"></script>
-<script
-    src="https://code.jquery.com/jquery-3.7.1.min.js"
-    integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo="
-    crossorigin="anonymous"></script>
+
 <!-- Toast -->
 <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
 <script src="{{asset('js/components/rangeslider.min.js')}}"></script>
@@ -88,6 +90,8 @@
 <script src="{{asset('js/components/bs-switches.js')}}"></script>
 
 <script>
+
+    const TPJ = jQuery;
 
     let table = new DataTable('.datatableTable', {
         pageLength: 9999999999,
@@ -99,11 +103,11 @@
         }
     });
 
-    const loader = $('#loaderDiv');
+    const loader = TPJ('#loaderDiv');
 
-    $.ajaxSetup({
+    TPJ.ajaxSetup({
         headers: {
-            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            'X-CSRF-TOKEN': TPJ('meta[name="csrf-token"]').attr('content')
         }
     });
 
@@ -176,17 +180,17 @@
     }
 
     function regenerateCategoryMenu() {
-        $.ajax({
+        TPJ.ajax({
             type: 'POST',
             url: '{!! route('category.menu') !!}',
             cache: false,
             success: function (response) {
-                $('#categoryMenu').html('');
+                TPJ('#categoryMenu').html('');
                 response.forEach((element)=> {
-                    $('#categoryMenu').append(
+                    TPJ('#categoryMenu').append(
                     `<li class="menu-item" style="">
                         <a class="menu-link"
-                           href="{{url('/category')}}/${element.route}">
+                           href="{{url('/category')}}/TPJ{element.route}">
                             <div>${element.name}</div>
                         </a>
                     </li>`);

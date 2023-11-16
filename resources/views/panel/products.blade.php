@@ -208,14 +208,15 @@
 
 @section('js')
     <script>
-        $(document).ready(function () {
+        TPJ(document).ready(function () {
 
-            const MODAL_LABEL = $('#modalLabel');
+            const MODAL_LABEL = TPJ('#modalLabel');
             const DEFAULT_VAT = '21';
             const DEFAULT_DISCOUNT = '0';
-            const BASE_PATH = '{{asset('')}}';
+            const BASE_PATH = '{{asset('storage/products')}}';
 
             let productDeleteId;
+            let imageDeleteId;
 
             let productsTable = new DataTable('#productsTable', {
                 ajax: {
@@ -255,39 +256,39 @@
             let modalMode;
 
             function wipeProductForm(mode) {
-                $('#productName').val('');
-                $('#productCategory').prop('selectedIndex', 0);
-                $('#productVat').val('0.0');
-                $('#productDiscount').val('0.0');
-                $('#productPrice').val('0.0');
-                $('#productWeight').val('');
-                $('#productMeasures').val('');
-                $('#productID').val('');
+                TPJ('#productName').val('');
+                TPJ('#productCategory').prop('selectedIndex', 0);
+                TPJ('#productVat').val('0.0');
+                TPJ('#productDiscount').val('0.0');
+                TPJ('#productPrice').val('0.0');
+                TPJ('#productWeight').val('');
+                TPJ('#productMeasures').val('');
+                TPJ('#productID').val('');
 
-                $(".vat-range").data("ionRangeSlider").update({
+                TPJ(".vat-range").data("ionRangeSlider").update({
                     from: DEFAULT_VAT
                 });
-                $(".discount-range").data("ionRangeSlider").update({
+                TPJ(".discount-range").data("ionRangeSlider").update({
                     from: DEFAULT_DISCOUNT
                 });
 
-                $('.fileinput-remove-button').click();
+                TPJ('.fileinput-remove-button').click();
 
                 modalMode = mode;
 
                 if (modalMode === 1) {
-                    $('#productButtonForm').html('{{__('Añadir producto')}}');
+                    TPJ('#productButtonForm').html('{{__('Añadir producto')}}');
 
-                    if (!$('#productImagesDisplay').hasClass('hiding')) {
-                        $('#productImagesDisplay').addClass('hiding');
+                    if (!TPJ('#productImagesDisplay').hasClass('hiding')) {
+                        TPJ('#productImagesDisplay').addClass('hiding');
                     }
 
-                    $('#productActive').prop('checked', false).change();
+                    TPJ('#productActive').prop('checked', false).change();
                 } else if (modalMode === 2) {
-                    $('#productButtonForm').html('{{__('Editar producto')}}');
+                    TPJ('#productButtonForm').html('{{__('Editar producto')}}');
 
-                    if ($('#productImagesDisplay').hasClass('hiding')) {
-                        $('#productImagesDisplay').removeClass('hiding');
+                    if (TPJ('#productImagesDisplay').hasClass('hiding')) {
+                        TPJ('#productImagesDisplay').removeClass('hiding');
                     }
                 }
 
@@ -301,8 +302,8 @@
             }
 
             function calculateVatPrice() {
-                let vat = parseFloat($('.vat-range').val());
-                let price = parseFloat($('#productPrice').val());
+                let vat = parseFloat(TPJ('.vat-range').val());
+                let price = parseFloat(TPJ('#productPrice').val());
 
                 if (vat === parseFloat('0') || price === parseFloat('0')) {
                     return price;
@@ -312,8 +313,8 @@
             }
 
             function calculateDiscountPrice() {
-                let discount = parseFloat($('.discount-range').val());
-                let price = parseFloat($('#productPrice').val());
+                let discount = parseFloat(TPJ('.discount-range').val());
+                let price = parseFloat(TPJ('#productPrice').val());
 
                 if (discount === parseFloat('0') || price === parseFloat('0')) {
                     return price;
@@ -323,7 +324,7 @@
             }
 
             function calculateVat() {
-                let vat = parseFloat($('.vat-range').val());
+                let vat = parseFloat(TPJ('.vat-range').val());
                 let price = calculateDiscountPrice();
 
                 if (vat === parseFloat('0') || price === parseFloat('0')) {
@@ -335,13 +336,13 @@
 
             function fillImages(images) {
 
-                $('#productImagesDisplayZone').html('');
+                TPJ('#productImagesDisplayZone').html('');
 
                 images.forEach((element) => {
 
-                    let url = BASE_PATH + element.image;
+                    let url = BASE_PATH  + '/' + element.image;
 
-                    $('#productImagesDisplayZone').append(
+                    TPJ('#productImagesDisplayZone').append(
                         `<div id="productImagePreviewFrame${element.id}" class="file-preview-frame krajee-default kv-preview-thumb rotatable">
                             <div class="kv-file-content">
                                 <img
@@ -353,10 +354,9 @@
                             <div class="file-thumbnail-footer">
                                 <div class="file-actions">
                                     <div class="file-footer-buttons">
-                                        <button id="productImageDelete"
-                                                data-id="${element.id}"
+                                        <button data-id="${element.id}"
                                                 type="button"
-                                                class="btn btn-sm btn-danger">
+                                                class="btn btn-sm btn-danger productImageDelete">
                                                 <i class="bi-trash"></i>
                                         </button>
                                     </div>
@@ -367,24 +367,24 @@
                 });
             }
 
-            $('#newProductButton').on('click', function () {
+            TPJ('#newProductButton').on('click', function () {
                 MODAL_LABEL.html('');
                 MODAL_LABEL.append('{{__('Añadir producto')}}');
                 wipeProductForm(1);
-                $('#productModal').modal('show');
+                TPJ('#productModal').modal('show');
             });
 
-            $(document.body).on('click', '.productEditLink', function () {
-                let id = $(this).data('id');
+            TPJ(document.body).on('click', '.productEditLink', function () {
+                let id = TPJ(this).data('id');
 
                 MODAL_LABEL.html('');
                 MODAL_LABEL.append('{{__('Editar producto')}}');
                 wipeProductForm(2);
-                $('#productID').val(id);
+                TPJ('#productID').val(id);
 
                 displayLoader();
 
-                $.ajax({
+                TPJ.ajax({
                     type: 'POST',
                     url: '{!! route('product.get') !!}',
                     data: {id: id},
@@ -392,25 +392,27 @@
                     success: function (response) {
                         if (response.success === 1) {
 
-                            $(".vat-range").data("ionRangeSlider").update({
+                            TPJ(".vat-range").data("ionRangeSlider").update({
                                 from: response.extra.vat
                             });
-                            $(".discount-range").data("ionRangeSlider").update({
+                            TPJ(".discount-range").data("ionRangeSlider").update({
                                 from: response.extra.discount
                             });
 
-                            $('#productCategory').val(response.extra.category_id)
-                            $('#productName').val(response.extra.name)
-                            $('#productPrice').val(response.extra.price)
-                            $('#productWeight').val(response.extra.weight)
-                            $('#productMeasures').val(response.extra.measures)
+                            TPJ('#productCategory').val(response.extra.category_id)
+                            TPJ('#productName').val(response.extra.name)
+                            TPJ('#productPrice').val(response.extra.price)
+                            TPJ('#productWeight').val(response.extra.weight)
+                            TPJ('#productMeasures').val(response.extra.measures)
 
                             calculatePrices();
                             fillImages(response.extra.images);
 
-                            $('#productActive').prop('checked', response.extra.active === 1 || response.extra.active === '1').change();
+                            TPJ('#productActive').prop('checked', response.extra.active === 1 || response.extra.active === '1').change();
 
-                            $('#productModal').modal('show');
+                            regenerateCategoryMenu();
+
+                            TPJ('#productModal').modal('show');
                         }
                     },
                     error: function (error) {
@@ -422,27 +424,28 @@
                 });
             });
 
-            $(document.body).on('click', '.productDeleteLink', function (e) {
+            TPJ(document.body).on('click', '.productDeleteLink', function (e) {
                 let id = e.currentTarget.dataset.id;
 
                 productDeleteId = id;
 
-                $('#productDeleteModalButton').attr('data-id', id);
-                $('#productDeleteModal').modal('show');
+                TPJ('#productDeleteModalButton').attr('data-id', id);
+                TPJ('#productDeleteModal').modal('show');
             });
 
-            $(document.body).on('click', '#productDeleteModalButton', function () {
+            TPJ(document.body).on('click', '#productDeleteModalButton', function () {
                 displayLoader();
 
-                $.ajax({
+                TPJ.ajax({
                     type: 'POST',
                     url: '{!! route('product.delete') !!}',
                     data: {id: productDeleteId},
                     cache: false,
                     success: function (response) {
                         if (response.success === 1) {
-                            $('#productDeleteModal').modal('hide');
+                            TPJ('#productDeleteModal').modal('hide');
                             productsTable.ajax.reload();
+                            regenerateCategoryMenu();
                         }
                         toastMessage(response.message, 5000, response.success);
                     },
@@ -456,28 +459,26 @@
 
             });
 
-            $(document.body).on('click', '#productImageDelete', function () {
-                let id = $(this).data('id');
+            TPJ(document.body).on('click', '.productImageDelete', function () {
+                imageDeleteId = TPJ(this).data('id');
 
-                $('#productImageDeleteModalButton').attr('data-id', id);
-                $('#productImageDeleteModal').modal('show');
+                TPJ('#productImageDeleteModal').modal('show');
 
             });
 
-            $(document.body).on('click', '#productImageDeleteModalButton', function () {
-                let id = $(this).data('id');
+            TPJ(document.body).on('click', '#productImageDeleteModalButton', function () {
 
                 displayLoader();
 
-                $.ajax({
+                TPJ.ajax({
                     type: 'POST',
                     url: '{!! route('image.delete') !!}',
-                    data: {id: id},
+                    data: {id: imageDeleteId},
                     cache: false,
                     success: function (response) {
                         if (response.success === 1) {
-                            $('#productImageDeleteModal').modal('hide');
-                            $(`#productImagePreviewFrame${id}`).remove();
+                            TPJ('#productImageDeleteModal').modal('hide');
+                            TPJ(`#productImagePreviewFrame${imageDeleteId}`).remove();
                         }
                         toastMessage(response.message, 5000, response.success);
                     },
@@ -490,7 +491,7 @@
                 });
             });
 
-            $(".vat-range").ionRangeSlider({
+            TPJ(".vat-range").ionRangeSlider({
                 onChange: function (data) {
                     // Called then action is done and mouse is released
                     calculatePrices();
@@ -500,7 +501,7 @@
                 from: 21
             });
 
-            $(".discount-range").ionRangeSlider({
+            TPJ(".discount-range").ionRangeSlider({
                 onChange: function (data) {
                     // Called then action is done and mouse is released
                     calculatePrices();
@@ -514,17 +515,17 @@
                 calculatePrices();
             });
 
-            $('#productForm').submit(function (e) {
+            TPJ('#productForm').submit(function (e) {
                 e.preventDefault();
 
                 displayLoader();
 
                 let data = new FormData(this);
 
-                data.append('active', $('#productActive').prop('checked') ? 1 : 0)
+                data.append('active', TPJ('#productActive').prop('checked') ? 1 : 0)
 
                 if (modalMode === 1) {
-                    $.ajax({
+                    TPJ.ajax({
                         type: 'POST',
                         url: '{!! route('product.store') !!}',
                         data: data,
@@ -534,7 +535,8 @@
                         success: function (response) {
                             if (response.success === 1) {
                                 productsTable.row.add(response.extra).draw();
-                                $('#productModal').modal('hide');
+                                regenerateCategoryMenu();
+                                TPJ('#productModal').modal('hide');
                             }
                             toastMessage(response.message, 5000, response.success);
                         },
@@ -546,7 +548,7 @@
                         }
                     });
                 } else if (modalMode === 2) {
-                    $.ajax({
+                    TPJ.ajax({
                         type: 'POST',
                         url: '{!! route('product.update') !!}',
                         data: data,
@@ -556,7 +558,8 @@
                         success: function (response) {
                             if (response.success === 1) {
                                 productsTable.ajax.reload();
-                                $('#productModal').modal('hide');
+                                regenerateCategoryMenu();
+                                TPJ('#productModal').modal('hide');
                             }
                             toastMessage(response.message, 5000, response.success);
                         },
@@ -570,7 +573,7 @@
                 }
             });
 
-            $(".bt-switch").bootstrapSwitch();
+            TPJ(".bt-switch").bootstrapSwitch();
         });
     </script>
 @endsection

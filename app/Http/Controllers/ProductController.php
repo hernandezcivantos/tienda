@@ -264,9 +264,22 @@ class ProductController extends Controller
 
     public function view(Request $request)
     {
-        echo '<pre>';
-        print_r($request->id);
-        echo '</pre>';
+        $product = Product::where('id', $request->id)
+            ->with('images')
+            ->with('category')
+            ->first();
+
+        $data = [
+            'bc' => true,
+            'routes' => [
+                ['name' => 'Inicio', 'redirect' => '/'],
+                ['name' => $product->category->name, 'redirect' => url('/category/' . $product->category->route)],
+                ['name' => $product->name],
+            ],
+            'product' => $product
+        ];
+
+        return view('products.view', $data);
     }
 
     private function _updaloadFiles($files, $id): void

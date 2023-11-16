@@ -120,7 +120,7 @@
 
 @section('js')
     <script>
-        $(document).ready(function () {
+        TPJ(document).ready(function () {
             let categoryEditId;
             let categoryDeleteId;
 
@@ -157,13 +157,13 @@
                 }
             });
 
-            $('#newCategoryButton').on('click', function (e) {
+            TPJ('#newCategoryButton').on('click', function (e) {
                 e.preventDefault();
 
-                $('#categoryName').val('');
-                $('#categoryRoute').val('');
-                $('#editCategoryActive').prop('checked', true).change();
-                $('#newCategoryModal').modal('show');
+                TPJ('#categoryName').val('');
+                TPJ('#categoryRoute').val('');
+                TPJ('#editCategoryActive').prop('checked', true).change();
+                TPJ('#newCategoryModal').modal('show');
             });
 
             document.getElementById('categoryName').addEventListener("input", function () {
@@ -174,18 +174,18 @@
                 document.getElementById("categoryRouteEdit").value = friendlyUrl(this.value)
             });
 
-            $('#newCategoryModalButton').on('click', function (e) {
+            TPJ('#newCategoryModalButton').on('click', function (e) {
                 e.preventDefault();
 
                 let data = {
-                    name: $('#categoryName').val(),
-                    route: friendlyUrl($('#categoryName').val()),
-                    active: $('#newCategoryActive').prop('checked') ? 1 : 0
+                    name: TPJ('#categoryName').val(),
+                    route: friendlyUrl(TPJ('#categoryName').val()),
+                    active: TPJ('#newCategoryActive').prop('checked') ? 1 : 0
                 };
 
                 displayLoader();
 
-                $.ajax({
+                TPJ.ajax({
                     type: 'POST',
                     url: '{!! route('category.store') !!}',
                     data: data,
@@ -194,7 +194,7 @@
                     success: function (response) {
                         if (response.success === 1) {
                             categoriesTable.row.add(response.extra).draw();
-                            $('#newCategoryModal').modal('hide');
+                            TPJ('#newCategoryModal').modal('hide');
                             regenerateCategoryMenu();
                         }
                         toastMessage(response.message, 5000, response.success);
@@ -208,18 +208,18 @@
                 });
             });
 
-            $(document.body).on('click', '.categoryEditLink', function (e) {
+            TPJ(document.body).on('click', '.categoryEditLink', function (e) {
                 e.preventDefault();
 
-                $('#categoryNameEdit').val('');
-                $('#categoryRouteEdit').val('');
-                $('#editCategoryActive').prop('checked', false).change();
+                TPJ('#categoryNameEdit').val('');
+                TPJ('#categoryRouteEdit').val('');
+                TPJ('#editCategoryActive').prop('checked', false).change();
 
                 displayLoader();
 
                 let id = e.currentTarget.dataset.id;
 
-                $.ajax({
+                TPJ.ajax({
                     type: 'POST',
                     url: '{!! route('category.get') !!}',
                     data: {id: id},
@@ -227,14 +227,14 @@
                     dataType: 'json',
                     success: function (response) {
                         if (response.success === 1) {
-                            $('#categoryNameEdit').val(response.extra.name);
-                            $('#categoryRouteEdit').val(response.extra.route);
+                            TPJ('#categoryNameEdit').val(response.extra.name);
+                            TPJ('#categoryRouteEdit').val(response.extra.route);
                             if(response.extra.active === 1 || response.extra.active === '1') {
-                                $('#editCategoryActive').prop('checked', true).change();
+                                TPJ('#editCategoryActive').prop('checked', true).change();
                             } else {
-                                $('#editCategoryActive').prop('checked', false).change();
+                                TPJ('#editCategoryActive').prop('checked', false).change();
                             }
-                            $('#editCategoryModal').modal('show');
+                            TPJ('#editCategoryModal').modal('show');
                             categoryEditId = id;
                             hideLoader();
                         } else {
@@ -250,19 +250,19 @@
                 });
             });
 
-            $('#editCategoryModalButton').on('click', function (e) {
+            TPJ('#editCategoryModalButton').on('click', function (e) {
                 e.preventDefault();
 
                 let data = {
                     id: categoryEditId,
-                    name: $('#categoryNameEdit').val(),
-                    route: friendlyUrl($('#categoryRouteEdit').val()),
-                    active: $('#editCategoryActive').prop('checked') ? 1 : 0,
+                    name: TPJ('#categoryNameEdit').val(),
+                    route: friendlyUrl(TPJ('#categoryRouteEdit').val()),
+                    active: TPJ('#editCategoryActive').prop('checked') ? 1 : 0,
                 };
 
                 displayLoader();
 
-                $.ajax({
+                TPJ.ajax({
                     type: 'POST',
                     url: '{!! route('category.update') !!}',
                     data: data,
@@ -270,7 +270,7 @@
                     dataType: 'json',
                     success: function (response) {
                         if (response.success === 1) {
-                            $('#editCategoryModal').modal('hide');
+                            TPJ('#editCategoryModal').modal('hide');
                             categoriesTable.ajax.reload();
                             categoryEditId = null;
                             regenerateCategoryMenu();
@@ -286,27 +286,26 @@
                 });
             });
 
-            $(document.body).on('click', '.categoryDeleteLink', function (e) {
-
+            TPJ(document.body).on('click', '.categoryDeleteLink', function (e) {
                 let id = e.currentTarget.dataset.id;
 
                 categoryDeleteId = id;
 
-                $('#userDeleteModalButton').attr('data-id', id);
-                $('#userDeleteModal').modal('show');
+                TPJ('#categoryDeleteModalButton').attr('data-id', id);
+                TPJ('#categoryDeleteModal').modal('show');
             });
 
-            $(document.body).on('click', '#categoryDeleteModalButton', function () {
+            TPJ(document.body).on('click', '#categoryDeleteModalButton', function () {
                 displayLoader();
 
-                $.ajax({
+                TPJ.ajax({
                     type: 'POST',
                     url: '{!! route('category.delete') !!}',
                     data: {id: categoryDeleteId},
                     cache: false,
                     success: function (response) {
                         if (response.success === 1) {
-                            $('#categoryDeleteModal').modal('hide');
+                            TPJ('#categoryDeleteModal').modal('hide');
                             categoriesTable.ajax.reload();
                             regenerateCategoryMenu();
                         }
@@ -322,7 +321,7 @@
 
             });
 
-            $(".bt-switch").bootstrapSwitch();
+            TPJ(".bt-switch").bootstrapSwitch();
         });
     </script>
 @endsection

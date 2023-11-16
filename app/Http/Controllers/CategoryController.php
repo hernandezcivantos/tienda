@@ -6,6 +6,7 @@ use App\Models\Category;
 use App\Models\Product;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 use Mockery\Exception;
 
@@ -24,13 +25,10 @@ class CategoryController extends Controller
             'bc' => true,
             'routes' => [
                 ['name' => 'Inicio', 'redirect' => '/'],
-                ['name' => 'Productos'],
                 ['name' => $category->name]
             ],
             'products' => Product::where('category_id', $category->id)
-                ->with('images', function ($query) {
-                    $query->take(2);
-                })
+                ->with('images')
                 ->get()
         ];
 
@@ -200,7 +198,12 @@ class CategoryController extends Controller
 
     public function menu()
     {
-        return response()->json(Category::where('active', 1)
-            ->get());
+        $categories = Category::where('active', 1)
+            ->whereHas('products', function ($query) {
+                $query->where('active', 1);
+            })
+            ->get();
+
+        return response()->json($categories);
     }
 }

@@ -124,25 +124,25 @@
 
 @section('js')
     <script>
-        $(document).ready(function () {
-            $('#userDataButton').on('click', function () {
-                $('#userDataModal').modal('show');
+        TPJ(document).ready(function () {
+            TPJ('#userDataButton').on('click', function () {
+                TPJ('#userDataModal').modal('show');
             });
 
-            $('#userEdit').submit(function (e) {
+            TPJ('#userEdit').submit(function (e) {
                 e.preventDefault();
 
                 displayLoader();
 
-                $.ajax({
+                TPJ.ajax({
                     type: 'POST',
                     url: '{!! route('user.update') !!}',
-                    data: $('#userEdit').serialize(),
+                    data: TPJ('#userEdit').serialize(),
                     dataType: 'json',
                     success: function (response) {
                         if (response.success === 1) {
-                            $('#username').text($('#name').val());
-                            $('#userDataModal').modal('hide');
+                            TPJ('#username').text(TPJ('#name').val());
+                            TPJ('#userDataModal').modal('hide');
                         }
                         toastMessage(response.message, 5000, response.success);
                     },
@@ -156,8 +156,8 @@
             });
         });
 
-        $('table tr').on('click', function () {
-            window.location = $(this).data('href');
+        TPJ('table tr').on('click', function () {
+            window.location = TPJ(this).data('href');
             return false;
         });
 

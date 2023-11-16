@@ -113,9 +113,9 @@
 
 @section('js')
     <script>
-        $(document).ready(function () {
+        TPJ(document).ready(function () {
 
-            const MODAL_LABEL = $('#modalLabel');
+            const MODAL_LABEL = TPJ('#modalLabel');
 
             let modalMode;
             let userDeleteId;
@@ -162,43 +162,43 @@
             });
 
             function wipeForm(mode) {
-                $('#userName').val('');
-                $('#userEmail').val('');
-                $('#userPassword').val('');
-                $('#userRol').prop('selectedIndex',0);
+                TPJ('#userName').val('');
+                TPJ('#userEmail').val('');
+                TPJ('#userPassword').val('');
+                TPJ('#userRol').prop('selectedIndex',0);
 
                 modalMode = mode;
 
                 if (modalMode === 1) {
-                    $('#userButtonForm').html('{{__('Crear usuario')}}');
-                    $('#userActive').prop('checked', false).change();
-                    $('#passwordWarning').not('.hidden').hide();
+                    TPJ('#userButtonForm').html('{{__('Crear usuario')}}');
+                    TPJ('#userActive').prop('checked', false).change();
+                    TPJ('#passwordWarning').not('.hidden').hide();
                 } else if (modalMode === 2) {
-                    $('#userButtonForm').html('{{__('Editar usuario')}}');
-                    if(!$('#passwordWarning').hasClass('hidden')) {
-                        $('#passwordWarning').show();
+                    TPJ('#userButtonForm').html('{{__('Editar usuario')}}');
+                    if(!TPJ('#passwordWarning').hasClass('hidden')) {
+                        TPJ('#passwordWarning').show();
                     }
                 }
             }
 
-            $('#newUserButton').on('click', function () {
+            TPJ('#newUserButton').on('click', function () {
                 MODAL_LABEL.html('');
                 MODAL_LABEL.append('{{__('Crear usuario')}}');
                 wipeForm(1);
-                $('#userModal').modal('show');
+                TPJ('#userModal').modal('show');
             });
 
-            $('#userForm').submit(function (e) {
+            TPJ('#userForm').submit(function (e) {
                 e.preventDefault();
 
                 displayLoader();
 
                 let data = new FormData(this);
 
-                data.append('active', $('#userActive').prop('checked') ? 1 : 0)
+                data.append('active', TPJ('#userActive').prop('checked') ? 1 : 0)
 
                 if (modalMode === 1) {
-                    $.ajax({
+                    TPJ.ajax({
                         type: 'POST',
                         url: '{!! route('user.store') !!}',
                         data: data,
@@ -208,7 +208,7 @@
                         success: function (response) {
                             if (response.success === 1) {
                                 usersTable.row.add(response.extra).draw();
-                                $('#userModal').modal('hide');
+                                TPJ('#userModal').modal('hide');
                             }
                             toastMessage(response.message, 5000, response.success);
                         },
@@ -220,7 +220,7 @@
                         }
                     });
                 } else if (modalMode === 2) {
-                    $.ajax({
+                    TPJ.ajax({
                         type: 'POST',
                         url: '{!! route('user.updateForm') !!}',
                         data: data,
@@ -230,7 +230,7 @@
                         success: function (response) {
                             if (response.success === 1) {
                                 usersTable.ajax.reload();
-                                $('#userModal').modal('hide');
+                                TPJ('#userModal').modal('hide');
                             }
                             toastMessage(response.message, 5000, response.success);
                         },
@@ -244,28 +244,28 @@
                 }
             });
 
-            $(document.body).on('click', '.userEditLink', function () {
-                let id = $(this).data('id');
+            TPJ(document.body).on('click', '.userEditLink', function () {
+                let id = TPJ(this).data('id');
 
                 MODAL_LABEL.html('');
                 MODAL_LABEL.append('{{__('Editar usuario')}}');
                 wipeForm(2);
-                $('#userID').val(id);
+                TPJ('#userID').val(id);
 
                 displayLoader();
 
-                $.ajax({
+                TPJ.ajax({
                     type: 'POST',
                     url: '{!! route('user.get') !!}',
                     data: {id: id},
                     cache: false,
                     success: function (response) {
                         if (response.success === 1) {
-                            $('#userName').val(response.extra.name);
-                            $('#userEmail').val(response.extra.email);
-                            $('#userRol').prop('selectedIndex',response.extra.access_level);
-                            $('#userActive').prop('checked', response.extra.active === 1 || response.extra.active === '1').change();
-                            $('#userModal').modal('show');
+                            TPJ('#userName').val(response.extra.name);
+                            TPJ('#userEmail').val(response.extra.email);
+                            TPJ('#userRol').prop('selectedIndex',response.extra.access_level);
+                            TPJ('#userActive').prop('checked', response.extra.active === 1 || response.extra.active === '1').change();
+                            TPJ('#userModal').modal('show');
                         }
                     },
                     error: function (error) {
@@ -277,27 +277,27 @@
                 });
             });
 
-            $(document.body).on('click', '.userDeleteLink', function (e) {
+            TPJ(document.body).on('click', '.userDeleteLink', function (e) {
 
                 let id = e.currentTarget.dataset.id;
 
                 userDeleteId = id;
 
-                $('#userDeleteModalButton').attr('data-id', id);
-                $('#userDeleteModal').modal('show');
+                TPJ('#userDeleteModalButton').attr('data-id', id);
+                TPJ('#userDeleteModal').modal('show');
             });
 
-            $(document.body).on('click', '#userDeleteModalButton', function () {
+            TPJ(document.body).on('click', '#userDeleteModalButton', function () {
                 displayLoader();
 
-                $.ajax({
+                TPJ.ajax({
                     type: 'POST',
                     url: '{!! route('user.delete') !!}',
                     data: {id: userDeleteId},
                     cache: false,
                     success: function (response) {
                         if (response.success === 1) {
-                            $('#userDeleteModal').modal('hide');
+                            TPJ('#userDeleteModal').modal('hide');
                             usersTable.ajax.reload();
                         }
                         toastMessage(response.message, 5000, response.success);
@@ -312,7 +312,7 @@
 
             });
 
-            $(".bt-switch").bootstrapSwitch();
+            TPJ(".bt-switch").bootstrapSwitch();
         });
     </script>
 @endsection

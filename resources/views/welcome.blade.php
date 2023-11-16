@@ -490,19 +490,19 @@
                 SEMICOLON.Base.sliderDimensions();
             });
 
-            $('#subscribe').on('submit', function (e) {
+            TPJ('#subscribe').on('submit', function (e) {
                 e.preventDefault();
 
                 displayLoader();
 
-                $.ajax({
+                TPJ.ajax({
                     type: 'POST',
                     url: '{!! route('newsletter.store') !!}',
-                    data: {email: $('#subscribeEmail').val()},
+                    data: {email: TPJ('#subscribeEmail').val()},
                     dataType: 'json',
                     success: function (response) {
                         if (response.success === 1) {
-                            $('#subscribeEmail').val("");
+                            TPJ('#subscribeEmail').val("");
                         }
                         toastMessage(response.message, 5000, response.success);
                     },

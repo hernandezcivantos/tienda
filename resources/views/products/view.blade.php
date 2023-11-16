@@ -5,7 +5,6 @@
         <div class="content-wrap">
             <div class="container">
 
-                <!-- AQUI -->
                 <div class="single-product">
                     <div class="product">
                         <div class="row gutter-40">
@@ -56,8 +55,12 @@
                                     <!-- Product Single - Price
                                     ============================================= -->
                                     <div class="product-price">
-                                        <del>$39.99</del>
-                                        <ins>$24.99</ins>
+                                        @if($product->discount > 0)
+                                            <del>{{$product->getFormattedPrice()}}</del>
+                                            <ins>{{$product->getFormattedWithDiscountPrice()}}</ins>
+                                        @else
+                                            <ins>{{$product->getFormattedPrice()}}</ins>
+                                        @endif
                                     </div><!-- Product Single - Price End -->
 
                                 </div>
@@ -95,7 +98,6 @@
                         </div>
                     </div>
                 </div>
-                <!-- ./AQUI -->
 
             </div>
         </div>

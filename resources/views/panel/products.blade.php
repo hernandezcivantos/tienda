@@ -80,7 +80,7 @@
                             <div class="col-md-2">
                                 <div class="form-group">
                                     <label for="productPrice">{{__('Precio con IVA')}}</label>
-                                    <input id="productPrice" name="price" type="number" class="form-control" step="0.1"
+                                    <input id="productPrice" name="price" type="number" class="form-control" step="0.01"
                                            value="0.0">
                                 </div>
                             </div>
@@ -109,7 +109,7 @@
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label for="productWeight">{{__('Peso (Kg)')}}</label>
-                                    <input id="productWeight" name="weight" type="number" class="form-control">
+                                    <input id="productWeight" name="weight" type="number" class="form-control" value="0.0" step="0.01">
                                 </div>
                             </div>
 
@@ -118,6 +118,15 @@
                                     <label for="productMeasures">{{__('Medidas')}}</label>
                                     <input id="productMeasures" name="measures" type="text" class="form-control"
                                            placeholder="20x20x20cm">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="description">{{__('Descripción')}}</label>
+                                    <textarea id="description" name="description" class="form-control" rows="3"></textarea>
                                 </div>
                             </div>
                         </div>
@@ -264,6 +273,7 @@
                 TPJ('#productWeight').val('');
                 TPJ('#productMeasures').val('');
                 TPJ('#productID').val('');
+                TPJ('#description').html('');
 
                 TPJ(".vat-range").data("ionRangeSlider").update({
                     from: DEFAULT_VAT
@@ -391,7 +401,6 @@
                     cache: false,
                     success: function (response) {
                         if (response.success === 1) {
-
                             TPJ(".vat-range").data("ionRangeSlider").update({
                                 from: response.extra.vat
                             });

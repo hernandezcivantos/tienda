@@ -23,6 +23,7 @@ class ProductController extends Controller
             'price' => 'required|numeric',
             'weight' => 'nullable|numeric',
             'measures' => 'nullable',
+            'description' => 'nullable',
             'productFiles.*' => 'required|image|mimes:png,jpg,jpeg|max:2048',
             'active' => 'required|bool'
         ];
@@ -64,6 +65,7 @@ class ProductController extends Controller
                 $product->price = $request->price;
                 $product->weight = $request->weight;
                 $product->measures = $request->measures;
+                $product->desription = $request->desription;
                 $product->active = $request->active;
                 $product->save();
 
@@ -137,6 +139,7 @@ class ProductController extends Controller
             'price' => 'required|numeric',
             'weight' => 'nullable|numeric',
             'measures' => 'nullable',
+            'description' => 'nullable',
             'productFiles.*' => 'required|image|mimes:png,jpg,jpeg|max:2048',
             'active' => 'required|bool'
         ];
@@ -181,6 +184,7 @@ class ProductController extends Controller
                 $product->price = $request->price;
                 $product->weight = $request->weight;
                 $product->measures = $request->measures;
+                $product->desription = $request->desription;
                 $product->active = $request->active;
                 $product->update();
 

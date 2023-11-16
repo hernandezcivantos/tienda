@@ -75,7 +75,6 @@ Route::group(['middleware' => 'admin'], function () {
         Route::get('products', [AdminController::class, 'products'])->name('products');
         Route::get('users', [AdminController::class, 'users'])->name('users');
         Route::get('users.all', [DatatablesController::class, 'users'])->name('users.all');
-
     });
 
     Route::group(['prefix' => 'image', 'as' => 'image.', 'name' => 'image', 'middleware' => 'admin'], function () {

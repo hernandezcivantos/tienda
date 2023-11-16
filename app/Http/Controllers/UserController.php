@@ -59,7 +59,7 @@ class UserController extends Controller
 
             $user->name = $request->name;
             $user->address = $request->address ?? '';
-            $user->save();
+            $user->update();
 
             $response = [
                 'success' => 1,

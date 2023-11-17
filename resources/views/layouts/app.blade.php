@@ -92,6 +92,19 @@
 <script>
 
     const TPJ = jQuery;
+    const loader = TPJ('#loaderDiv');
+    let total = localStorage.getItem('total');
+    let storedCart = localStorage.getItem('storedCart');
+
+    if(!total) {
+        total = 0;
+        localStorage.setItem("total", 0);
+    }
+
+    if(!storedCart) {
+        cart = "";
+        localStorage.setItem("storedCart", "");
+    }
 
     let table = new DataTable('.datatableTable', {
         pageLength: 9999999999,
@@ -103,7 +116,6 @@
         }
     });
 
-    const loader = TPJ('#loaderDiv');
 
     TPJ.ajaxSetup({
         headers: {
@@ -203,6 +215,46 @@
                 hideLoader();
             }
         });
+    }
+
+    function regenerateCart() {
+
+        let total = localStorage.getItem('total');
+        let cart = localStorage.getItem('storedCart');
+        let items = JSON.parse(cart);
+
+        console.log(items);
+
+        /*items.forEach((element) => {
+            console.log(element);
+        })*/
+
+        if(!total)
+            total = 0;
+
+        if(!cart)
+            cart = '';
+
+        let item = `<div class="top-cart-item">
+            <div class="top-cart-item-image">
+                <a href="#"><img src="images/shop/small/1.jpg" alt="Blue Round-Neck Tshirt"></a>
+            </div>
+            <div class="top-cart-item-desc">
+                <div class="top-cart-item-desc-title">
+                    <a href="#">Blue Round-Neck Tshirt with a Button</a>
+                    <span class="top-cart-item-price d-block"></span>
+                </div>
+                <div class="top-cart-item-quantity">x 2</div>
+            </div>
+        </div>`;
+
+        TPJ('.top-cart-items').html(item);
+
+        total = new Intl.NumberFormat('de-DE', {style: 'currency', currency: 'EUR'}).format(
+            total,
+        );
+
+        TPJ('.top-checkout-price').html(total);
     }
 
     regenerateCategoryMenu();

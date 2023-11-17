@@ -24,6 +24,7 @@ class Product extends Model
         'price',
         'weight',
         'measures',
+        'description',
         'discount',
         'vat'
     ];

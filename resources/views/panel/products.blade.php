@@ -125,8 +125,8 @@
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <label for="description">{{__('Descripción')}}</label>
-                                    <textarea id="description" name="description" class="form-control" rows="3"></textarea>
+                                    <label for="productDescription">{{__('Descripción')}}</label>
+                                    <textarea id="productDescription" name="description" class="form-control" rows="3"></textarea>
                                 </div>
                             </div>
                         </div>
@@ -273,7 +273,7 @@
                 TPJ('#productWeight').val('');
                 TPJ('#productMeasures').val('');
                 TPJ('#productID').val('');
-                TPJ('#description').html('');
+                TPJ('#productDescription').val('');
 
                 TPJ(".vat-range").data("ionRangeSlider").update({
                     from: DEFAULT_VAT
@@ -413,6 +413,7 @@
                             TPJ('#productPrice').val(response.extra.price)
                             TPJ('#productWeight').val(response.extra.weight)
                             TPJ('#productMeasures').val(response.extra.measures)
+                            TPJ('#productDescription').val(response.extra.description)
 
                             calculatePrices();
                             fillImages(response.extra.images);

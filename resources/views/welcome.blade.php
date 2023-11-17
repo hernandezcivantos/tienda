@@ -94,7 +94,7 @@
                              data-elementdelay="0.01"
                              data-endelementdelay="0.1"
                              data-endspeed="1000"
-                             data-endeasing="Power4.easeIn"><a href="#"
+                             data-endeasing="Power4.easeIn"><a href="/category/mquinas"
                                                                class="button button-border button-large button-rounded text-end m-0"><span>Máquinas gym</span>
                                 <i class="uil uil-angle-right-b"></i></a></div>
 
@@ -178,7 +178,7 @@
                              data-elementdelay="0.01"
                              data-endelementdelay="0.1"
                              data-endspeed="1000"
-                             data-endeasing="Power4.easeIn"><a href="#"
+                             data-endeasing="Power4.easeIn"><a href="/category/bolsas-de-deporte"
                                                                class="button button-border button-large button-rounded text-end m-0"><span>Bolsas de deporte</span>
                                 <i class="uil uil-angle-right-b"></i></a></div>
 
@@ -213,7 +213,7 @@
 
                         <div class="row align-items-stretch g-4 h-100">
                             <div class="col-md-6 min-vh-25 min-vh-md-0">
-                                <a href="#" class="grid-inner d-block h-100">
+                                <a href="/category/relojes-deportivos" class="grid-inner d-block h-100">
                                     <img src="images/shop/banners/relojes-deportivos.png"
                                          alt="Banner de la sección de relojes deportivos"
                                          class="w-100 h-100 object-cover rounded">
@@ -221,7 +221,7 @@
                             </div>
 
                             <div class="col-md-6 min-vh-25 min-vh-md-0">
-                                <a href="#" class="grid-inner d-block h-100">
+                                <a href="/category/zapatillas-deportivas" class="grid-inner d-block h-100">
                                     <img src="images/shop/banners/zapatillas-deportivas.png"
                                          alt="Banner de la sección de zapatillas deportivas"
                                          class="w-100 h-100 object-cover rounded">
@@ -229,7 +229,7 @@
                             </div>
 
                             <div class="col-md-12 min-vh-25 min-vh-md-0 pb-md-0">
-                                <a href="#" class="grid-inner d-block h-100">
+                                <a href="/category/tenis-de-mesa" class="grid-inner d-block h-100">
                                     <img src="images/shop/banners/tenis-de-mesa.png"
                                          alt="Banner de la sección de tenis de mesa"
                                          class="w-100 h-100 object-cover rounded">
@@ -240,7 +240,7 @@
                     </div>
 
                     <div class="col-md-4 min-vh-50">
-                        <a href="#" class="grid-inner d-block h-100">
+                        <a href="/category/baloncesto" class="grid-inner d-block h-100">
                             <img src="images/shop/banners/baloncesto.png" alt="Banner de la sección de baloncesto"
                                  class="w-100 h-100 object-cover rounded">
                         </a>
@@ -250,7 +250,7 @@
                 <div class="clear mb-4"></div>
 
                 <div class="fancy-title title-border title-center mt-4">
-                    <h4>Destacados</h4>
+                    <h4>{{__('Descuentos')}}</h4>
                 </div>
 
                 <div class="tab-pane fade show active" id="home2" role="tabpanel" aria-labelledby="canvas-home-tab"
@@ -258,39 +258,47 @@
 
                     <div class="shop row gutter-30">
 
-                        <div class="product col-lg-3 col-md-4 col-sm-6 col-12">
-                            <div class="grid-inner">
-                                <div class="product-image">
-                                    <a href="#"><img src="images/shop/dress/1.jpg" alt="Checked Short Dress"></a>
-                                    <a href="#"><img src="images/shop/dress/1-1.jpg" alt="Checked Short Dress"></a>
-                                    <div class="sale-flash badge bg-success p-2">50% Off*</div>
-                                    <div class="bg-overlay">
-                                        <div class="bg-overlay-content align-items-end justify-content-between"
-                                             data-hover-animate="fadeIn" data-hover-speed="400">
-                                            <a href="#" class="btn btn-dark me-2" title="Add to Cart"><i
-                                                    class="bi-bag-plus"></i></a>
-                                            <a href="include/ajax/shop-item.html" class="btn btn-dark"
-                                               data-lightbox="ajax" title="Quick View"><i class="bi-eye"></i></a>
+                        @foreach($products as $product)
+                            <div onClick="window.location='{{url('/product/view') . '/' . $product->id}}';"
+                                 class="product col-lg-3 col-md-4 col-sm-6 col-12 pointer">
+                                <div class="grid-inner">
+                                    <div class="product-image">
+                                        @foreach($product->images->take(2) as $image)
+                                            <a href="#"><img class="img-fluid" src="{{asset('storage/products/' . $image->image)}}"
+                                                             alt="{{$product->name}}"></a>
+                                        @endforeach
+                                        @if(count($product->images) < 1)
+                                            <a href="#"><img src="{{asset('images/no-image.jpg')}}"
+                                                             alt="{{$product->name}}"></a>
+                                        @endif
+                                        @if($product->discount > 0)
+                                            <div class="sale-flash badge bg-success p-2 text-uppercase">
+                                                -{{$product->discount}}%
+                                            </div>
+                                        @endif
+                                        <div class="bg-overlay">
+                                            <div class="bg-overlay-content align-items-end justify-content-between"
+                                                 data-hover-animate="fadeIn" data-hover-speed="400">
+                                            </div>
+                                            <div class="bg-overlay-bg bg-transparent"></div>
                                         </div>
-                                        <div class="bg-overlay-bg bg-transparent"></div>
                                     </div>
-                                </div>
-                                <div class="product-desc">
-                                    <div class="product-title"><h3><a href="#">Checked Short Dress</a></h3></div>
-                                    <div class="product-price">
-                                        <del>$24.99</del>
-                                        <ins>$12.49</ins>
-                                    </div>
-                                    <div class="product-rating">
-                                        <i class="bi-star-fill"></i>
-                                        <i class="bi-star-fill"></i>
-                                        <i class="bi-star-fill"></i>
-                                        <i class="bi-star-fill"></i>
-                                        <i class="bi-star-half"></i>
+                                    <div class="product-desc">
+                                        <div class="product-title"><h3><a
+                                                    href="{{url('/product/view') . '/' . $product->id}}">{{$product->name}}</a>
+                                            </h3></div>
+                                        <div class="product-price">
+                                            @if($product->discount > 0)
+                                                <del>{{$product->getFormattedPrice()}}</del>
+                                                <ins>{{$product->getFormattedWithDiscountPrice()}}</ins>
+                                            @else
+                                                <ins>{{$product->getFormattedPrice()}}</ins>
+                                            @endif
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        @endforeach
 
                     </div>
 

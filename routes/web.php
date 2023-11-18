@@ -65,7 +65,7 @@ Route::group(['middleware' => 'admin'], function () {
     Route::group(['prefix' => 'product', 'as' => 'product.', 'name' => 'product'], function () {
         Route::post('store', [ProductController::class, 'store'])->name('store');
         Route::post('update', [ProductController::class, 'update'])->name('update');
-        Route::post('get', [ProductController::class, 'get'])->name('get');
+        //Route::post('get', [ProductController::class, 'get'])->name('get');
         Route::post('delete', [ProductController::class, 'delete'])->name('delete');
         Route::get('all', [DatatablesController::class, 'products'])->name('all');
     });
@@ -90,5 +90,6 @@ Route::group(['middleware' => 'admin'], function () {
     });
 });
 
+Route::post('/product/get', [ProductController::class, 'get'])->name('product.get');
 Route::get('/category/{name}', [CategoryController::class, 'url']);
 Route::get('/product/view/{id}', [ProductController::class, 'view']);

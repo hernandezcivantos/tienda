@@ -127,26 +127,26 @@
                     cache: false,
                     success: function (response) {
                         if (response.success === 1) {
-                            let letStoredCart = localStorage.getItem('storedCart');
-                            let qty = TPJ('#qty').val();
-                            let finalPrice = parseFloat(response.extra.price) - parseFloat(response.extra.price) * parseFloat(response.extra.discount) / parseFloat(100);
+                            let qty = parseFloat(TPJ('#qty').val());
+                            let finalPrice = parseFloat(parseFloat(response.extra.price) - parseFloat(response.extra.price) * parseFloat(response.extra.discount) / parseFloat(100));
+                            let cart = TPJ('#top-cart');
+                            let imgtodrag = TPJ('.slide').eq(0);
+                            let target = TPJ('#product-image');
+                            let imgclone;
+                            let url = "{{url('/')}}";
 
-                            if(!letStoredCart)
-                                letStoredCart = '';
+                            initCart();
 
-                            if(!total)
-                                total = 0;
+                            storedCart.push(`{"item":"${response.extra.name}","url":"${url}/product/view/${response.extra.id}","price": ${finalPrice},"qty":${qty},"img":"${response.extra.images[0].image ? `${url}/storage/products/` + response.extra.images[0].image : '${url}/images/no-image.jpg'}"}`);
 
-                            letStoredCart = letStoredCart + `{"item": ${response.extra.name}, "price": ${finalPrice}, "qty": ${qty}}`;
+                            total += qty * finalPrice;
+                            badget += qty;
 
-                            localStorage.setItem('storedCart', '' + JSON.stringify(letStoredCart));
-                            localStorage.setItem('total', parseFloat(parseFloat(localStorage.getItem('total')) + parseFloat(TPJ('#qty').val() * finalPrice)))
+                            storeCart();
+                            regenerateCart();
 
-                            var cart = TPJ('#top-cart');
-                            var imgtodrag = TPJ('.slide').eq(0);
-                            var target = TPJ('#product-image');
                             if (imgtodrag) {
-                                var imgclone = imgtodrag.clone()
+                                imgclone = imgtodrag.clone()
                                     .offset({
                                         top: target.offset().top,
                                         left: target.offset().left
@@ -162,7 +162,7 @@
                                         'left': cart.offset().left + 10,
                                         'width': 75,
                                         'height': 75
-                                    }, 1000, 'easeInOutExpo');
+                                    }, 900, 'easeInOutExpo');
 
                                 imgclone.animate({
                                     'width': 0,

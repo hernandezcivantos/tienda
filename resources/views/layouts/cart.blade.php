@@ -9,7 +9,7 @@
             <div class="top-cart-title">
                 <h4>Cesta de compra</h4>
             </div>
-            <div class="top-cart-items">
+            <div class="top-cart-items scrollable">
 
             </div>
             <div class="top-cart-action">

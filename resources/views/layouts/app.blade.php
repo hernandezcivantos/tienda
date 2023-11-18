@@ -11,10 +11,10 @@
     <meta name="author" content="Civantos">
     <meta name="description" content="">
 
-   {{-- <script
-        src="https://code.jquery.com/jquery-3.7.1.min.js"
-        integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo="
-        crossorigin="anonymous"></script>--}}
+    {{-- <script
+         src="https://code.jquery.com/jquery-3.7.1.min.js"
+         integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo="
+         crossorigin="anonymous"></script>--}}
 
     <!-- Font Imports -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -93,18 +93,11 @@
 
     const TPJ = jQuery;
     const loader = TPJ('#loaderDiv');
-    let total = localStorage.getItem('total');
-    let storedCart = localStorage.getItem('storedCart');
+    let total;
+    let storedCart;
+    let badget;
 
-    if(!total) {
-        total = 0;
-        localStorage.setItem("total", 0);
-    }
-
-    if(!storedCart) {
-        cart = "";
-        localStorage.setItem("storedCart", "");
-    }
+    initCart();
 
     let table = new DataTable('.datatableTable', {
         pageLength: 9999999999,
@@ -198,9 +191,9 @@
             cache: false,
             success: function (response) {
                 TPJ('#categoryMenu').html('');
-                response.forEach((element)=> {
+                response.forEach((element) => {
                     TPJ('#categoryMenu').append(
-                    `<li class="menu-item" style="">
+                        `<li class="menu-item" style="">
                         <a class="menu-link"
                            href="{{url('/category')}}/${element.route}">
                             <div>${element.name}</div>
@@ -217,47 +210,53 @@
         });
     }
 
+    function initCart() {
+        total = localStorage.getItem('total');
+        total = total ? parseFloat(total) : 0;
+        storedCart = localStorage.getItem('storedCart');
+        storedCart = storedCart ? JSON.parse(storedCart) : [];
+        badget = localStorage.getItem('badget');
+        badget = badget ? parseFloat(badget) : 0;
+    }
+
+    function storeCart() {
+        localStorage.setItem("total", total);
+        localStorage.setItem("storedCart", JSON.stringify(storedCart));
+        localStorage.setItem("badget", badget);
+    }
+
     function regenerateCart() {
 
-        let total = localStorage.getItem('total');
-        let cart = localStorage.getItem('storedCart');
-        let items = JSON.parse(cart);
+        initCart();
 
-        console.log(items);
+        TPJ('.top-cart-items').html('');
 
-        /*items.forEach((element) => {
-            console.log(element);
-        })*/
+        storedCart.forEach((element) => {
+            let obj = JSON.parse(element);
+            item = `<div class="top-cart-item">
+                        <div class="top-cart-item-image">
+                            <a href="${obj.url}"><img src="${obj.img}" alt="${obj.item}"></a>
+                        </div>
+                        <div class="top-cart-item-desc">
+                            <div class="top-cart-item-desc-title">
+                                <a href="${obj.url}">${obj.item}</a>
+                                <span class="top-cart-item-price d-block"></span>
+                            </div>
+                            <div class="top-cart-item-quantity">x ${obj.qty}</div>
+                        </div>
+                    </div>`;
 
-        if(!total)
-            total = 0;
+            TPJ('.top-cart-items').append(item);
+        })
 
-        if(!cart)
-            cart = '';
-
-        let item = `<div class="top-cart-item">
-            <div class="top-cart-item-image">
-                <a href="#"><img src="images/shop/small/1.jpg" alt="Blue Round-Neck Tshirt"></a>
-            </div>
-            <div class="top-cart-item-desc">
-                <div class="top-cart-item-desc-title">
-                    <a href="#">Blue Round-Neck Tshirt with a Button</a>
-                    <span class="top-cart-item-price d-block"></span>
-                </div>
-                <div class="top-cart-item-quantity">x 2</div>
-            </div>
-        </div>`;
-
-        TPJ('.top-cart-items').html(item);
-
-        total = new Intl.NumberFormat('de-DE', {style: 'currency', currency: 'EUR'}).format(
+        TPJ('.top-cart-number').html(badget)
+        TPJ('.top-checkout-price').html(new Intl.NumberFormat('de-DE', {style: 'currency', currency: 'EUR'}).format(
             total,
-        );
-
-        TPJ('.top-checkout-price').html(total);
+        ));
     }
 
     regenerateCategoryMenu();
+    regenerateCart();
 
 </script>
 

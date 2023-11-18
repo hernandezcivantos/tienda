@@ -94,3 +94,7 @@ select .disabled {
     color: #d21c1c !important;
 }
 
+.scrollable {
+    max-height: 200px;
+    overflow: auto;
+}

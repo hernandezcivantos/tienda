@@ -95,6 +95,7 @@
     const loader = TPJ('#loaderDiv');
     let total;
     let storedCart;
+    let storedIDs;
     let badget;
 
     initCart();
@@ -211,18 +212,17 @@
     }
 
     function initCart() {
-        total = localStorage.getItem('total');
-        total = total ? parseFloat(total) : 0;
-        storedCart = localStorage.getItem('storedCart');
-        storedCart = storedCart ? JSON.parse(storedCart) : [];
-        badget = localStorage.getItem('badget');
-        badget = badget ? parseFloat(badget) : 0;
+        total = parseFloat(localStorage.getItem('total')) || 0;
+        storedCart = JSON.parse(localStorage.getItem('storedCart')) || [];
+        storedIDs = JSON.parse(localStorage.getItem('storedIDs')) || [];
+        badget = parseFloat(localStorage.getItem('badget')) || 0;
     }
 
     function storeCart() {
         localStorage.setItem("total", total);
         localStorage.setItem("storedCart", JSON.stringify(storedCart));
         localStorage.setItem("badget", badget);
+        localStorage.setItem("storedIDs", JSON.stringify(storedIDs));
     }
 
     function regenerateCart() {

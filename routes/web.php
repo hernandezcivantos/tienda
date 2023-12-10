@@ -3,6 +3,7 @@
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
+use App\Http\Controllers\CartController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\DatatablesController;
 use App\Http\Controllers\LandingController;
@@ -93,3 +94,5 @@ Route::group(['middleware' => 'admin'], function () {
 Route::post('/product/get', [ProductController::class, 'get'])->name('product.get');
 Route::get('/category/{name}', [CategoryController::class, 'url']);
 Route::get('/product/view/{id}', [ProductController::class, 'view']);
+Route::get('/cart/view', [CartController::class, 'view'])->name('cart.view');
+Route::post('/cart/calculate', [CartController::class, 'calculate'])->name('cart.calculate');

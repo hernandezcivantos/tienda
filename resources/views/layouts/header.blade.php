@@ -18,7 +18,7 @@
                     </a>
                 </div><!-- #logo end -->
 
-                @include('layouts.cart')
+                @include('cart.cart')
 
                 <div class="primary-menu-trigger">
                     <button class="cnvs-hamburger" type="button" title="Open Mobile Menu">

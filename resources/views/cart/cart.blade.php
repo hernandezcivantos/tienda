@@ -14,7 +14,7 @@
             </div>
             <div class="top-cart-action">
                 <span class="top-checkout-price">0.00€</span>
-                <a href="#" class="button button-3d button-small m-0">Ver cesta</a>
+                <a href="{{route('cart.view')}}" class="button button-3d button-small m-0">Ver cesta</a>
             </div>
         </div>
     </div><!-- #top-cart end -->

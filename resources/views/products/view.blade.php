@@ -86,13 +86,8 @@
                                                class="qty">
                                         <input type="button" value="+" class="plus">
                                     </div>
-                                    @if(Auth()->user())
-                                        <button id="add" type="button"
-                                                class="add-to-cart button m-0">{{__('Añadir a la cesta')}}</button>
-                                    @else
-                                        <a href="{{route('login')}}" type="button"
-                                           class="button m-0">{{__('Conectar...')}}</a>
-                                    @endif
+                                    <button id="add" type="button"
+                                            class="add-to-cart button m-0">{{__('Añadir a la cesta')}}</button>
                                 </form><!-- Product Single - Quantity & Cart Button End -->
 
                                 <div class="line"></div>
@@ -134,10 +129,27 @@
                             let target = TPJ('#product-image');
                             let imgclone;
                             let url = "{{url('/')}}";
+                            let items;
+                            let indexToModify;
 
                             initCart();
 
-                            storedCart.push(`{"item":"${response.extra.name}","url":"${url}/product/view/${response.extra.id}","price": ${finalPrice},"qty":${qty},"img":"${response.extra.images[0].image ? `${url}/storage/products/` + response.extra.images[0].image : '${url}/images/no-image.jpg'}"}`);
+                            if (storedIDs.includes(response.extra.id)) {
+                                items = storedCart.map(jsonString => JSON.parse(jsonString));
+
+                                indexToModify = items.findIndex(item => item.id === response.extra.id);
+                                if (indexToModify !== -1) {
+                                    items[indexToModify].price += response.extra.price * qty;
+                                    items[indexToModify].qty += qty;
+
+                                    items = items.map(obj => JSON.stringify(obj));
+
+                                    storedCart = items;
+                                }
+                            } else {
+                                storedCart.push(`{"id":${response.extra.id},"vat":${response.extra.vat},"item":"${response.extra.name}","url":"${url}/product/view/${response.extra.id}","price": ${finalPrice},"qty":${qty},"img":"${response.extra.images[0].image ? `${url}/storage/products/` + response.extra.images[0].image : '${url}/images/no-image.jpg'}"}`);
+                                storedIDs.push(response.extra.id);
+                            }
 
                             total += qty * finalPrice;
                             badget += qty;

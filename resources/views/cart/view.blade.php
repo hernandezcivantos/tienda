@@ -27,9 +27,15 @@
                     <tbody>
                     <div class="row justify-content-between align-items-center py-2 col-mb-30">
                         <div class="col-lg-auto pe-lg-0">
-                            <a href="" class="button button-small button-3d mt-2 mt-sm-0 me-0 mb-0">
-                                {{__('Pasar por caja')}}
+                            @if(Auth()->user())
+                            <a id="buy" href="#" class="button button-small button-3d mt-2 mt-sm-0 me-0 mb-0">
+                                {{__('Terminar compra')}}
                             </a>
+                            @else
+                                <a href="{{route('login')}}" class="button button-small button-3d mt-2 mt-sm-0 me-0 mb-0">
+                                    <i class="fa-brands bi-lock"></i> {{__('Terminar compra')}}
+                                </a>
+                            @endif
                         </div>
                     </div>
                     </tbody>
@@ -120,7 +126,6 @@
 
 @section('js')
     <script>
-
 
         TPJ(document).ready(function () {
 
@@ -251,9 +256,31 @@
                 });
             }
 
+            TPJ('#buy').on('click', function () {
+
+                displayLoader();
+
+                TPJ.ajax({
+                    type: 'POST',
+                    url: '{!! route('cart.payment') !!}',
+                    data: {json: storedCart},
+                    cache: false,
+                    success: function (response) {
+                        if (response.success === 1) {
+                            toastMessage(response.message, 5000, response.success);
+                            localStorage.clear();
+                        }
+                    },
+                    error: function (error) {
+                        toastMessage(error.message, 5000, 0);
+                    },
+                    complete: function (e) {
+                        hideLoader();
+                    }
+                });
+            });
+
         });
-
-
     </script>
 @endsection
 

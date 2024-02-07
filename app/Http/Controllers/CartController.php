@@ -2,12 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Shopping;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
 class CartController extends Controller
 {
-    public function view(Request $request)
+    public function view()
     {
         $data = [
             'bc' => true,
@@ -62,5 +63,11 @@ class CartController extends Controller
         ];
 
         return response()->json($response);
+    }
+
+    public function payment(Request $request)
+    {
+        $data = array_map('json_decode', $request['json']);
+        return Shopping::storeShopping($data);
     }
 }

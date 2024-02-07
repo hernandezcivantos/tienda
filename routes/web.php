@@ -50,6 +50,8 @@ Route::group(['middleware' => 'auth'], function () {
         Route::post('update', [UserController::class, 'update'])->name('update');
     });
 
+    Route::post('/cart/payment', [CartController::class, 'payment'])->name('cart.payment');
+
 });
 
 # Admin
@@ -92,7 +94,7 @@ Route::group(['middleware' => 'admin'], function () {
 });
 
 Route::post('/product/get', [ProductController::class, 'get'])->name('product.get');
+Route::post('/cart/calculate', [CartController::class, 'calculate'])->name('cart.calculate');
 Route::get('/category/{name}', [CategoryController::class, 'url']);
 Route::get('/product/view/{id}', [ProductController::class, 'view']);
 Route::get('/cart/view', [CartController::class, 'view'])->name('cart.view');
-Route::post('/cart/calculate', [CartController::class, 'calculate'])->name('cart.calculate');
